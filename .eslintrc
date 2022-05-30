@@ -1,0 +1,29 @@
+{
+  "env": {
+      "browser": true,
+      "es2021": true
+  },
+  "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+      "plugin:@typescript-eslint/recommended" // Uses the recommended rules from @typescript-eslint/eslint-plugin
+  ],
+  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true // Allows for the parsing of JSX
+      },
+      "ecmaVersion": "latest", // Allows for the parsing of modern ECMAScript features
+      "sourceType": "module" // Allows for the use of imports
+  },
+  "plugins": [
+      "react",
+      "@typescript-eslint"
+  ],
+  "rules": {
+      "react/self-closing-comp": "error",
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": 0,
+      "no-mixed-spaces-and-tabs": 0,
+  }
+}
