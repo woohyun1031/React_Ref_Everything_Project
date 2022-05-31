@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Image from './Image';
 
 type GridProps = {
 	is_flex?: boolean | undefined;
@@ -11,7 +10,6 @@ type GridProps = {
 };
 
 const Grid = (props: GridProps) => {
-	console.log(props);
 	const { is_flex, width, padding, margin, bg, children } = props;
 	const styles = {
 		is_flex,
@@ -41,5 +39,5 @@ const GridBox = styled.div<{
 	background-color: ${({ bg }) => (bg ? 'red' : 'gray')};
 	display: ${({ is_flex }) => (is_flex ? 'flex' : '0')};
 	align-items: ${({ is_flex }) => (is_flex ? 'center' : '0')};
-	justify-content: ${({ is_flex }) => (is_flex ? 'center' : '0')};
+	justify-content: ${({ is_flex }) => (is_flex ? 'space-between' : '0')};
 `;
