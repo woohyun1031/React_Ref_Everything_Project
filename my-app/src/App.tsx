@@ -1,10 +1,15 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PostList from './pages/PostList';
 
 const App = () => {
 	return (
-		<div className='App'>
-			<PostList />
-		</div>
+		<>
+			<Router>
+				<Routes>
+					<Route path='/' element={<PostList />} />
+				</Routes>
+			</Router>
+		</>
 	);
 };
 
