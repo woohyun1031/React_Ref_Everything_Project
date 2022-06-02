@@ -1,21 +1,29 @@
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { Text, Grid } from './index';
 
 type InputProps = {
-	label?: string | undefined;
-	placeholder?: string | undefined;
-	callback?(): any;
-	children?: any | undefined;
+	type?: string;
+	value?: string;
+	label?: string;
+	placeholder?: string;
+	callback?(value: ChangeEvent<HTMLInputElement>): any;
+	children?: any;
 };
 
 const Input = (props: InputProps) => {
-	const { label, placeholder, callback, children } = props;
+	const { label, placeholder, callback, value, type, children } = props;
 
 	return (
 		<>
 			<Grid padding='10px 0px'>
 				<Text>{label}</Text>
-				<InputBox placeholder={placeholder} onChange={callback} />
+				<InputBox
+					type={type}
+					value={value}
+					placeholder={placeholder}
+					onChange={callback}
+				/>
 			</Grid>
 		</>
 	);

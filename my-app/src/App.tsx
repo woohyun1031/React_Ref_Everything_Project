@@ -12,7 +12,6 @@ const App = () => {
 		<>
 			<Grid>
 				<Header />
-
 				<Routes>
 					<Route path='/' element={<PostList />} />
 					<Route path='/login' element={<Login />} />
