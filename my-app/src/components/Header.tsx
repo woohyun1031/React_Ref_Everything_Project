@@ -2,27 +2,25 @@ import { Grid, Text, Button } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getCookie, deleteCookie } from '../Cookie';
+import { logout } from '../store/modules/user';
+import { useDispatch } from 'react-redux';
 
 type HeaderProps = {
-	label?: string | undefined;
-	placeholder?: string | undefined;
-	callback?: (() => {}) | undefined;
-	children?: any | undefined;
+	_isLogin?: boolean | undefined;
 };
 
 const Header = (props: HeaderProps) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [isLogin, setIsLogin] = useState(false);
-
+	console.log();
 	useEffect(() => {
-		let cookie: string | undefined = getCookie('userId');
-		console.log(cookie, 'cookie');
-		if (cookie) {
+		if (props._isLogin) {
 			setIsLogin(true);
 		} else {
 			setIsLogin(false);
 		}
-	}, []);
+	}, [props._isLogin]);
 
 	if (isLogin) {
 		return (
@@ -40,8 +38,8 @@ const Header = (props: HeaderProps) => {
 						<Button
 							text='로그아웃'
 							callback={() => {
-								deleteCookie('userId');
-								setIsLogin(false);
+								dispatch(logout());
+								navigate('/login');
 							}}
 						/>
 					</Grid>

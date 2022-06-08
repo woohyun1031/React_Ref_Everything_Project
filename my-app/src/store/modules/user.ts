@@ -1,13 +1,14 @@
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {getCookie,setCookie,deleteCookie} from '../../Cookie'
 
+//initialState
 const initialState = {
 	user:null,	
 	isLogin: false,
 };
 
-export const usersSlice = createSlice({
+export const user = createSlice({
   name: 'users',
   initialState,
   reducers: {
@@ -15,16 +16,19 @@ export const usersSlice = createSlice({
 			setCookie('isLogin','success');
 			state.user = 	actions.payload.user;
 			state.isLogin = true
-			console.log(`logout : ${state} ${actions}`);
+			console.log(`login : ${state} ${actions}`);
       },
-		logout : (state,actions) => {
-			console.log(`logout : ${state} ${actions}`);
+		logout : (state) => {
+			deleteCookie('isLogin')
+			state.user = 	null;
+			state.isLogin = false;
+			console.log(`logout : ${state}`);
 		},
 		getUser : (state,actions) =>  {
-			console.log(`logout : ${state} ${actions}`);
+			console.log(`getUser : ${state} ${actions}`);
 		}
 	}	
 })
 
-export const { login,logout,getUser } = usersSlice.actions;
-export default usersSlice.reducer;
+export const { login,logout,getUser } = user.actions;
+export default user.reducer;

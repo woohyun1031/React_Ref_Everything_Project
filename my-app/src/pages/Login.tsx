@@ -1,10 +1,16 @@
 import { useState, ChangeEvent } from 'react';
 import { getCookie, setCookie, deleteCookie } from '../Cookie';
 import { Text, Input, Grid, Button } from '../elements/index';
+import { useDispatch } from 'react-redux';
+import { login } from '../store/modules/user';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [isId, setIsId] = useState('');
 	const [isPw, setIsPw] = useState('');
+
+	const dispatch = useDispatch();
+	const navigator = useNavigate();
 
 	const changeId = (e: ChangeEvent<HTMLInputElement>) => {
 		setIsId(e.target.value);
@@ -13,9 +19,9 @@ const Login = () => {
 		setIsPw(e.target.value);
 	};
 
-	const login = () => {
-		setCookie('userId', isId);
-		setCookie('userPw', isPw);
+	const onlogin = () => {
+		dispatch(login({ user: 'woohyun' }));
+		navigator('/');
 	};
 
 	return (
@@ -39,7 +45,7 @@ const Login = () => {
 						placeholder='패스워드를 입력하세요'
 					/>
 				</Grid>
-				<Button text='버튼' callback={login} />
+				<Button text='버튼' callback={onlogin} />
 			</Grid>
 		</>
 	);
