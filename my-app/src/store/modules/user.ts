@@ -1,15 +1,28 @@
 
-import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
-import {getCookie,setCookie,deleteCookie} from '../../Cookie'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {deleteCookie,getCookie,setCookie} from '../../Cookie'
 import {auth} from '../../firebase'
 
 export const signUp = createAsyncThunk(
 	'user/signUp',
-	async (loginInfo: { email: string; password: string},{ rejectWithValue }) => {
+	async (signUpInfo: { email: string; password: string},{ rejectWithValue }) => {
 		try {
-			const user  = await createUserWithEmailAndPassword(auth,loginInfo.email,loginInfo.password);		
+			const user  = await createUserWithEmailAndPassword(auth, signUpInfo.email, signUpInfo.password);		
+			console.log(user.user.email,"user");
+			return user.user.email
+		} catch (error) {
+			alert(`알 수 없는 오류: ${error}`);
+			return rejectWithValue('An unexpected error occurred');
+		}
+	}
+);
+
+export const signIn = createAsyncThunk(
+	'user/signIn',
+	async (signInInfo: { email: string; password: string},{ rejectWithValue }) => {
+		try {
+			const user = await signInWithEmailAndPassword(auth, signInInfo.email, signInInfo.password);
 			console.log(user.user.email,"user");
 			return user.user.email
 		} catch (error) {
@@ -33,12 +46,6 @@ export const user = createSlice({
   name: 'users',
   initialState,
   reducers: {
-		login : (state,actions) => {
-			setCookie('isLogin','success');
-			state.user = 	actions.payload.user;
-			state.isLogin = true
-			console.log(`login : ${state} ${actions}`);
-      },
 		logout : (state) => {
 			deleteCookie('isLogin')
 			state.user = 	null;
@@ -55,11 +62,19 @@ export const user = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(signUp.fulfilled, (state, action) => {
 			console.log(action,'signUp.fulfilled');
+			setCookie('isLogin','login Tocen')
 			state.user = "isLogin";			
 			state.isLogin = true;			
-		});		
+		});
+		builder.addCase(signIn.fulfilled, (state, action) => {
+			console.log(action,'signIn.fulfilled');
+			setCookie('isLogin','login Tocen')
+			state.user = "isLogin";			
+			state.isLogin = true;			
+			
+		});				
 	},
 })
 
-export const { login,logout,getUser } = user.actions;
+export const { logout,getUser } = user.actions;
 export default user.reducer;

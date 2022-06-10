@@ -19,13 +19,16 @@ const SignUp = () => {
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setInputs({ ...inputs, [name]: value });
-		console.log(inputs);
 	};
 
 	const onSignUp = () => {
-		const { email, password } = inputs;
+		const { email, password, confirmPassword } = inputs;
 		const userInfo = { email, password };
-		dispatch(signUp(userInfo));
+		if (password !== confirmPassword) {
+			return alert('비밀번호가 다릅니다');
+		} else {
+			dispatch(signUp(userInfo));
+		}
 	};
 
 	return (
@@ -58,6 +61,7 @@ const SignUp = () => {
 					<Input
 						name='password'
 						label='비밀번호'
+						type='password'
 						placeholder='비밀번호를 입력해주세요.'
 						callback={onChange}
 					/>
@@ -67,6 +71,7 @@ const SignUp = () => {
 					<Input
 						name='confirmPassword'
 						label='비밀번호 확인'
+						type='password'
 						placeholder='비밀번호를 다시 입력해주세요.'
 						callback={onChange}
 					/>

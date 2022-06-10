@@ -1,7 +1,6 @@
 import { Grid, Text, Button } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getCookie, deleteCookie } from '../Cookie';
 import { logout } from '../store/modules/user';
 import { useDispatch } from 'react-redux';
 
@@ -13,7 +12,7 @@ const Header = (props: HeaderProps) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [isLogin, setIsLogin] = useState(false);
-	console.log();
+
 	useEffect(() => {
 		if (props._isLogin) {
 			setIsLogin(true);

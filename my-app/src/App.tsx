@@ -1,7 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import PostList from './pages/PostList';
 
-import { Grid } from './elements/index';
+import { Grid, FloatButton } from './elements/index';
 
 import Login from './pages/Login';
 import Header from './components/Header';
@@ -9,10 +9,21 @@ import SignUp from './pages/SignUp';
 
 import { useSelector } from 'react-redux';
 import { RootState } from './store/configStore';
+import { useEffect } from 'react';
+import { getCookie } from './Cookie';
 
 const App = () => {
+	const navigate = useNavigate();
 	const _isLogin = useSelector((state: RootState) => state.isLogin);
-	console.log('rerender');
+	const _isToken = getCookie('isLogin') ? true : false;
+
+	useEffect(() => {
+		if (_isToken) {
+			navigate('/');
+		} else {
+			console.log('notLogin');
+		}
+	}, [_isLogin, _isToken]);
 	return (
 		<>
 			<Grid>
@@ -22,6 +33,13 @@ const App = () => {
 					<Route path='/login' element={<Login />} />
 					<Route path='/signup' element={<SignUp />} />
 				</Routes>
+				{_isLogin ? (
+					<FloatButton
+						callback={() => {
+							console.log('floatbutton click!!');
+						}}
+					/>
+				) : null}
 			</Grid>
 		</>
 	);

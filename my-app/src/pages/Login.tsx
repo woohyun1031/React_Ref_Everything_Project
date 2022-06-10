@@ -1,27 +1,25 @@
 import { useState, ChangeEvent } from 'react';
-import { getCookie, setCookie, deleteCookie } from '../Cookie';
 import { Text, Input, Grid, Button } from '../elements/index';
 import { useDispatch } from 'react-redux';
-import { login } from '../store/modules/user';
-import { useNavigate } from 'react-router-dom';
+import { signIn } from '../store/modules/user';
+import { AppDispatch } from '../store/configStore';
 
 const Login = () => {
-	const [isId, setIsId] = useState('');
-	const [isPw, setIsPw] = useState('');
+	const [inputs, setInputs] = useState({
+		email: '',
+		password: '',
+	});
+	const dispatch = useDispatch<AppDispatch>();
 
-	const dispatch = useDispatch();
-	const navigator = useNavigate();
-
-	const changeId = (e: ChangeEvent<HTMLInputElement>) => {
-		setIsId(e.target.value);
-	};
-	const changePw = (e: ChangeEvent<HTMLInputElement>) => {
-		setIsPw(e.target.value);
+	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setInputs({ ...inputs, [name]: value });
 	};
 
 	const onlogin = () => {
-		dispatch(login({ user: 'woohyun' }));
-		navigator('/');
+		const { email, password } = inputs;
+		const userInfo = { email, password };
+		dispatch(signIn(userInfo));
 	};
 
 	return (
@@ -32,20 +30,20 @@ const Login = () => {
 				</Text>
 				<Grid padding='16px 0px'>
 					<Input
-						value={isId}
-						callback={changeId}
+						name='email'
+						callback={onChange}
 						label='아이디'
 						placeholder='아이디를 입력하세요'
 					/>
 					<Input
-						value={isPw}
-						callback={changePw}
+						name='password'
 						type='password'
+						callback={onChange}
 						label='패스워드'
 						placeholder='패스워드를 입력하세요'
 					/>
 				</Grid>
-				<Button text='버튼' callback={onlogin} />
+				<Button text='로그인' callback={onlogin} />
 			</Grid>
 		</>
 	);
