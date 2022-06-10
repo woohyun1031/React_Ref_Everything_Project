@@ -10,7 +10,8 @@ import SignUp from './pages/SignUp';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/configStore';
 import { useEffect } from 'react';
-import { getCookie } from './Cookie';
+import { getCookie } from './shared/Cookie';
+import PostWrite from './pages/PostWrite';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -32,10 +33,12 @@ const App = () => {
 					<Route path='/' element={<PostList />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/signup' element={<SignUp />} />
+					<Route path='/write' element={<PostWrite />} />
 				</Routes>
 				{_isLogin ? (
 					<FloatButton
 						callback={() => {
+							navigate('/write');
 							console.log('floatbutton click!!');
 						}}
 					/>

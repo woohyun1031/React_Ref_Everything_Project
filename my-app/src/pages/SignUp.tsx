@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Text, Input, Grid, Button } from '../elements/index';
+import { emailCheck } from '../shared/common';
 import { AppDispatch } from '../store/configStore';
 import { signUp } from '../store/modules/user';
 
@@ -24,7 +25,12 @@ const SignUp = () => {
 	const onSignUp = () => {
 		const { email, password, confirmPassword } = inputs;
 		const userInfo = { email, password };
-		if (password !== confirmPassword) {
+		const checkEmail = emailCheck(email);
+		if (email === '' || password === '') {
+			return alert('email 혹은 password가 비어있습니다!');
+		} else if (!checkEmail) {
+			return alert('email이 형식이 맞지 않습니다!');
+		} else if (password !== confirmPassword) {
 			return alert('비밀번호가 다릅니다');
 		} else {
 			dispatch(signUp(userInfo));

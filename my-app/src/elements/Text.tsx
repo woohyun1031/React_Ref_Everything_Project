@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 type TextProps = {
-	bold?: boolean | undefined;
-	color?: string | undefined;
-	size?: string | undefined;
-	margin?: string | undefined;
-	children?: any | undefined;
+	bold?: boolean;
+	color?: string;
+	size?: string;
+	margin?: string;
+	children?: any;
 };
 
 const Text = (props: TextProps) => {

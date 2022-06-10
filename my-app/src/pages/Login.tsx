@@ -3,6 +3,7 @@ import { Text, Input, Grid, Button } from '../elements/index';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../store/modules/user';
 import { AppDispatch } from '../store/configStore';
+import { emailCheck } from '../shared/common';
 
 const Login = () => {
 	const [inputs, setInputs] = useState({
@@ -10,7 +11,6 @@ const Login = () => {
 		password: '',
 	});
 	const dispatch = useDispatch<AppDispatch>();
-
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setInputs({ ...inputs, [name]: value });
@@ -18,6 +18,13 @@ const Login = () => {
 
 	const onlogin = () => {
 		const { email, password } = inputs;
+		const checkEmail = emailCheck(email);
+
+		if (email === '' || password === '') {
+			return alert('email 혹은 password가 비어있습니다!');
+		} else if (!checkEmail) {
+			return alert('email이 형식이 맞지 않습니다!');
+		}
 		const userInfo = { email, password };
 		dispatch(signIn(userInfo));
 	};
