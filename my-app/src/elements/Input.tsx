@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Text, Grid } from './index';
 
 type InputProps = {
+	name?: string;
 	type?: string;
 	value?: string;
 	label?: string;
@@ -12,13 +13,14 @@ type InputProps = {
 };
 
 const Input = (props: InputProps) => {
-	const { label, placeholder, callback, value, type, children } = props;
+	const { label, placeholder, callback, value, type, name, children } = props;
 
 	return (
 		<>
 			<Grid padding='10px 0px'>
 				<Text>{label}</Text>
 				<InputBox
+					name={name}
 					type={type}
 					value={value}
 					placeholder={placeholder}
