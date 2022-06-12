@@ -1,14 +1,17 @@
-import { Grid, Text, Button, Input, Image } from '../elements';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Text, Button, Input, Image, Upload } from '../elements';
 import TextArea from '../elements/TextArea';
 
 type PostWriteType = {};
 
 const PostWrite = (props: PostWriteType) => {
+	const navigate = useNavigate();
+
 	return (
 		<>
 			<Grid padding='16px'>
 				<Text size='36px'>게시글 작성</Text>
-				<input type='file' />
+				<Upload />
 				{/* 파일 import */}
 			</Grid>
 			<Grid>
@@ -23,6 +26,13 @@ const PostWrite = (props: PostWriteType) => {
 			<Grid padding='16px'>
 				<Button text='게시글 작성' />
 			</Grid>
+			<button
+				onClick={() => {
+					navigate('/post/1');
+				}}
+			>
+				postdetail page 임시 이동
+			</button>
 		</>
 	);
 };

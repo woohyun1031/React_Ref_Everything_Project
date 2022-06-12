@@ -37,7 +37,7 @@ const GridBox = styled.div<{
 	padding: ${({ padding }) => (padding ? padding : '0px')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
 	background-color: ${({ bg }) => (bg ? 'red' : 'gray')};
-	display: ${({ is_flex }) => (is_flex ? 'flex' : '0')};
-	align-items: ${({ is_flex }) => (is_flex ? 'center' : '0')};
-	justify-content: ${({ is_flex }) => (is_flex ? 'space-between' : '0')};
+	display: ${({ is_flex }) => (is_flex ? 'flex' : 'block')};
+	${({ is_flex }) => (is_flex ? 'align-items: center' : '')};
+	${({ is_flex }) => (is_flex ? 'justify-content: space-between' : '')};
 `;

@@ -12,6 +12,7 @@ import { RootState } from './store/configStore';
 import { useEffect } from 'react';
 import { getCookie } from './shared/Cookie';
 import PostWrite from './pages/PostWrite';
+import PostDetail from './pages/PostDetail';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -28,14 +29,15 @@ const App = () => {
 	return (
 		<>
 			<Grid>
-				<Header _isLogin={_isLogin} />
+				<Header _isToken={_isToken} />
 				<Routes>
 					<Route path='/' element={<PostList />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/signup' element={<SignUp />} />
 					<Route path='/write' element={<PostWrite />} />
+					<Route path='/post/:id' element={<PostDetail />} />
 				</Routes>
-				{_isLogin ? (
+				{_isToken ? (
 					<FloatButton
 						callback={() => {
 							navigate('/write');

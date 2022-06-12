@@ -5,7 +5,7 @@ import { logout } from '../store/modules/user';
 import { useDispatch } from 'react-redux';
 
 type HeaderProps = {
-	_isLogin?: boolean | undefined;
+	_isToken?: boolean | undefined;
 };
 
 const Header = (props: HeaderProps) => {
@@ -14,12 +14,12 @@ const Header = (props: HeaderProps) => {
 	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
-		if (props._isLogin) {
+		if (props._isToken) {
 			setIsLogin(true);
 		} else {
 			setIsLogin(false);
 		}
-	}, [props._isLogin]);
+	}, [props._isToken]);
 
 	if (isLogin) {
 		return (

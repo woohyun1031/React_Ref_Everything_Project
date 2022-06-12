@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Text, Grid } from './index';
 
 type InputProps = {
-	width?: string;
 	name?: string;
 	type?: string;
 	value?: string;
@@ -12,26 +11,17 @@ type InputProps = {
 	callback?(value: ChangeEvent<HTMLInputElement>): any;
 };
 
-const Input = (props: InputProps) => {
-	const { label, placeholder, callback, value, type, name, width } = props;
+const Upload = (props: InputProps) => {
+	const { label, placeholder, callback, value, type, name } = props;
 
 	return (
 		<>
-			<Grid width={width} padding='10px 0px'>
-				{label ? '' : <Text>{label}</Text>}
-				<InputBox
-					name={name}
-					type={type}
-					value={value}
-					placeholder={placeholder}
-					onChange={callback}
-				/>
-			</Grid>
+			<input type='file' />
 		</>
 	);
 };
 
-export default Input;
+export default Upload;
 
 const InputBox = styled.input`
 	border: 1px solid #212121;

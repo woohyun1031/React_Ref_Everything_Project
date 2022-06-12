@@ -1,20 +1,30 @@
 import styled from 'styled-components';
 
 type ButtonProps = {
-	text?: string | undefined;
+	text?: string;
 	callback?(): any;
+	width?: string;
+	margin?: string;
 };
 
 const Button = (props: ButtonProps) => {
-	const { text, callback } = props;
-
-	return <ButtonBox onClick={callback}>{text}</ButtonBox>;
+	const { text, callback, width, margin } = props;
+	const styles = {
+		width,
+		margin,
+	};
+	return (
+		<ButtonBox {...styles} onClick={callback}>
+			{text}
+		</ButtonBox>
+	);
 };
 
 export default Button;
 
-const ButtonBox = styled.button`
-	width: 100%;
+const ButtonBox = styled.button<{ width?: string; margin?: string }>`
+	width: ${({ width }) => (width ? width : '100%')};
+	margin: ${({ margin }) => (margin ? margin : '0px')};
 	background-color: #212121;
 	color: #ffffff;
 	padding: 12px 0px;
