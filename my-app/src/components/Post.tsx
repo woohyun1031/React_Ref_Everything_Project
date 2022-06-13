@@ -1,6 +1,19 @@
 import { Grid, Image, Text } from '../elements/index';
 
-const Post = () => {
+type PostProps = {
+	id?: number;
+	user_info?: {
+		user_name?: string;
+		user_profile?: string;
+	};
+	image_url?: string;
+	contents?: string;
+	comment_cnt?: number;
+	insert_dt?: string;
+};
+
+const Post = (props: PostProps) => {
+	const { user_info, image_url, contents, comment_cnt, insert_dt } = props;
 	return (
 		<>
 			<Grid>
