@@ -13,7 +13,6 @@ const PostList = (props: PostListProps) => {
 	}, []);
 	return (
 		<div>
-			<Post />
 			{post_list?.map((post, index) => {
 				return <Post key={post.id} {...post} />;
 			})}

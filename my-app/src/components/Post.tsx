@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Grid, Image, Text } from '../elements/index';
 
 type PostProps = {
@@ -5,6 +6,7 @@ type PostProps = {
 	user_info?: {
 		user_name?: string;
 		user_profile?: string;
+		user_id?: string;
 	};
 	image_url?: string;
 	contents?: string;
@@ -13,36 +15,33 @@ type PostProps = {
 };
 
 const Post = (props: PostProps) => {
-	const { user_info, image_url, contents, comment_cnt, insert_dt } = props;
+	const { id, user_info, image_url, contents, comment_cnt, insert_dt } = props;
+	const navigate = useNavigate();
 	return (
 		<>
 			<Grid>
 				<Grid is_flex>
-					<Image
-						shape={'circle'}
-						src={
-							'https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg'
-						}
-						size={60}
-					/>
-					<Text bold>username</Text>
-					<Text bold>{Date.now()}</Text>
+					<Grid is_flex>
+						<Image shape={'circle'} src={user_info?.user_profile} size={60} />
+						<Text bold>{user_info?.user_id}</Text>
+					</Grid>
+					<Text bold>{insert_dt}</Text>
 				</Grid>
 				<Grid>
 					<Image
 						shape={'rectangle'}
-						src={
-							'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png'
-						}
+						src={image_url}
+						callback={() => {
+							navigate(`/post/${id}`);
+							console.log('image click!!');
+						}}
 					/>
 				</Grid>
 				<Grid padding='16px'>
-					<Text>
-						contents가 들어가는 부분입니다 지금은 Post를 작성하고 있습니다
-					</Text>
+					<Text>{contents}</Text>
 				</Grid>
 				<Grid padding='16px'>
-					<Text bold>댓글 10개</Text>
+					<Text bold>댓글 {comment_cnt}개</Text>
 				</Grid>
 			</Grid>
 		</>

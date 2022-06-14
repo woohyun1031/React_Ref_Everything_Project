@@ -4,11 +4,11 @@ type ImageProps = {
 	shape?: string | undefined;
 	src?: string | undefined;
 	size?: number | undefined;
+	callback?(): any;
 };
 
 const Image = (props: ImageProps) => {
-	console.log(props);
-	const { shape, src, size } = props;
+	const { shape, src, size, callback } = props;
 	const styles = {
 		src,
 		size,
@@ -17,7 +17,7 @@ const Image = (props: ImageProps) => {
 		return <ImageBox {...styles}></ImageBox>;
 	}
 	return (
-		<AspectOutter>
+		<AspectOutter onClick={callback}>
 			<AspectInner {...styles} />
 		</AspectOutter>
 	);
