@@ -1,7 +1,7 @@
 import { Grid, Image, Text } from '../elements/index';
 
 type PostProps = {
-	id?: number;
+	id?: string;
 	user_info?: {
 		user_name?: string;
 		user_profile?: string;

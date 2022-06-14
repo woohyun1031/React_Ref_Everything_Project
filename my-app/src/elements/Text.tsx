@@ -5,11 +5,12 @@ type TextProps = {
 	color?: string;
 	size?: string;
 	margin?: string;
+	callback?(): any;
 	children?: any;
 };
 
 const Text = (props: TextProps) => {
-	const { bold, color, size, margin, children } = props;
+	const { bold, color, size, margin, callback, children } = props;
 
 	const styles = {
 		bold,
@@ -20,7 +21,9 @@ const Text = (props: TextProps) => {
 
 	return (
 		<>
-			<Ptag {...styles}>{children}</Ptag>
+			<Ptag {...styles} onClick={callback}>
+				{children}
+			</Ptag>
 		</>
 	);
 };
