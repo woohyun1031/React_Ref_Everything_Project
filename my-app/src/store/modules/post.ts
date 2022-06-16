@@ -3,7 +3,6 @@ import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../shared/firebase';
 import moment from 'moment';
 import {RootState } from '../configStore';
-//import store from '../configStore';
 
 export const addPost = createAsyncThunk(
 	'user/addPost',
@@ -21,6 +20,8 @@ export const addPost = createAsyncThunk(
 				contents,
 				insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
 			}
+			console.log(user_info, post_info);
+			return
 			const docRef = await addDoc(collection(db,'post'),{...user_info,...post_info});	
 			console.log(docRef);
 		} catch (error) {

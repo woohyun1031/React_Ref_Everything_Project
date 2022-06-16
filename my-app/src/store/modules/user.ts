@@ -35,8 +35,8 @@ export const signIn = createAsyncThunk(
 			const user = await signInWithEmailAndPassword(auth, signInInfo.email, signInInfo.password);
 			console.log(user,"user");
 			const userInfo = {
-				user_name: user.user.displayName,
-				user_id: user.user.email,	
+				user_name: user.user.displayName ? user.user.displayName : '',
+				user_id: user.user.email ? user.user.email : '',	
 				user_profile: '',	
 				user_uid: user.user.uid,
 			}	
@@ -50,16 +50,21 @@ export const signIn = createAsyncThunk(
 
 //initialState
 type initialStateType = {
-	user: {
+	user: {		
 		user_name: string;
 		user_id: string;	
 		user_profile: string;	
 		user_uid: string;
-	}|null,	
+	},	
 	isLogin: boolean,
 }
 const initialState:initialStateType = {
-	user: null,	
+	user:{		
+		user_name: '',
+		user_id: '',
+		user_profile: '',
+		user_uid: '',
+	} ,	
 	isLogin: false,
 };
 
@@ -69,7 +74,12 @@ export const user = createSlice({
   reducers: {
 		logout : (state) => {
 			deleteCookie('isLogin')
-			state.user = 	null;
+			state.user = 	{		
+				user_name: '',
+				user_id: '',
+				user_profile: '',
+				user_uid: '',
+			};
 			state.isLogin = false;
 			console.log(`logout : ${state}`);
 		},
@@ -84,14 +94,19 @@ export const user = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(signUp.fulfilled, (state, action) => {
 			console.log(action,'signUp.fulfilled');
-			setCookie('isLogin','login Tocen')	
+			setCookie('isLogin','login Token')	
 			setUser(action.payload);
 			state.isLogin = true;			
 		});
 		builder.addCase(signIn.fulfilled, (state, action) => {
 			console.log(action,'signIn.fulfilled');
-			setCookie('isLogin','login Tocen')	
-			setUser(action.payload);
+			setCookie('isLogin','login Token')						
+			state.user = {		
+				user_name: action.payload.user_name,
+				user_id: action.payload.user_id,
+				user_profile: action.payload.user_profile,
+				user_uid: action.payload.user_uid,
+			}
 			state.isLogin = true;			
 			
 		});				

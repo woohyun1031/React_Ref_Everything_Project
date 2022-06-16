@@ -1,13 +1,16 @@
 import { ChangeEvent, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Text, Button, Image, Upload, TextArea } from '../elements';
 import { getCookie } from '../shared/Cookie';
-import { RootState } from '../store/configStore';
+import { AppDispatch, RootState } from '../store/configStore';
+import { addPost } from '../store/modules/post';
 
 type PostWriteType = {};
 
 const PostWrite = (props: PostWriteType) => {
+	const dispatch = useDispatch<AppDispatch>();
+	const userInfo = useSelector((state: RootState) => state.user.user);
 	const navigate = useNavigate();
 	const _isToken = getCookie('isLogin') ? true : false;
 	const [isContents, setIsContents] = useState('');
@@ -16,7 +19,10 @@ const PostWrite = (props: PostWriteType) => {
 		setIsContents(e.target.value);
 	};
 
-	const addPost = () => {};
+	const onAddPost = () => {
+		console.log(userInfo);
+		dispatch(addPost(isContents));
+	};
 
 	if (!_isToken) {
 		return (
@@ -51,7 +57,7 @@ const PostWrite = (props: PostWriteType) => {
 				/>
 			</Grid>
 			<Grid padding='16px'>
-				<Button text='게시글 작성' callback={() => {}} />
+				<Button text='게시글 작성' callback={onAddPost} />
 			</Grid>
 		</>
 	);
