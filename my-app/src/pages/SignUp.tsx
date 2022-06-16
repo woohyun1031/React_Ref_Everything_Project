@@ -23,8 +23,8 @@ const SignUp = () => {
 	};
 
 	const onSignUp = () => {
-		const { email, password, confirmPassword } = inputs;
-		const userInfo = { email, password };
+		const { email, password, nickName, confirmPassword } = inputs;
+		const userInfo = { email, password, nickName };
 		const checkEmail = emailCheck(email);
 		if (email === '' || password === '') {
 			return alert('email 혹은 password가 비어있습니다!');

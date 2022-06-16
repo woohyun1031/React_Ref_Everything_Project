@@ -1,8 +1,24 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs } from 'firebase/firestore';
-import { arrayBuffer } from 'stream/consumers';
-import { setCookie } from '../../shared/Cookie';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../shared/firebase';
+import moment from 'moment';
+import store from '../configStore';
+
+export const addPost = createAsyncThunk(
+	'user/addPost',
+	async () => {
+		try{
+			const _user = store.getState().user.user;			
+			const user_info = {
+				user_name: _user,
+				//user_id : 
+			}
+			//await addDoc(collection(db,'post'));	
+		} catch (error) {
+
+		}
+	}
+)
 
 export const getPost = createAsyncThunk(
 	'user/getPost',
@@ -11,30 +27,6 @@ export const getPost = createAsyncThunk(
 			const postDB = await getDocs(collection(db,'post'));
 			const post_list: PostType[] = [];			
 			postDB.forEach((post)=> {
-				// const {	user_name,user_profile,user_id,	image_url,contents,comment_cnt,insert_dt} = post.data();
-				// let _post = {
-				// 	id: post.id,
-				// 	user_name,
-				// 	user_profile,
-				// 	user_id,
-				// 	image_url,
-				// 	contents,
-				// 	comment_cnt,
-				// 	insert_dt
-				// };
-				// let new_post = {
-				// 	id: _post.id,
-				// 	user_info: {
-				// 		user_name: _post.user_name,
-				// 		user_profile: _post.user_profile,
-				// 		user_id: _post.user_id
-				// 	},
-				// 	image_url: _post.image_url,
-				// 	contents: _post.contents,
-				// 	comment_cnt: _post.comment_cnt,
-				// 	insert_dt: _post.insert_dt,
-				// }
-				// post_list.push(new_post);
 				let _post = post.data();
 				let new_post = Object.keys(_post).reduce((acc, cur) => {
 					if(cur.indexOf('user_') !== -1) {
@@ -51,17 +43,6 @@ export const getPost = createAsyncThunk(
 		}
 	}
 );
-
-// type newPostType = {	
-// 	id: string,
-// 	user_name: string,
-// 	user_profile: string,
-// 	user_id: string,	
-// 	image_url: string,
-// 	contents: string,
-// 	comment_cnt: number,
-// 	insert_dt: string,
-// }	
 
 type PostType = {
 	id: string;
