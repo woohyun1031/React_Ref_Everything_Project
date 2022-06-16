@@ -11,9 +11,13 @@ const PostWrite = (props: PostWriteType) => {
 	const navigate = useNavigate();
 	const _isToken = getCookie('isLogin') ? true : false;
 	const [isContents, setIsContents] = useState('');
+
 	const changeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
 		setIsContents(e.target.value);
 	};
+
+	const addPost = () => {};
+
 	if (!_isToken) {
 		return (
 			<>
@@ -40,18 +44,15 @@ const PostWrite = (props: PostWriteType) => {
 				<Image shape='rectangle' />
 			</Grid>
 			<Grid padding='16px'>
-				<TextArea label='게시글 내용' placeholder='게시글 작성' />
+				<TextArea
+					label='게시글 내용'
+					placeholder='게시글 작성'
+					callback={changeContents}
+				/>
 			</Grid>
 			<Grid padding='16px'>
-				<Button text='게시글 작성' />
+				<Button text='게시글 작성' callback={() => {}} />
 			</Grid>
-			<button
-				onClick={() => {
-					navigate('/post/1');
-				}}
-			>
-				postdetail page 임시 이동
-			</button>
 		</>
 	);
 };
