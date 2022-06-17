@@ -17,6 +17,7 @@ const Text = (props: TextProps) => {
 		color,
 		size,
 		margin,
+		isCallback: callback ? true : false,
 	};
 
 	return (
@@ -35,9 +36,11 @@ const Ptag = styled.p<{
 	color?: string;
 	size?: string;
 	margin?: string;
+	isCallback?: boolean;
 }>`
 	color: ${({ color }) => (color ? color : '#222831')};
 	font-size: ${({ size }) => (size ? size : '14px')};
 	font-weight: ${({ bold }) => (bold ? '600' : '400')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
+	${({ isCallback }) => (isCallback ? 'cursor:pointer' : '')};
 `;

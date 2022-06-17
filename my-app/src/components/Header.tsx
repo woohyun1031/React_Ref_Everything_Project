@@ -57,7 +57,13 @@ const Header = (props: HeaderProps) => {
 		<>
 			<Grid is_flex>
 				<Grid>
-					<Text size='24px' bold>
+					<Text
+						size='24px'
+						bold
+						callback={() => {
+							navigate('/');
+						}}
+					>
 						안녕하세요
 					</Text>
 				</Grid>

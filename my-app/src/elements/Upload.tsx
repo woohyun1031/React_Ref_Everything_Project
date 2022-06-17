@@ -1,31 +1,28 @@
-import { ChangeEvent } from 'react';
-import styled from 'styled-components';
-import { Text, Grid } from './index';
+import { ChangeEvent, useRef, useState } from 'react';
+import { Button } from '../elements/index';
+import { storage } from '../shared/firebase';
+import { ref, uploadBytes } from 'firebase/storage';
 
-type InputProps = {
-	name?: string;
-	type?: string;
-	value?: string;
-	label?: string;
-	placeholder?: string;
-	callback?(value: ChangeEvent<HTMLInputElement>): any;
-};
+type UploadProps = {};
 
-const Upload = (props: InputProps) => {
-	const { label, placeholder, callback, value, type, name } = props;
+const Upload = (props: UploadProps) => {
+	const fileRef = useRef<HTMLInputElement>(null);
+
+	const uploadDB = () => {
+		if (!fileRef.current?.files) return;
+		const isImage = fileRef.current?.files[0];
+		const storageRef = ref(storage, `images/${isImage.name}`);
+		uploadBytes(storageRef, isImage).then((snapshot) => {
+			console.log(snapshot);
+		});
+	};
 
 	return (
 		<>
-			<input type='file' />
+			<input type='file' ref={fileRef} />
+			<Button text='UPLOAD' callback={uploadDB} />
 		</>
 	);
 };
 
 export default Upload;
-
-const InputBox = styled.input`
-	border: 1px solid #212121;
-	width: 100%;
-	padding: 12px 4px;
-	box-sizing: border-box;
-`;
