@@ -41,13 +41,10 @@ const PostWrite = (props: PostWriteType) => {
 		<>
 			<Grid padding='16px'>
 				<Text size='36px'>게시글 작성</Text>
-				<Upload />
-			</Grid>
-			<Grid>
-				<Grid padding='16px'>
+				<Grid padding='16px 0px'>
 					<Text size='15px'>미리보기</Text>
 				</Grid>
-				<Image shape='rectangle' />
+				<Upload />
 			</Grid>
 			<Grid padding='16px'>
 				<TextArea

@@ -7,6 +7,7 @@ type ImageProps = {
 	callback?(): any;
 };
 
+const defaultImage = 'images/default-image.jpg';
 const Image = (props: ImageProps) => {
 	const { shape, src, size, callback } = props;
 	const styles = {
@@ -34,14 +35,15 @@ const AspectInner = styled.div<{ src?: string }>`
 	padding-top: 75%;
 	overflow: hidden;
 	background-image: url(${({ src }) => (src ? src : 'none')});
-	background-size: cover;
+	background-size: contain;
+	background-position: center center;
+	background-repeat: no-repeat;
 `;
 const ImageBox = styled.div<{ src?: string; size?: number }>`
 	--size: ${({ size }) => (size ? size + 'px' : '0px')};
 	width: var(--size);
 	height: var(--size);
 	border-radius: var(--size);
-	background-image: url(${({ src }) => (src ? src : 'none')});
-	background-size: cover;
+	background-image: url(${({ src }) => (src ? src : defaultImage)});
 	margin: 4px;
 `;
