@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import { getCookie } from './shared/Cookie';
 import PostWrite from './pages/PostWrite';
 import PostDetail from './pages/PostDetail';
+import TodoTemplate from './components/Template';
+import { createGlobalStyle } from 'styled-components';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -28,26 +30,35 @@ const App = () => {
 	}, [_isLogin, _isToken]);
 	return (
 		<>
-			<Grid>
-				<Header _isToken={_isToken} />
-				<Routes>
-					<Route path='/' element={<PostList />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/signup' element={<SignUp />} />
-					<Route path='/write' element={<PostWrite />} />
-					<Route path='/post/:id' element={<PostDetail />} />
-				</Routes>
-				{_isToken ? (
-					<FloatButton
-						callback={() => {
-							navigate('/write');
-							console.log('floatbutton click!!');
-						}}
-					/>
-				) : null}
-			</Grid>
+			<GlobalStyle />
+			<TodoTemplate>
+				<Grid>
+					<Header _isToken={_isToken} />
+					<Routes>
+						<Route path='/' element={<PostList />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/signup' element={<SignUp />} />
+						<Route path='/write' element={<PostWrite />} />
+						<Route path='/post/:id' element={<PostDetail />} />
+					</Routes>
+					{_isToken ? (
+						<FloatButton
+							callback={() => {
+								navigate('/write');
+								console.log('floatbutton click!!');
+							}}
+						/>
+					) : null}
+				</Grid>
+			</TodoTemplate>
 		</>
 	);
 };
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`;
 
 export default App;

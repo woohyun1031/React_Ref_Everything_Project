@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../shared/firebase';
 import moment from 'moment';
-import {RootState } from '../configStore';
+import {RootState} from '../configStore';
 
 export const addPost = createAsyncThunk(
 	'user/addPost',
@@ -19,11 +19,10 @@ export const addPost = createAsyncThunk(
 				comment_cnt: 0,
 				contents,
 				insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
-			}
-			console.log(user_info, post_info);
-			return
+			}			
 			const docRef = await addDoc(collection(db,'post'),{...user_info,...post_info});	
 			console.log(docRef);
+			return
 		} catch (error) {
 			console.log(error);
 		}
@@ -48,6 +47,26 @@ export const getPost = createAsyncThunk(
 			}			
 			)
 			return post_list
+		} catch (error) {
+			alert(`알 수 없는 오류: ${error}`);			 
+		}
+	}
+);
+
+export const getOnePost = createAsyncThunk(
+	'user/getOnePost',
+	async (postId:string) => {
+		try {
+			const docRef = doc(db, "post", postId);			
+			const postDB = await getDoc(docRef);	
+			let post_data;		
+			if (postDB.exists()) {
+				console.log("Document data:", postDB.data());				
+				post_data = postDB.data();
+			} else {				
+				console.log("No such document!");
+			}			
+			return post_data
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
