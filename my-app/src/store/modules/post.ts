@@ -4,6 +4,29 @@ import { db } from '../../shared/firebase';
 import moment from 'moment';
 import {RootState} from '../configStore';
 
+type PostDataType = {
+	user_name?: string;
+	user_profile?: string;
+	user_id?: string;
+	image_url?: string;
+	contents?: string;
+	comment_cnt?: number;
+	insert_dt?: string;
+};
+
+type PostType = {
+	id: string;
+	user_info: {
+		user_name?: string;
+		user_profile?: string;
+		user_id?: string;
+	};
+	image_url?: string;
+	contents?: string;
+	comment_cnt?: number;
+	insert_dt?: string;
+};
+
 export const addPost = createAsyncThunk(
 	'user/addPost',
 	async (contents : string, thunkAPI) => {
@@ -57,34 +80,27 @@ export const getOnePost = createAsyncThunk(
 	'user/getOnePost',
 	async (postId:string) => {
 		try {
-			const docRef = doc(db, "post", postId);			
-			const postDB = await getDoc(docRef);	
-			let post_data;		
+			//const docRef = doc(db, "post", postId);			
+			const postDB = await getDoc(doc(db, "post", postId));	
+			
+			let post_data : PostDataType = {};		
+
 			if (postDB.exists()) {
-				console.log("Document data:", postDB.data());				
 				post_data = postDB.data();
+				console.log(post_data);
 			} else {				
 				console.log("No such document!");
-			}			
-			return post_data
+			}
+			const {user_name,user_profile,user_id,image_url,contents,comment_cnt,insert_dt} = post_data; 		
+			const new_array = {user_info:{user_name,user_profile,user_id},image_url,contents,comment_cnt,insert_dt};			
+			console.log(new_array)
+			return new_array
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
 	}
 );
 
-type PostType = {
-	id: string;
-	user_info: {
-		user_name?: string;
-		user_profile?: string;
-		user_id?: string;
-	};
-	image_url?: string;
-	contents?: string;
-	comment_cnt?: number;
-	insert_dt?: string;
-};
 
 //initialState
 type initialStateType = {
