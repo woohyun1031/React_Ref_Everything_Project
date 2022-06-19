@@ -1,11 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { Button, Image } from '../elements/index';
-import { storage } from '../shared/firebase';
-import { ref, uploadBytes } from 'firebase/storage';
+import { Image } from '../elements/index';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/configStore';
-import { uploadImage } from '../store/modules/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/configStore';
+import { setPreviewUrl } from '../store/modules/image';
 
 type UploadProps = {};
 const defaultImage = 'images/default-image.jpg';
@@ -13,6 +11,7 @@ const defaultImage = 'images/default-image.jpg';
 const Upload = (props: UploadProps) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const fileRef = useRef<HTMLInputElement>(null);
+	const is_uploading = useSelector((state: RootState) => state.image.uploading);
 	const [isPreviewURL, setIsPreviewURL] = useState(defaultImage);
 
 	useEffect(() => {
@@ -28,26 +27,21 @@ const Upload = (props: UploadProps) => {
 		reader.onloadend = () => {
 			const csv = reader.result as string;
 			setIsPreviewURL(csv);
+			dispatch(setPreviewUrl(csv));
 		};
-	};
-
-	const uploadDB = () => {
-		if (!fileRef.current?.files) return;
-		const isImage = fileRef.current?.files[0];
-		dispatch(uploadImage(isImage));
 	};
 
 	return (
 		<>
 			<Image shape='rectangle' src={isPreviewURL} />
-			{/* <ImageLabel htmlFor='file' src={isPreviewURL} /> */}
+
 			<input
 				type='file'
 				id='file'
 				ref={fileRef}
 				onChange={handleFileOnChange}
+				disabled={!is_uploading}
 			/>
-			<Button text='UPLOAD' callback={uploadDB} />
 		</>
 	);
 };

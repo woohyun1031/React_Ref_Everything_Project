@@ -7,8 +7,6 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/configStore';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { async } from '@firebase/util';
-import { DocumentData } from 'firebase/firestore';
 
 type PostDetailType = {};
 

@@ -28,18 +28,18 @@ const Header = (props: HeaderProps) => {
 					<Grid>
 						<Text
 							size='24px'
+							margin='0px 10px'
 							bold
 							callback={() => {
 								navigate('/');
 							}}
 						>
-							안녕하세요
+							My Reference
 						</Text>
 					</Grid>
 
 					<Grid is_flex width='50%'>
 						<Button text='내정보' callback={() => {}} />
-						<Button text='알림' callback={() => {}} />
 						<Button
 							text='로그아웃'
 							callback={() => {

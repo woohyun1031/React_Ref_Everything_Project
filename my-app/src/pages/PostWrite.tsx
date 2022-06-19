@@ -1,16 +1,15 @@
 import { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Text, Button, Image, Upload, TextArea } from '../elements';
+import { Grid, Text, Button, Upload, TextArea } from '../elements';
 import { getCookie } from '../shared/Cookie';
-import { AppDispatch, RootState } from '../store/configStore';
+import { AppDispatch } from '../store/configStore';
 import { addPost } from '../store/modules/post';
 
 type PostWriteType = {};
 
 const PostWrite = (props: PostWriteType) => {
 	const dispatch = useDispatch<AppDispatch>();
-	const userInfo = useSelector((state: RootState) => state.user.user);
 	const navigate = useNavigate();
 	const _isToken = getCookie('isLogin') ? true : false;
 	const [isContents, setIsContents] = useState('');
@@ -19,9 +18,13 @@ const PostWrite = (props: PostWriteType) => {
 		setIsContents(e.target.value);
 	};
 
-	const onAddPost = () => {
-		console.log(userInfo);
-		dispatch(addPost(isContents));
+	const onAddPost = async () => {
+		try {
+			await dispatch(addPost(isContents));
+			navigate('/');
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	if (!_isToken) {
