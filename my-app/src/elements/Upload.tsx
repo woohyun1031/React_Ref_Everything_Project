@@ -3,11 +3,15 @@ import { Button, Image } from '../elements/index';
 import { storage } from '../shared/firebase';
 import { ref, uploadBytes } from 'firebase/storage';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/configStore';
+import { uploadImage } from '../store/modules/image';
 
 type UploadProps = {};
 const defaultImage = 'images/default-image.jpg';
 
 const Upload = (props: UploadProps) => {
+	const dispatch = useDispatch<AppDispatch>();
 	const fileRef = useRef<HTMLInputElement>(null);
 	const [isPreviewURL, setIsPreviewURL] = useState(defaultImage);
 
@@ -30,10 +34,7 @@ const Upload = (props: UploadProps) => {
 	const uploadDB = () => {
 		if (!fileRef.current?.files) return;
 		const isImage = fileRef.current?.files[0];
-		const storageRef = ref(storage, `images/${isImage.name}`);
-		uploadBytes(storageRef, isImage).then((snapshot) => {
-			console.log(snapshot);
-		});
+		dispatch(uploadImage(isImage));
 	};
 
 	return (
