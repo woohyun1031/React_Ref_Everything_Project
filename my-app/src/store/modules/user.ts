@@ -58,6 +58,7 @@ type initialStateType = {
 	},	
 	isLogin: boolean,
 }
+
 const initialState:initialStateType = {
 	user:{		
 		user_name: '',

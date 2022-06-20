@@ -1,9 +1,9 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Grid, Text, Button, Upload, TextArea } from '../elements';
 import { getCookie } from '../shared/Cookie';
-import { AppDispatch } from '../store/configStore';
+import { AppDispatch, RootState } from '../store/configStore';
 import { getOnePost, updatePost } from '../store/modules/post';
 
 type PostType = {
@@ -22,6 +22,7 @@ const PostUpdate = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 	const _isToken = getCookie('isLogin') ? true : false;
+	const isPreview = useSelector((state: RootState) => state.image.preview);
 	const { id: postId } = useParams();
 
 	const [isPostData, setIsPostData] = useState<PostType>();
@@ -33,7 +34,6 @@ const PostUpdate = () => {
 	useEffect(() => {
 		if (postId) {
 			dispatch(getOnePost(postId)).then((result) => {
-				console.log(result);
 				const new_post = result.payload as PostType;
 				setIsPostData(new_post);
 				setIsContents(new_post.contents);
@@ -44,12 +44,16 @@ const PostUpdate = () => {
 	const onUpdatePost = async () => {
 		try {
 			if (isContents && postId) {
-				const post_info = { isContents, postId };
-				await dispatch(updatePost(post_info));
-				navigate('/');
+				if (isPostData?.contents === isContents && isPreview === '') {
+					alert('변경된 것이 없다');
+				} else {
+					const post_info = { isContents, postId };
+					await dispatch(updatePost(post_info));
+					navigate('/');
+				}
 			}
 		} catch (error) {
-			console.log(error);
+			alert(error);
 		}
 	};
 

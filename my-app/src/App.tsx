@@ -19,8 +19,8 @@ import PostUpdate from './pages/PostUpdate';
 
 const App = () => {
 	const navigate = useNavigate();
-	const _isLogin = useSelector((state: RootState) => state.user.isLogin);
 	const _isToken = getCookie('isLogin') ? true : false;
+	const _isLogin = useSelector((state: RootState) => state.user.isLogin);
 
 	useEffect(() => {
 		if (_isToken) {
