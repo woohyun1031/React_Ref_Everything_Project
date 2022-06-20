@@ -22,11 +22,9 @@ const PostList = (props: PostListProps) => {
 		dispatch(getPost());
 	};
 
-	// useBottomScrollListener(() => {
-	// 	console.log('getPost');
-	// 	dispatch(getPost());
-	// 	console.log(post_list);
-	// });
+	useBottomScrollListener(() => {
+		dispatch(getPost());
+	});
 
 	return (
 		<div>
