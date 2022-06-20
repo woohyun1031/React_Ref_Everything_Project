@@ -14,13 +14,14 @@ const PostList = (props: PostListProps) => {
 
 	useEffect(() => {
 		console.log('render effect');
-		if (post_list.length === 0) {
-			dispatch(getPost());
-		}
+		console.log('render getPost');
+		dispatch(getPost());
 	}, []);
+
 	const onclick = () => {
 		dispatch(getPost());
 	};
+
 	// useBottomScrollListener(() => {
 	// 	console.log('getPost');
 	// 	dispatch(getPost());

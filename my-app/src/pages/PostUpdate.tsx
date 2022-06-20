@@ -49,7 +49,7 @@ const PostUpdate = () => {
 				} else {
 					const post_info = { isContents, postId };
 					await dispatch(updatePost(post_info));
-					navigate('/');
+					navigate(`/post/${postId}`);
 				}
 			}
 		} catch (error) {

@@ -50,17 +50,16 @@ export const image = createSlice({
   reducers:{    
 		uploadComplete : (state,actions) => {			
 			state.image_url = actions.payload
-			state.uploading = true;
-      console.log(state)
+      state.preview = ''
+			state.uploading = true;      
 		},
     uploading : (state) => {						
-			state.uploading = false;
-      console.log(state)
+			state.uploading = false;      
 		},
     setPreviewUrl : (state,actions) => {
-      state.preview = actions.payload			
-      console.log(state)
-    }
+      state.preview = actions.payload			      
+    },    
+
 
   },
 	},

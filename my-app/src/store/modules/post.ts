@@ -38,7 +38,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
 	list: [],
-	paging: { start: null, next: null, size: 1},
+	paging: { start: null, next: null, size: 2},
   is_loading: false,
 };
 
@@ -63,17 +63,15 @@ export const addPost = createAsyncThunk(
 	'user/addPost',
 	async(contents : string, thunkAPI) => {
 		try{
+			thunkAPI.dispatch(setPostInit())
 			const _user = thunkAPI.getState() as RootState
 			const storageRef = ref(storage, `images/${_user.user.user.user_id}_${new Date().getTime()}`);   						
 			await uploadString(storageRef, _user.image.preview, 'data_url')			
 			.then(async(snapshot) => {				
-
 				await getDownloadURL(snapshot.ref)
-				.then((downloadURL)=>{			
-				thunkAPI.dispatch(uploadComplete(downloadURL));   
+				.then((downloadURL)=>{							
 				return downloadURL
 				}).then(async(downloadURL)=>{
-
 					const user_info = {
 						user_name: _user.user.user?.user_name,
 						user_id : _user.user.user?.user_uid,
@@ -85,13 +83,12 @@ export const addPost = createAsyncThunk(
 						contents,
 						insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
 					}			
-				  await addDoc(collection(db,'post'),{...user_info,...post_info, image_url:downloadURL}).then(()=>{
+				  await addDoc(collection(db,'post'),{...user_info,...post_info, image_url:downloadURL})
+					.then(async()=>{
 					thunkAPI.dispatch(uploadComplete(downloadURL));	
-
 					});	
 				})								
-			})				
-			return 
+			})							
 		} catch (error) {
 			alert(error);
 		}
@@ -101,7 +98,8 @@ export const addPost = createAsyncThunk(
 export const updatePost = createAsyncThunk(
 	'user/updatePost',
 	async(new_post_info:{isContents:string, postId:string} , thunkAPI) => {
-		try{
+		try{			
+			thunkAPI.dispatch(setPostInit())
 			const _user = thunkAPI.getState() as RootState
 			if(_user.image.preview === ''){				
 				const updateRef = doc(db,'post',new_post_info.postId);			
@@ -121,8 +119,9 @@ export const updatePost = createAsyncThunk(
 						image_url:downloadURL,	
 						contents:new_post_info.isContents,
 					}
+					thunkAPI.dispatch(uploadComplete(downloadURL));	
 					const updateRef = doc(db,'post',new_post_info.postId);			
-					await updateDoc(updateRef,{...post_info})
+					await updateDoc(updateRef,{...post_info});
 				})})							
 			}
 		} 
@@ -162,7 +161,7 @@ export const getPost = createAsyncThunk(
 			const post_list: PostType[] = [];								
 			
 			const paging = {
-				start: postDB.docs[0],
+				start: postDB.docs[_paging.post.paging.size - 1],
 				next: postDB.docs.length === _paging.post.paging.size + 1 ? 
 				postDB.docs[postDB.docs.length - 1] : 
 				null,
@@ -183,7 +182,7 @@ export const getPost = createAsyncThunk(
 			
 			if(paging.next) post_list.pop();						
 
-			return {post_list,paging}
+			return {post_list, paging}
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
@@ -214,6 +213,10 @@ export const post = createSlice({
 	name: 'post',
 	initialState,
 	reducers: {
+		setPostInit:(state) => {
+			state.list = initialState.list;
+			state.paging = initialState.paging;
+		},
 		setPost: (state, action) => {
 			state.list.push(...action.payload.post_list)
 			state.paging = action.payload.paging;
@@ -232,10 +235,13 @@ export const post = createSlice({
 			}else {
 				state.list = [initialPost]
 			}			
+		});	
+		builder.addCase(updatePost.fulfilled, (state, action) => {
+				
 		});				
 	},
 	},
 );
 
-export const { setPost,loading } = post.actions;
+export const { setPostInit,setPost,loading, } = post.actions;
 export default post.reducer;
