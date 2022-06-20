@@ -1,12 +1,12 @@
-import { Grid } from '../elements';
+import { Button, Grid } from '../elements';
 import Post from '../components/Post';
 import CommentList from '../components/CommentList';
 import CommentWrite from '../components/CommentWrite';
 import { getOnePost } from '../store/modules/post';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/configStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/configStore';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type PostDetailType = {};
 
@@ -24,6 +24,8 @@ type PostType = {
 
 const PostDetail = (props: PostDetailType) => {
 	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
+	const isUserId = useSelector((state: RootState) => state.user.user.user_uid);
 	const { id: postId } = useParams();
 	const [isPostData, setIsPostData] = useState<PostType>();
 
@@ -39,6 +41,17 @@ const PostDetail = (props: PostDetailType) => {
 		<>
 			<Grid padding='16px'>
 				<Post {...isPostData} />
+				<Grid padding='16px' is_flex>
+					{isUserId === isPostData?.user_info?.user_id ? (
+						<Button
+							width='50px'
+							text='수정'
+							callback={() => {
+								navigate(`/update/${postId}`);
+							}}
+						/>
+					) : null}
+				</Grid>
 				<CommentWrite />
 				<CommentList />
 			</Grid>

@@ -23,7 +23,7 @@ const Post = (props: PostProps) => {
 				<Grid is_flex>
 					<Grid is_flex>
 						<Image shape={'circle'} src={user_info?.user_profile} size={60} />
-						<Text bold>{user_info?.user_id}</Text>
+						<Text bold>{user_info?.user_name}</Text>
 					</Grid>
 					<Text bold>{insert_dt}</Text>
 				</Grid>

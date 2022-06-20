@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc, doc, getDoc, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, getDoc, query, orderBy, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../shared/firebase';
 import moment from 'moment';
 import {RootState} from '../configStore';
@@ -70,6 +70,35 @@ export const addPost = createAsyncThunk(
 	}
 )
 
+export const updatePost = createAsyncThunk(
+	'user/updatePost',
+	async(contents : string, thunkAPI) => {
+		try{
+			const _user = thunkAPI.getState() as RootState
+			const storageRef = ref(storage, `images/${_user.user.user.user_id}_${new Date().getTime()}`);   						
+			await uploadString(storageRef, _user.image.preview, 'data_url')			
+			.then(async(snapshot) => {				
+				await getDownloadURL(snapshot.ref)
+				.then((downloadURL)=>{			
+				thunkAPI.dispatch(uploadComplete(downloadURL));   
+				return downloadURL
+				}).then(async(downloadURL)=>{
+					const post_info = {
+						image_url:downloadURL,										
+						contents,						
+					}
+					const updateRef = doc(db,'post',_user.user.user?.user_uid);			
+				  await updateDoc(updateRef,{...post_info}).then(()=>{					
+					});	
+				})								
+			})				
+			return 
+		} catch (error) {
+			console.log(error);
+		}
+	}
+)
+
 export const getPost = createAsyncThunk(
 	'user/getPost',
 	async () => {
@@ -101,12 +130,9 @@ export const getPost = createAsyncThunk(
 export const getOnePost = createAsyncThunk(
 	'user/getOnePost',
 	async (postId:string) => {
-		try {
-			//const docRef = doc(db, "post", postId);			
-			const postDB = await getDoc(doc(db, "post", postId));	
-			
-			let post_data : PostDataType = {};		
-
+		try {			
+			const postDB = await getDoc(doc(db, "post", postId));				
+			let post_data : PostDataType = {};
 			if (postDB.exists()) {
 				post_data = postDB.data();
 				console.log(post_data);

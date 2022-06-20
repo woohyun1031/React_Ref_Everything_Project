@@ -1,22 +1,28 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Image } from '../elements/index';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configStore';
 import { setPreviewUrl } from '../store/modules/image';
 
-type UploadProps = {};
+type UploadProps = {
+	isUpdate?: boolean;
+	isDefaultImage?: string;
+};
 const defaultImage = 'images/default-image.jpg';
 
 const Upload = (props: UploadProps) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const fileRef = useRef<HTMLInputElement>(null);
 	const is_uploading = useSelector((state: RootState) => state.image.uploading);
+
 	const [isPreviewURL, setIsPreviewURL] = useState(defaultImage);
 
 	useEffect(() => {
-		console.log(isPreviewURL);
-	}, [isPreviewURL]);
+		if (props.isUpdate && props.isDefaultImage) {
+			setIsPreviewURL(props.isDefaultImage);
+		}
+	}, [props]);
 
 	const handleFileOnChange = (event: ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
@@ -31,10 +37,24 @@ const Upload = (props: UploadProps) => {
 		};
 	};
 
+	if (props.isUpdate) {
+		return (
+			<>
+				<Image shape='rectangle' src={isPreviewURL} />
+				<input
+					type='file'
+					id='file'
+					ref={fileRef}
+					onChange={handleFileOnChange}
+					disabled={!is_uploading}
+				/>
+			</>
+		);
+	}
+
 	return (
 		<>
 			<Image shape='rectangle' src={isPreviewURL} />
-
 			<input
 				type='file'
 				id='file'
@@ -45,7 +65,7 @@ const Upload = (props: UploadProps) => {
 		</>
 	);
 };
-export default Upload;
+export default React.memo(Upload);
 
 const ImageLabel = styled.label<{ src: string }>`
 	background-image: url(${({ src }) => (src ? src : defaultImage)});

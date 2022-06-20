@@ -15,6 +15,7 @@ import PostWrite from './pages/PostWrite';
 import PostDetail from './pages/PostDetail';
 import TodoTemplate from './components/Template';
 import { createGlobalStyle } from 'styled-components';
+import PostUpdate from './pages/PostUpdate';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -39,6 +40,7 @@ const App = () => {
 						<Route path='/login' element={<Login />} />
 						<Route path='/signup' element={<SignUp />} />
 						<Route path='/write' element={<PostWrite />} />
+						<Route path='/update/:id' element={<PostUpdate />} />
 						<Route path='/post/:id' element={<PostDetail />} />
 					</Routes>
 					{_isToken ? (
