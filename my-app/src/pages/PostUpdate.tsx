@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Grid, Text, Button, Upload, TextArea } from '../elements';
 import { getCookie } from '../shared/Cookie';
 import { AppDispatch } from '../store/configStore';
-import { addPost, getOnePost } from '../store/modules/post';
+import { getOnePost, updatePost } from '../store/modules/post';
 
 type PostType = {
 	user_info?: {
@@ -43,8 +43,11 @@ const PostUpdate = () => {
 
 	const onUpdatePost = async () => {
 		try {
-			if (isContents) await dispatch(addPost(isContents));
-			navigate('/');
+			if (isContents && postId) {
+				const post_info = { isContents, postId };
+				await dispatch(updatePost(post_info));
+				navigate('/');
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -70,7 +73,6 @@ const PostUpdate = () => {
 				<Grid padding='16px 0px'>
 					<Text size='15px'>미리보기</Text>
 				</Grid>
-				{console.log(isPostData)}
 				<Upload isUpdate isDefaultImage={isPostData?.image_url} />
 			</Grid>
 			<Grid padding='16px'>

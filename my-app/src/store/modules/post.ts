@@ -72,7 +72,7 @@ export const addPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
 	'user/updatePost',
-	async(contents : string, thunkAPI) => {
+	async(new_post_info:{isContents:string, postId:string} , thunkAPI) => {
 		try{
 			const _user = thunkAPI.getState() as RootState
 			const storageRef = ref(storage, `images/${_user.user.user.user_id}_${new Date().getTime()}`);   						
@@ -84,10 +84,10 @@ export const updatePost = createAsyncThunk(
 				return downloadURL
 				}).then(async(downloadURL)=>{
 					const post_info = {
-						image_url:downloadURL,										
-						contents,						
+						image_url:downloadURL,	
+						contents:new_post_info.isContents,
 					}
-					const updateRef = doc(db,'post',_user.user.user?.user_uid);			
+					const updateRef = doc(db,'post',new_post_info.postId);			
 				  await updateDoc(updateRef,{...post_info}).then(()=>{					
 					});	
 				})								
