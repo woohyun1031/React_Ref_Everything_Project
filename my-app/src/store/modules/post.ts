@@ -38,7 +38,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
 	list: [],
-	paging: { start: null, next: null, size: 2},
+	paging: { start: null, next: null, size: 1},
   is_loading: false,
 };
 
@@ -137,33 +137,37 @@ export const getPost = createAsyncThunk(
 	async (_,thunkAPI) => {
 		try {	
 			let _paging = thunkAPI.getState() as RootState						
-			
-			// if(_paging.post.paging.start && !_paging.post.paging.next){
-			// 	return
-			// }
-			//thunkAPI.dispatch(loading(true));
-			
 			let post_query;
+			
+			if(_paging.post.paging.start && !_paging.post.paging.next) return
+			
+			thunkAPI.dispatch(loading(true));			
 
 			if(_paging.post.paging.start) {
 				post_query = query(
 					collection(db,'post'),
 					orderBy("insert_dt", "desc"),								
-					startAt(_paging.post.paging.start),
-					limit(_paging.post.paging.size + 1),
+					startAfter(_paging.post.paging.start),
+					limit(_paging.post.paging.size+1),
 				)	
 			} else {
 				post_query = query(
 					collection(db,'post'),
 					orderBy("insert_dt", "desc"),								
-					limit(_paging.post.paging.size + 1),
+					limit(_paging.post.paging.size+1),
 				);		
 			}
 			
 			const postDB = await getDocs(post_query);
-
-			const post_list: PostType[] = [];			
+			const post_list: PostType[] = [];								
 			
+			const paging = {
+				start: postDB.docs[0],
+				next: postDB.docs.length === _paging.post.paging.size + 1 ? 
+				postDB.docs[postDB.docs.length - 1] : 
+				null,
+				size: _paging.post.paging.size,
+			};
 
 			postDB.forEach((post)=> {
 				let _post = post.data();
@@ -176,15 +180,8 @@ export const getPost = createAsyncThunk(
 				post_list.push(new_post);
 			})
 
-			post_list.pop();
-
-			const paging = {
-        start: postDB.docs[0],
-        next: postDB.docs.length === _paging.post.paging.size + 1 ? postDB.docs[postDB.docs.length - 1] : null,
-        size: _paging.post.paging.size,
-      };
-
-			//thunkAPI.dispatch(setPost({post_list, paging}))
+			
+			if(paging.next) post_list.pop();						
 
 			return {post_list,paging}
 		} catch (error) {
