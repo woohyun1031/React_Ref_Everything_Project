@@ -1,12 +1,12 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store/configStore';
+import { getOnePost } from '../store/modules/post';
 import { Button, Grid } from '../elements';
 import Post from '../components/Post';
 import CommentList from '../components/CommentList';
 import CommentWrite from '../components/CommentWrite';
-import { getOnePost } from '../store/modules/post';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../store/configStore';
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 
 type PostDetailType = {};
 

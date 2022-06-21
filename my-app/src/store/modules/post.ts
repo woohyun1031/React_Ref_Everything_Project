@@ -140,7 +140,7 @@ export const getPost = createAsyncThunk(
 			
 			if(_paging.post.paging.start && !_paging.post.paging.next) return
 			
-			thunkAPI.dispatch(loading(true));			
+			thunkAPI.dispatch(loading());			
 
 			if(_paging.post.paging.start) {
 				post_query = query(
@@ -216,14 +216,15 @@ export const post = createSlice({
 		setPostInit:(state) => {
 			state.list = initialState.list;
 			state.paging = initialState.paging;
+			state.is_loading = false;	
 		},
 		setPost: (state, action) => {
 			state.list.push(...action.payload.post_list)
 			state.paging = action.payload.paging;
 			state.is_loading = false;
 		},
-		loading: (state, action) => {
-		 state.is_loading = action.payload
+		loading: (state) => {
+		 state.is_loading = true;
 		},
 	},
 	extraReducers: (builder) => {	
