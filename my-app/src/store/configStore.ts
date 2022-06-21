@@ -3,10 +3,11 @@ import logger from 'redux-logger';
 import user from './modules/user';
 import post from './modules/post';
 import image from './modules/image';
+import comment from './modules/comment';
 
 
 const store = configureStore({ 
-  reducer: {user,post,image},
+  reducer: {user,post,image,comment},
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

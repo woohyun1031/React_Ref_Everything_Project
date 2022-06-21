@@ -11,6 +11,7 @@ import CommentWrite from '../components/CommentWrite';
 type PostDetailType = {};
 
 type PostType = {
+	id?: string;
 	user_info?: {
 		user_name?: string;
 		user_profile?: string;

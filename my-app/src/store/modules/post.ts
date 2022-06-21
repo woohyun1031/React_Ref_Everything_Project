@@ -7,6 +7,7 @@ import { getDownloadURL, ref, uploadString, } from 'firebase/storage';
 import { uploadComplete } from './image';
 
 type PostDataType = {
+	[index:string] : string|number|undefined;
 	user_name?: string;
 	user_profile?: string;
 	user_id?: string;
@@ -17,8 +18,8 @@ type PostDataType = {
 };
 
 type PostType = {
-	id: string;
-	user_info: {
+id?: string;
+	user_info?: {
 		user_name?: string;
 		user_profile?: string;
 		user_id?: string;
@@ -138,7 +139,7 @@ export const getPost = createAsyncThunk(
 			let _paging = thunkAPI.getState() as RootState						
 			let post_query;
 			
-			if(_paging.post.paging.start && !_paging.post.paging.next) return
+			if(!_paging.post.paging.next && _paging.post.paging.start ) return alert('마지막 페이지 입니다')
 			
 			thunkAPI.dispatch(loading());			
 
@@ -181,8 +182,7 @@ export const getPost = createAsyncThunk(
 
 			
 			if(paging.next) post_list.pop();						
-
-			return {post_list, paging}
+			thunkAPI.dispatch(setPost({post_list, paging}))			
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
@@ -195,14 +195,31 @@ export const getOnePost = createAsyncThunk(
 		try {			
 			const postDB = await getDoc(doc(db, "post", postId));				
 			let post_data : PostDataType = {};
+
 			if (postDB.exists()) {
 				post_data = postDB.data();
 			} else {				
-				alert("No such document!");
-			}
-			const {user_name,user_profile,user_id,image_url,contents,comment_cnt,insert_dt} = post_data; 		
-			const new_array = {user_info:{user_name,user_profile,user_id},image_url,contents,comment_cnt,insert_dt};			
-			return new_array
+				return alert("No such document!");
+			}			
+
+			let isPost = Object.keys(post_data).reduce(
+				(acc, cur) => {
+					if (cur.indexOf("user_") !== -1) {
+						return {
+							...acc,
+							user_info: { ...acc.user_info, [cur]: post_data[cur] },
+						};
+					}
+					return { ...acc, [cur]: post_data[cur] };
+				},
+				{ id: postDB.id, user_info: {} }
+			);
+
+			//const { user_name,user_profile,user_id,image_url,contents,comment_cnt,insert_dt } = post_data; 		
+			//const new_array = {user_info:{user_name,user_profile,user_id},image_url,contents,comment_cnt,insert_dt};			
+			
+			//return new_array
+			return isPost
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
@@ -219,27 +236,21 @@ export const post = createSlice({
 			state.is_loading = false;	
 		},
 		setPost: (state, action) => {
-			state.list.push(...action.payload.post_list)
-			state.paging = action.payload.paging;
-			state.is_loading = false;
-		},
-		loading: (state) => {
-		 state.is_loading = true;
-		},
-	},
-	extraReducers: (builder) => {	
-		builder.addCase(getPost.fulfilled, (state, action) => {
 			if(action.payload){
 				state.list.push(...action?.payload?.post_list);
 				state.paging = {...action?.payload?.paging};
 				state.is_loading = false;	
 			}else {
 				state.list = [initialPost]
-			}			
-		});	
-		builder.addCase(updatePost.fulfilled, (state, action) => {
-				
-		});				
+			}		
+		},
+		loading: (state) => {
+		 state.is_loading = true;
+		},
+	},
+	extraReducers: (builder) => {	
+		builder.addCase(getPost.fulfilled, (state, action) => {});	
+		builder.addCase(updatePost.fulfilled, (state, action) => {});				
 	},
 	},
 );
