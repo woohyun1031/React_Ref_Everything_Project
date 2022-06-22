@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, Image, Text, Button } from '../elements/index';
 import { AppDispatch, RootState } from '../store/configStore';
@@ -20,8 +20,6 @@ const CommentList = (props: CommentListProps) => {
 	}, []);
 
 	if (!comment_list || !props.post_id) {
-		console.log(comment_list, 'comment_list');
-		console.log(props.post_id, 'props.post_id');
 		console.log('!comment_list || !props.post_id');
 		return null;
 	}
@@ -30,7 +28,6 @@ const CommentList = (props: CommentListProps) => {
 		<>
 			<Grid padding='16px'>
 				{comment_list.map((comment) => {
-					console.log(comment_list);
 					return <CommentItem key={comment.id} {...comment} />;
 				})}
 			</Grid>
@@ -38,4 +35,4 @@ const CommentList = (props: CommentListProps) => {
 	);
 };
 
-export default CommentList;
+export default React.memo(CommentList);

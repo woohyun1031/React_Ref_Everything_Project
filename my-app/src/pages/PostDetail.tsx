@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configStore';
@@ -7,6 +7,7 @@ import { Button, Grid } from '../elements';
 import Post from '../components/Post';
 import CommentList from '../components/CommentList';
 import CommentWrite from '../components/CommentWrite';
+import { addComment } from '../store/modules/comment';
 
 type PostDetailType = {};
 
@@ -27,8 +28,10 @@ const PostDetail = (props: PostDetailType) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 	const isUserId = useSelector((state: RootState) => state.user.user.user_uid);
+	const isLogin = useSelector((state: RootState) => state.user.isLogin);
 	const { id: postId } = useParams();
 	const [isPostData, setIsPostData] = useState<PostType>();
+	const [isContents, setIsContents] = useState('');
 
 	useEffect(() => {
 		if (postId)
@@ -37,6 +40,22 @@ const PostDetail = (props: PostDetailType) => {
 				setIsPostData(new_post);
 			});
 	}, []);
+
+	const changeContents = (e: ChangeEvent<HTMLInputElement>) => {
+		setIsContents(e.target.value);
+	};
+
+	const onAddComment = async () => {
+		if (isContents === '') {
+			alert('댓글을 입력해주세요!');
+			return;
+		}
+		if (postId) {
+			const comment_info = { post_id: postId, contents: isContents };
+			await dispatch(addComment(comment_info));
+			setIsContents('');
+		}
+	};
 
 	return (
 		<>
@@ -53,7 +72,13 @@ const PostDetail = (props: PostDetailType) => {
 						/>
 					) : null}
 				</Grid>
-				<CommentWrite post_id={postId} />
+				<CommentWrite
+					_isLogin={isLogin}
+					post_id={postId}
+					isContents={isContents}
+					_onChange={changeContents}
+					_onClick={onAddComment}
+				/>
 				<CommentList post_id={postId} />
 			</Grid>
 		</>

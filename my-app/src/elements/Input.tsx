@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Text, Grid } from './index';
 
 type InputProps = {
+	disable?: boolean;
 	width?: string;
 	name?: string;
 	type?: string;
@@ -13,7 +14,16 @@ type InputProps = {
 };
 
 const Input = (props: InputProps) => {
-	const { label, placeholder, callback, value, type, name, width } = props;
+	const {
+		label,
+		placeholder,
+		callback,
+		value,
+		type,
+		name,
+		width,
+		disable = false,
+	} = props;
 
 	return (
 		<>
@@ -25,6 +35,7 @@ const Input = (props: InputProps) => {
 					value={value}
 					placeholder={placeholder}
 					onChange={callback}
+					disabled={disable ? true : false}
 				/>
 			</Grid>
 		</>

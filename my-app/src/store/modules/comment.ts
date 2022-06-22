@@ -30,24 +30,24 @@ export const addComment = createAsyncThunk(
 	'user/addComment',
 	async (comment_info : {post_id : string, contents: string}, thunkAPI) => {
 		try {	
+      thunkAPI.dispatch(loading());
 		  const _user = thunkAPI.getState() as RootState
       let isComment = {
-      id:'',
-      post_id: comment_info.post_id,
-      user_id: _user.user.user.user_uid,
-      user_name: _user.user.user.user_name,
-      user_profile: _user.user.user.user_profile,
-      contents: comment_info.contents,
-      insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
+        id:'',
+        post_id: comment_info.post_id,
+        user_id: _user.user.user.user_uid,
+        user_name: _user.user.user.user_name,
+        user_profile: _user.user.user.user_profile,
+        contents: comment_info.contents,
+        insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
       }
       await addDoc(collection(db,'comment'),{...isComment})
       .then(async(isdoc)=>{
         isComment = {...isComment, id: isdoc.id};        
         const updateRef = doc(db,'post', comment_info.post_id);		
         await updateDoc(updateRef,{ comment_cnt : increment(1)});	
-
+        thunkAPI.dispatch(addCommentList(isComment))
         //const post = _user.post.list.find((l) => l.id === comment_info.post_id);
-        //thunkAPI.dispatch(addCommentList(isComment))
       })
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
@@ -84,11 +84,13 @@ export const comment = createSlice({
 	reducers: {
 		setCommentList:(state,action) => {
       state.comment_list = [...action.payload];
+      state.is_loading = false;
     },
 		addCommentList:(state,action) => {
       state.comment_list = [...state.comment_list,action.payload];
+      state.is_loading = false;
     },
-		loading:(state,action) => {
+		loading:(state) => {
       state.is_loading = true;
     },
 	},

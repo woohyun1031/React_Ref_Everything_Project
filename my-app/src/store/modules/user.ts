@@ -1,6 +1,7 @@
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword,updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut,updateProfile } from 'firebase/auth';
+import { userInfo } from 'os';
 import {deleteCookie,getCookie,setCookie} from '../../shared/Cookie'
 import {auth} from '../../shared/firebase'
 
@@ -48,6 +49,42 @@ export const signIn = createAsyncThunk(
 	}
 );
 
+export const getUserInfo = createAsyncThunk(
+	'user/getUserInfo',
+	async (_,thunkAPI) => {
+		try {
+			const user = auth.currentUser;
+			if(user) {
+				const userInfo = {
+					user_name: user.displayName,
+					user_id: user.email,	
+					user_profile: 'https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',	
+					user_uid: user.uid,
+				}
+				thunkAPI.dispatch(setUser(userInfo));	
+			}	else {
+				return;
+			}								
+		}
+		catch (error) {
+			return alert(`알 수 없는 오류: ${error}`);			
+		}
+	}
+);
+
+export const logoutDB = createAsyncThunk(
+	'user/logoutDB',
+	async (_,thunkAPI) => {
+		try {
+			signOut(auth).then(()=>{
+			thunkAPI.dispatch(logout());	
+			})
+		} catch (error) {
+			return alert(`알 수 없는 오류: ${error}`);			
+		}
+	}
+);
+
 //initialState
 type initialStateType = {
 	user: {		
@@ -85,11 +122,19 @@ export const user = createSlice({
 			console.log(`logout : ${state}`);
 		},
 		getUser : (state,actions) =>  {
+			state.user = {...actions.payload}
 			console.log(`getUser : ${state} ${actions}`);
 		},
 		setUser : (state,actions) => {
-			console.log(`setUser : ${state} ${actions}`);
-			state.user = actions.payload
+			console.log(`setUser : ${state} ${actions}`);			
+			setCookie('isLogin','login Token')						
+			state.user = {		
+				user_name: actions.payload.user_name,
+				user_id: actions.payload.user_id,
+				user_profile: actions.payload.user_profile,
+				user_uid: actions.payload.user_uid,
+			}
+			state.isLogin = true;		
 		}		
 	},
 	extraReducers: (builder) => {
@@ -108,9 +153,8 @@ export const user = createSlice({
 				user_profile: action.payload.user_profile,
 				user_uid: action.payload.user_uid,
 			}
-			state.isLogin = true;			
-			
-		});				
+			state.isLogin = true;						
+		});							
 	},
 })
 

@@ -1,48 +1,43 @@
-import { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { ChangeEvent } from 'react';
+import { useSelector } from 'react-redux';
 import { Grid, Text, Button, Image, Input } from '../elements/index';
-import { AppDispatch } from '../store/configStore';
-import { addComment } from '../store/modules/comment';
+import Spinner from '../elements/Spinner';
+import { RootState } from '../store/configStore';
 
 type CommentWriteProps = {
 	_isLogin?: boolean;
 	post_id?: string;
+	isContents?: string;
+	_onChange?(e: ChangeEvent<HTMLInputElement>): any;
+	_onClick?(): any;
 };
 
 const CommentWrite = (props: CommentWriteProps) => {
-	const [isContents, setIsContents] = useState('');
-	const dispatch = useDispatch<AppDispatch>();
-
-	const changeContents = (e: ChangeEvent<HTMLInputElement>) => {
-		setIsContents(e.target.value);
-	};
-
-	const onAddComment = () => {
-		if (isContents === '') {
-			alert('댓글을 입력해주세요!');
-			return;
-		}
-		if (props.post_id) {
-			const comment_info = { post_id: props.post_id, contents: isContents };
-			dispatch(addComment(comment_info));
-		}
-	};
-
+	const isLoading = useSelector((state: RootState) => state.comment.is_loading);
 	return (
 		<>
 			<Grid padding='16px' is_flex>
 				<Input
-					callback={changeContents}
+					callback={props._onChange}
 					width='100%'
-					placeholder='댓글을 입력해주세요'
-					value={isContents}
+					placeholder={
+						props._isLogin
+							? '댓글을 입력해주세요'
+							: '로그인이 필요한 서비스 입니다.'
+					}
+					value={props.isContents}
+					disable={!props._isLogin ? true : false}
 				/>
-				<Button
-					width='90px'
-					margin='0px 0px 0px 10px'
-					text='댓글 작성'
-					callback={onAddComment}
-				/>
+				{isLoading ? (
+					<Spinner type='inline' size={80} is_dim={false} />
+				) : props._isLogin ? (
+					<Button
+						width='90px'
+						margin='0px 0px 0px 10px'
+						text='댓글 작성'
+						callback={props._onClick}
+					/>
+				) : null}
 			</Grid>
 		</>
 	);

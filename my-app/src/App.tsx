@@ -7,8 +7,8 @@ import Login from './pages/Login';
 import Header from './components/Header';
 import SignUp from './pages/SignUp';
 
-import { useSelector } from 'react-redux';
-import { RootState } from './store/configStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './store/configStore';
 import { useEffect } from 'react';
 import { getCookie } from './shared/Cookie';
 import PostWrite from './pages/PostWrite';
@@ -16,25 +16,27 @@ import PostDetail from './pages/PostDetail';
 import TodoTemplate from './components/Template';
 import { createGlobalStyle } from 'styled-components';
 import PostUpdate from './pages/PostUpdate';
+import { getUserInfo } from './store/modules/user';
 
 const App = () => {
 	const navigate = useNavigate();
-	const _isToken = getCookie('isLogin') ? true : false;
+	const dispatch = useDispatch<AppDispatch>();
 	const _isLogin = useSelector((state: RootState) => state.user.isLogin);
 
 	useEffect(() => {
-		if (_isToken) {
+		dispatch(getUserInfo());
+		if (_isLogin) {
 			navigate('/');
 		} else {
 			console.log('notLogin');
 		}
-	}, [_isLogin, _isToken]);
+	}, [_isLogin]);
 	return (
 		<>
 			<GlobalStyle />
 			<TodoTemplate>
 				<Grid>
-					<Header _isToken={_isToken} />
+					<Header _isLogin={_isLogin} />
 					<Routes>
 						<Route path='/' element={<PostList />} />
 						<Route path='/login' element={<Login />} />
@@ -43,7 +45,7 @@ const App = () => {
 						<Route path='/update/:id' element={<PostUpdate />} />
 						<Route path='/post/:id' element={<PostDetail />} />
 					</Routes>
-					{_isToken ? (
+					{_isLogin ? (
 						<FloatButton
 							callback={() => {
 								navigate('/write');

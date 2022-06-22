@@ -1,11 +1,11 @@
 import { Grid, Text, Button } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { logout } from '../store/modules/user';
+import { logout, logoutDB } from '../store/modules/user';
 import { useDispatch } from 'react-redux';
 
 type HeaderProps = {
-	_isToken?: boolean | undefined;
+	_isLogin?: boolean | undefined;
 };
 
 const Header = (props: HeaderProps) => {
@@ -14,12 +14,12 @@ const Header = (props: HeaderProps) => {
 	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
-		if (props._isToken) {
+		if (props._isLogin) {
 			setIsLogin(true);
 		} else {
 			setIsLogin(false);
 		}
-	}, [props._isToken]);
+	}, [props._isLogin]);
 
 	if (isLogin) {
 		return (
@@ -43,7 +43,7 @@ const Header = (props: HeaderProps) => {
 						<Button
 							text='로그아웃'
 							callback={() => {
-								dispatch(logout());
+								logoutDB();
 								navigate('/login');
 							}}
 						/>
@@ -59,29 +59,42 @@ const Header = (props: HeaderProps) => {
 				<Grid>
 					<Text
 						size='24px'
+						margin='0px 10px'
 						bold
 						callback={() => {
 							navigate('/');
 						}}
 					>
-						안녕하세요
+						My Reference
 					</Text>
 				</Grid>
-
-				<Grid is_flex width='50%'>
-					<Button
-						text='로그인'
-						callback={() => {
-							navigate('/login');
-						}}
-					/>
-					<Button
-						text='회원가입'
-						callback={() => {
-							navigate('/signup');
-						}}
-					/>
-				</Grid>
+				{isLogin ? (
+					<Grid is_flex width='50%'>
+						<Button text='내정보' callback={() => {}} />
+						<Button
+							text='로그아웃'
+							callback={() => {
+								logoutDB();
+								navigate('/login');
+							}}
+						/>
+					</Grid>
+				) : (
+					<Grid is_flex width='50%'>
+						<Button
+							text='로그인'
+							callback={() => {
+								navigate('/login');
+							}}
+						/>
+						<Button
+							text='회원가입'
+							callback={() => {
+								navigate('/signup');
+							}}
+						/>
+					</Grid>
+				)}
 			</Grid>
 		</>
 	);
