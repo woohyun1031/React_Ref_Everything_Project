@@ -53,8 +53,8 @@ const PostDetail = (props: PostDetailType) => {
 						/>
 					) : null}
 				</Grid>
-				<CommentWrite />
-				<CommentList />
+				<CommentWrite post_id={postId} />
+				<CommentList post_id={postId} />
 			</Grid>
 		</>
 	);

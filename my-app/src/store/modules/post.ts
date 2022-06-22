@@ -146,7 +146,7 @@ export const getPost = createAsyncThunk(
 			if(_paging.post.paging.start) {
 				post_query = query(
 					collection(db,'post'),
-					orderBy("insert_dt", "desc"),								
+					orderBy("insert_dt","desc"),								
 					startAfter(_paging.post.paging.start),
 					limit(_paging.post.paging.size+1),
 				)	
@@ -169,7 +169,7 @@ export const getPost = createAsyncThunk(
 				size: _paging.post.paging.size,
 			};
 
-			postDB.forEach((post)=> {
+			postDB.forEach((post) => {
 				let _post = post.data();
 				let new_post = Object.keys(_post).reduce((acc, cur) => {
 					if(cur.indexOf('user_') !== -1) {
@@ -214,11 +214,7 @@ export const getOnePost = createAsyncThunk(
 				},
 				{ id: postDB.id, user_info: {} }
 			);
-
-			//const { user_name,user_profile,user_id,image_url,contents,comment_cnt,insert_dt } = post_data; 		
-			//const new_array = {user_info:{user_name,user_profile,user_id},image_url,contents,comment_cnt,insert_dt};			
-			
-			//return new_array
+				
 			return isPost
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 

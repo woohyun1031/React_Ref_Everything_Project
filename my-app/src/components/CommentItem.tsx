@@ -1,32 +1,33 @@
 import { Grid, Image, Text, Button } from '../elements/index';
 
 type CommentItemProps = {
+	id?: string;
 	user_profile?: string;
 	user_name?: string;
-	user_Id?: string;
-	post_Id?: string;
+	user_id?: string;
+	post_id?: string;
 	contents?: string;
-	insert_day?: string;
+	insert_dt?: string;
 };
 
 const CommentItem = (props: CommentItemProps) => {
-	const { user_profile, user_name, user_Id, post_Id, contents, insert_day } =
+	const { user_profile, user_name, user_id, post_id, contents, insert_dt } =
 		props;
 
 	return (
 		<>
-			<Grid border is_flex bg>
+			<Grid border is_flex bg margin='10px 0px'>
 				<Grid is_flex width='auto' bg>
-					<Image
-						src='https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg'
-						shape='circle'
-						size={30}
-					/>
-					<Text bold>userName</Text>
+					<Image src={user_profile} shape='circle' size={30} />
+					<Text bold>{user_name}</Text>
 				</Grid>
-				<Grid is_flex margin='0px 4px'>
-					<Text margin='0px'>isContents...</Text>
-					<Text margin='0px'>20xx-xx-xx-xxxx</Text>
+				<Grid is_flex margin='0px 4px' bg>
+					<Grid margin='0px 5px' padding='0px 5px'>
+						<Text margin='0px'>{contents}</Text>
+					</Grid>
+					<Grid padding='0px 5px'>
+						<Text margin='0px'>{insert_dt}</Text>
+					</Grid>
 				</Grid>
 			</Grid>
 		</>
