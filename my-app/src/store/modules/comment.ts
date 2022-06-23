@@ -46,8 +46,7 @@ export const addComment = createAsyncThunk(
         isComment = {...isComment, id: isdoc.id};        
         const updateRef = doc(db,'post', comment_info.post_id);		
         await updateDoc(updateRef,{ comment_cnt : increment(1)});	
-        thunkAPI.dispatch(addCommentList(isComment))
-        //const post = _user.post.list.find((l) => l.id === comment_info.post_id);
+        thunkAPI.dispatch(addCommentList(isComment))        
       })
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 

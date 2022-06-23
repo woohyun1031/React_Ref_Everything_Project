@@ -24,7 +24,7 @@ const Header = (props: HeaderProps) => {
 	if (isLogin) {
 		return (
 			<>
-				<Grid is_flex>
+				<Grid is_flex padding='16px'>
 					<Grid>
 						<Text
 							size='24px'
@@ -34,7 +34,7 @@ const Header = (props: HeaderProps) => {
 								navigate('/');
 							}}
 						>
-							My Reference
+							Ref everything
 						</Text>
 					</Grid>
 
@@ -65,7 +65,7 @@ const Header = (props: HeaderProps) => {
 							navigate('/');
 						}}
 					>
-						My Reference
+						Ref everything
 					</Text>
 				</Grid>
 				{isLogin ? (

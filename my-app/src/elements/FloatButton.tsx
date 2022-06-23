@@ -11,18 +11,18 @@ const FloatButton = (props: FloatButtonProps) => {
 export default FloatButton;
 
 const FloatButtonBox = styled.button`
-	width: 50px;
-	height: 50px;
-	border-radius: 50px;
+	width: 80px;
+	height: 80px;
+	border-radius: 80px;
 	text-align: center;
 	vertical-align: middle;
 	border: none;
 	background-color: #212121;
 	color: #ffffff;
 	box-sizing: border-box;
-	font-size: 36px;
+	font-size: 50px;
 	font-weight: 800;
 	position: fixed;
 	bottom: 50px;
-	right: 16px;
+	right: 20px;
 `;

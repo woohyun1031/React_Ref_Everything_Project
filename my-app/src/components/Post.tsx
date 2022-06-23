@@ -20,8 +20,8 @@ const Post = (props: PostProps) => {
 	const navigate = useNavigate();
 	return (
 		<>
-			<Grid>
-				<Grid is_flex>
+			<Grid border margin='10px 0px'>
+				<Grid is_flex padding='16px'>
 					<Grid is_flex>
 						<Image shape={'circle'} src={user_info?.user_profile} size={45} />
 						<Text bold>{user_info?.user_name}</Text>
@@ -29,7 +29,7 @@ const Post = (props: PostProps) => {
 					<Text bold>{insert_dt && displayDate(insert_dt)}</Text>
 				</Grid>
 
-				<Grid>
+				<Grid padding='16px'>
 					<Image
 						shape={'rectangle'}
 						src={image_url}

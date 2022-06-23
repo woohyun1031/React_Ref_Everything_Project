@@ -31,6 +31,7 @@ export default Image;
 const AspectOutter = styled.div`
 	width: 100%;
 	min-width: 250px;
+	cursor: pointer;
 `;
 const AspectInner = styled.div<{ src?: string }>`
 	position: relative;
