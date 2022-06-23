@@ -27,7 +27,7 @@ id?: string;
 	image_url?: string;
 	contents?: string;
 	comment_cnt?: number;
-	insert_dt?: string;
+	insert_dt?: number;
 };
 
 //initialState
@@ -55,7 +55,7 @@ const initialPost : PostType = {
 		'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1200px-Image_created_with_a_mobile_phone.png',
 	contents: 'contents가 들어가는 부분입니다 지금은 Post를 작성하고 있습니다',
 	comment_cnt: 10,
-	insert_dt: '2021-04-05',
+	insert_dt: 1655970741034,
 };
 
 const defaultImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXp7vG6vsG3u77s8fTCxsnn7O/f5OfFyczP09bM0dO8wMPk6ezY3eDd4uXR1tnJzdBvAX/cAAACVElEQVR4nO3b23KDIBRA0ShGU0n0//+2KmO94gWZ8Zxmr7fmwWEHJsJUHw8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwO1MHHdn+L3rIoK6eshsNJ8kTaJI07fERPOO1Nc1vgQm2oiBTWJ+d8+CqV1heplLzMRNonED+4mg7L6p591FC+133/xCRNCtd3nL9BlxWP++MOaXFdEXFjZ7r8D9l45C8y6aG0cWtP/SUGhs2d8dA/ZfGgrzYX+TVqcTNRRO9l+fS5eSYzQs85psUcuzk6igcLoHPz2J8gvzWaH/JLS+95RfOD8o1p5CU5R7l5LkfKEp0mQ1UX7hsVXqDpRrifILD/3S9CfmlUQFhQfuFu0STTyJ8gsP3PH7GVxN1FC4t2sbBy4TNRTu7LyHJbqaqKFw+/Q0ncFloo7CjRPwMnCWqKXQZ75El4nKC9dmcJaou9AXOE5UXbi+RGeJygrz8Uf+GewSn9uXuplnWDZJ7d8f24F/s6iq0LYf9olbS3Q8i5oKrRu4S9ybwaQ/aCkqtP3I28QDgeoK7TBya/aXqL5COx67PTCD2grtdOwH+pQV2r0a7YVBgZoKwwIVFQYG6ikMDVRTGByopjD8ATcKb0UhhRTe77sKs2DV7FKSjId18TUEBYVyLhUThWfILHTDqmI85/2RWWjcE/bhP6OD7maT3h20MHsA47JC3PsW0wcwLhv9t0OOPOIkCn21y2bXXwlyylxiYMPk1SuCSmpfK8bNQvIrpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwNX4BCbAju9/X67UAAAAASUVORK5CYII='
@@ -82,7 +82,8 @@ export const addPost = createAsyncThunk(
 						image_url:defaultImage,				
 						comment_cnt: 0,
 						contents,
-						insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
+						//insert_dt: moment().format('YYYY-MM-DD hh:mm:ss'),
+						insert_dt: Number(new Date()),
 					}			
 				  await addDoc(collection(db,'post'),{...user_info,...post_info, image_url:downloadURL})
 					.then(async()=>{
@@ -137,9 +138,12 @@ export const getPost = createAsyncThunk(
 	async (_,thunkAPI) => {
 		try {	
 			let _paging = thunkAPI.getState() as RootState						
-			let post_query;
-			
-			if(!_paging.post.paging.next && _paging.post.paging.start ) return alert('마지막 페이지 입니다')
+			let post_query;		
+			if(!_paging.post.paging.next && _paging.post.paging.start ){
+				return alert('마지막 페이지 입니다');
+			} else if (_paging.post.paging.start === undefined) {
+				return alert('마지막 페이지 입니다');
+			}
 			
 			thunkAPI.dispatch(loading());			
 
@@ -168,7 +172,7 @@ export const getPost = createAsyncThunk(
 				null,
 				size: _paging.post.paging.size,
 			};
-
+			console.log(paging)
 			postDB.forEach((post) => {
 				let _post = post.data();
 				let new_post = Object.keys(_post).reduce((acc, cur) => {

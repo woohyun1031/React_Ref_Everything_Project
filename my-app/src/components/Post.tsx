@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Grid, Image, Text } from '../elements/index';
+import { displayDate } from '../shared/common';
 
 type PostProps = {
 	id?: string;
@@ -11,7 +12,7 @@ type PostProps = {
 	image_url?: string;
 	contents?: string;
 	comment_cnt?: number;
-	insert_dt?: string;
+	insert_dt?: number;
 };
 
 const Post = (props: PostProps) => {
@@ -25,7 +26,7 @@ const Post = (props: PostProps) => {
 						<Image shape={'circle'} src={user_info?.user_profile} size={60} />
 						<Text bold>{user_info?.user_name}</Text>
 					</Grid>
-					<Text bold>{insert_dt}</Text>
+					<Text bold>{insert_dt && displayDate(insert_dt)}</Text>
 				</Grid>
 				<Grid>
 					<Image

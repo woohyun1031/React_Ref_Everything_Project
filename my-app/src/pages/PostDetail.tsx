@@ -21,7 +21,7 @@ type PostType = {
 	image_url?: string;
 	contents?: string;
 	comment_cnt?: number;
-	insert_dt?: string;
+	insert_dt?: number;
 };
 
 const PostDetail = (props: PostDetailType) => {
