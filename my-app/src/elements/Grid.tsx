@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 type GridProps = {
-	is_flex?: boolean | undefined;
-	width?: string | undefined;
-	padding?: string | undefined;
-	margin?: string | undefined;
-	bg?: boolean | undefined;
-	children?: any | undefined;
+	is_flex?: boolean;
+	width?: string;
+	padding?: string;
+	margin?: string;
+	bg?: boolean;
+	children?: any;
 	border?: boolean;
 };
 

@@ -33,10 +33,11 @@ const App = () => {
 	}, [_isLogin]);
 	return (
 		<>
+			<Header _isLogin={_isLogin} />
 			<GlobalStyle />
 			<TodoTemplate>
+				<Grid></Grid>
 				<Grid>
-					<Header _isLogin={_isLogin} />
 					<Routes>
 						<Route path='/' element={<PostList />} />
 						<Route path='/login' element={<Login />} />
