@@ -23,11 +23,12 @@ const Post = (props: PostProps) => {
 			<Grid>
 				<Grid is_flex>
 					<Grid is_flex>
-						<Image shape={'circle'} src={user_info?.user_profile} size={60} />
+						<Image shape={'circle'} src={user_info?.user_profile} size={45} />
 						<Text bold>{user_info?.user_name}</Text>
 					</Grid>
 					<Text bold>{insert_dt && displayDate(insert_dt)}</Text>
 				</Grid>
+
 				<Grid>
 					<Image
 						shape={'rectangle'}

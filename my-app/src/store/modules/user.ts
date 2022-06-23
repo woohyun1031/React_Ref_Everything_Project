@@ -5,6 +5,8 @@ import { userInfo } from 'os';
 import {deleteCookie,getCookie,setCookie} from '../../shared/Cookie'
 import {auth} from '../../shared/firebase'
 
+const userDafaultImgae = 'images/man_default_image.png';
+
 export const signUp = createAsyncThunk(
 	'user/signUp',
 	async (signUpInfo: { email: string; password: string; nickName: string},{ rejectWithValue }) => {
@@ -18,7 +20,7 @@ export const signUp = createAsyncThunk(
 			const userInfo = {
 				user_name: signUpInfo.nickName,
 				user_id: signUpInfo.email,	
-				user_profile: 'https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',	
+				user_profile: userDafaultImgae,	
 				user_uid: user.user.uid,
 			}			
 			return userInfo
@@ -38,7 +40,7 @@ export const signIn = createAsyncThunk(
 			const userInfo = {
 				user_name: user.user.displayName ? user.user.displayName : '',
 				user_id: user.user.email ? user.user.email : '',	
-				user_profile: 'https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',	
+				user_profile: userDafaultImgae,	
 				user_uid: user.user.uid,
 			}	
 			return userInfo
@@ -58,7 +60,7 @@ export const getUserInfo = createAsyncThunk(
 				const userInfo = {
 					user_name: user.displayName,
 					user_id: user.email,	
-					user_profile: 'https://static.remove.bg/remove-bg-web/6ad52d54336ad62d58e7bd1317d40fb98e377ad5/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg',	
+					user_profile: userDafaultImgae,	
 					user_uid: user.uid,
 				}
 				thunkAPI.dispatch(setUser(userInfo));	

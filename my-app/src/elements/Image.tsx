@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
 type ImageProps = {
-	shape?: string | undefined;
-	src?: string | undefined;
-	size?: number | undefined;
+	shape?: string;
+	src?: string;
+	size?: number;
 	callback?(): any;
+	margin?: string;
 };
 
 const defaultImage = 'images/default-image.jpg';
 const Image = (props: ImageProps) => {
-	const { shape, src, size, callback } = props;
+	const { shape, src, size, margin, callback } = props;
 	const styles = {
 		src,
 		size,
+		margin,
 	};
 	if (shape === 'circle') {
 		return <ImageBox {...styles}></ImageBox>;
@@ -39,11 +41,14 @@ const AspectInner = styled.div<{ src?: string }>`
 	background-position: center center;
 	background-repeat: no-repeat;
 `;
-const ImageBox = styled.div<{ src?: string; size?: number }>`
+const ImageBox = styled.div<{ src?: string; size?: number; margin?: string }>`
 	--size: ${({ size }) => (size ? size + 'px' : '0px')};
 	width: var(--size);
 	height: var(--size);
 	border-radius: var(--size);
 	background-image: url(${({ src }) => (src ? src : defaultImage)});
-	margin: 4px;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-right: 7px;
 `;
