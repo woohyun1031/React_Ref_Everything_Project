@@ -26,12 +26,13 @@ const SideBar = (props: SideProps) => {
 		<>
 			<SideBarWrap>
 				<SideUlist>
-					<SideList>😀😀sidebar</SideList>
-					<SideList>😀😀sidebar</SideList>
-					<SideList>😀😀sidebar</SideList>
-					<SideList>😀😀sidebar</SideList>
-					<SideList>😀😀sidebar</SideList>
-					<SideList>😀😀sidebar</SideList>
+					<SideList>🧇 sidebar</SideList>
+					<SideList>🤬 sidebar</SideList>
+					<SideList>👾 sidebar</SideList>
+					<SideList>🏜 sidebar</SideList>
+					<SideList>😀 sidebar</SideList>
+					<SideList>😀 sidebar</SideList>
+					<AddSideList>+ 추가하기</AddSideList>
 				</SideUlist>
 			</SideBarWrap>
 		</>
@@ -41,12 +42,14 @@ const SideBar = (props: SideProps) => {
 export default SideBar;
 
 const SideBarWrap = styled.aside`
-	width: 25%;
+	background-color: white;
+	width: 20%;
 	position: fixed;
 	top: 60px;
 	padding: 40px 0px;
 	height: 100%;
 	overflow: auto;
+	border-right: 1px solid #e9e9e9;
 `;
 
 const SideUlist = styled.ul`
@@ -56,4 +59,17 @@ const SideUlist = styled.ul`
 
 const SideList = styled.li`
 	padding: 8px 36px;
+	cursor: pointer;
+	:hover {
+		background: #e9e9e9;
+	}
+`;
+
+const AddSideList = styled.button`
+	width: 100%;
+	padding: 8px 26px;
+	cursor: pointer;
+	:hover {
+		background: #e9e9e9;
+	}
 `;

@@ -30,7 +30,7 @@ export default Image;
 
 const AspectOutter = styled.div`
 	width: 100%;
-	min-width: 250px;
+	min-width: 200px;
 	cursor: pointer;
 `;
 const AspectInner = styled.div<{ src?: string }>`

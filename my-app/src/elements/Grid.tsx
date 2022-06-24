@@ -54,7 +54,7 @@ const GridBox = styled.div<{
 	box-sizing: border-box;
 	padding: ${({ padding }) => (padding ? padding : '0px')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
-	background-color: ${({ bg }) => (bg ? 'white' : 'gray')};
+	background-color: ${({ bg }) => (bg ? 'white' : '#F8F8F8')};
 	border: ${({ border }) => (border ? '1px black solid' : 'none')};
 	display: ${({ is_flex }) => (is_flex ? 'flex' : 'block')};
 	${({ is_flex }) => (is_flex ? 'align-items: center' : '')};

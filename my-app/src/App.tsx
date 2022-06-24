@@ -38,7 +38,7 @@ const App = () => {
 			<GlobalStyle />
 			<Template>
 				<SideBar />
-				<Grid width='100%' margin='0% 0% 0% 25%'>
+				<Grid width='100%' margin='0% 0% 0% 20%'>
 					<Routes>
 						<Route path='/' element={<PostList />} />
 						<Route path='/login' element={<Login />} />
