@@ -1,20 +1,16 @@
 import styled from 'styled-components';
 
-type TodoTemplateProps = {
+type TemplateProps = {
 	children?: any;
 };
 
-const TodoTemplate = (props: TodoTemplateProps) => {
+const Template = (props: TemplateProps) => {
 	return <TodoTemplateBlock>{props.children}</TodoTemplateBlock>;
 };
 
 const TodoTemplateBlock = styled.div`
-	width: 512px;
-	padding: 30px;
-	background: white;
-	border-radius: 16px;
-	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.04);
-	margin: 100px auto; /* 페이지 중앙에 나타나도록 설정 */
+	display: flex;
+	position: relative;
 `;
 
-export default TodoTemplate;
+export default Template;

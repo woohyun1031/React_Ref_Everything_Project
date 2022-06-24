@@ -13,10 +13,11 @@ import { useEffect } from 'react';
 import { getCookie } from './shared/Cookie';
 import PostWrite from './pages/PostWrite';
 import PostDetail from './pages/PostDetail';
-import TodoTemplate from './components/Template';
+import Template from './components/Template';
 import { createGlobalStyle } from 'styled-components';
 import PostUpdate from './pages/PostUpdate';
 import { getUserInfo } from './store/modules/user';
+import SideBar from './components/SideBar';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -35,9 +36,9 @@ const App = () => {
 		<>
 			<Header _isLogin={_isLogin} />
 			<GlobalStyle />
-			<TodoTemplate>
-				<Grid></Grid>
-				<Grid>
+			<Template>
+				<SideBar />
+				<Grid width='100%' margin='0% 0% 0% 25%'>
 					<Routes>
 						<Route path='/' element={<PostList />} />
 						<Route path='/login' element={<Login />} />
@@ -55,7 +56,7 @@ const App = () => {
 						/>
 					) : null}
 				</Grid>
-			</TodoTemplate>
+			</Template>
 		</>
 	);
 };

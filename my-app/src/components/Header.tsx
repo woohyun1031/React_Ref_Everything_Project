@@ -26,8 +26,8 @@ const Header = (props: HeaderProps) => {
 		return (
 			<>
 				<HeaderBox>
-					<Grid is_flex padding='16px'>
-						<Grid>
+					<Grid is_flex padding='0px 16px'>
+						<Grid is_flex>
 							<Text
 								size='24px'
 								margin='0px 10px'
@@ -40,7 +40,7 @@ const Header = (props: HeaderProps) => {
 							</Text>
 						</Grid>
 
-						<Grid is_flex padding='5px' width='20%'>
+						<Grid is_flex padding='0px 5px' width='20%'>
 							<Button
 								text='내정보'
 								margin='0px 5px 0px 0px'
@@ -56,6 +56,7 @@ const Header = (props: HeaderProps) => {
 						</Grid>
 					</Grid>
 				</HeaderBox>
+				<HeaderPlaceHolder />
 			</>
 		);
 	}
@@ -64,7 +65,7 @@ const Header = (props: HeaderProps) => {
 		<>
 			<HeaderBox>
 				<Grid is_flex>
-					<Grid>
+					<Grid is_flex>
 						<Text
 							size='24px'
 							margin='0px 10px'
@@ -94,6 +95,7 @@ const Header = (props: HeaderProps) => {
 					</Grid>
 				</Grid>
 			</HeaderBox>
+			<HeaderPlaceHolder />
 		</>
 	);
 };
@@ -103,6 +105,12 @@ export default Header;
 const HeaderBox = styled.div`
 	position: fixed;
 	top: 0;
+	height: 61px;
 	width: 100%;
 	z-index: 9999;
+	border: 1px solid black;
+`;
+const HeaderPlaceHolder = styled.div`
+	height: 61px;
+	margin: 0px;
 `;

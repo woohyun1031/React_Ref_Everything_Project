@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 type GridProps = {
 	is_flex?: boolean;
+	position?: string;
 	width?: string;
 	padding?: string;
+	height?: string;
 	margin?: string;
 	bg?: boolean;
 	children?: any;
@@ -11,7 +13,17 @@ type GridProps = {
 };
 
 const Grid = (props: GridProps) => {
-	const { is_flex, width, padding, margin, bg, border, children } = props;
+	const {
+		is_flex,
+		width,
+		padding,
+		margin,
+		bg,
+		border,
+		children,
+		height,
+		position,
+	} = props;
 	const styles = {
 		is_flex,
 		width,
@@ -19,6 +31,8 @@ const Grid = (props: GridProps) => {
 		margin,
 		bg,
 		border,
+		height,
+		position,
 	};
 
 	return <GridBox {...styles}>{children}</GridBox>;
@@ -33,9 +47,10 @@ const GridBox = styled.div<{
 	margin?: string;
 	bg?: boolean;
 	border?: boolean;
+	height?: string;
 }>`
 	width: ${({ width }) => width};
-	height: 100%;
+	height: ${({ height }) => (height ? height : '100%')};
 	box-sizing: border-box;
 	padding: ${({ padding }) => (padding ? padding : '0px')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
