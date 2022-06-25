@@ -36,7 +36,7 @@ const Header = (props: HeaderProps) => {
 						<Grid is_flex bg>
 							<Text
 								size='24px'
-								margin='0px 10px'
+								margin='0px 26px'
 								bold
 								callback={() => {
 									navigate('/');
@@ -68,7 +68,7 @@ const Header = (props: HeaderProps) => {
 					<Grid is_flex bg>
 						<Text
 							size='24px'
-							margin='0px 10px'
+							margin='0px 26px'
 							bold
 							callback={() => {
 								navigate('/');

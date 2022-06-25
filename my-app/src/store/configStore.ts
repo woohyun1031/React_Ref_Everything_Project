@@ -5,10 +5,11 @@ import post from './modules/post';
 import image from './modules/image';
 import comment from './modules/comment';
 import component from './modules/component';
+import item from './modules/item';
 
 
 const store = configureStore({ 
-  reducer: {user,post,image,comment,component},
+  reducer: {user,post,image,comment,component,item},
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

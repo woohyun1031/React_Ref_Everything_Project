@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Grid, Image, Text, Button } from '../elements/index';
+import { AppDispatch } from '../store/configStore';
 import RefItem from './RefItem';
 
 type RefComponentsProps = {
@@ -10,7 +12,10 @@ type RefComponentsProps = {
 };
 
 const RefComponents = (props: RefComponentsProps) => {
-	const { component_title } = props;
+	const { component_title, id, user_id } = props;
+	const dispatch = useDispatch<AppDispatch>();
+
+	useEffect(() => {}, []);
 	return (
 		<>
 			<Grid padding='16px' margin='30px 0px' width='100%'>

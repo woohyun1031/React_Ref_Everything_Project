@@ -4,19 +4,18 @@ import { displayDate } from '../shared/common';
 
 type PostProps = {
 	id?: string;
-	user_info?: {
-		user_name?: string;
-		user_profile?: string;
-		user_id?: string;
-	};
+	component_id?: string;
 	image_url?: string;
+	item_url?: string;
+	title?: string;
 	contents?: string;
-	comment_cnt?: number;
 	insert_dt?: number;
 };
 
 const RefItem = (props: PostProps) => {
-	const { id, user_info, image_url, contents, comment_cnt, insert_dt } = props;
+	const { id, component_id, image_url, item_url, title, contents, insert_dt } =
+		props;
+	console.log(props);
 	const navigate = useNavigate();
 	const userDafaultImgae = 'images/man_default_image.png';
 	return (

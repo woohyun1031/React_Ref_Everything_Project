@@ -42,8 +42,6 @@ const App = () => {
 				<Grid width='100%' margin='0% 0% 0% 20%'>
 					<Routes>
 						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/signup' element={<SignUp />} />
 						<Route
 							path='/write'
 							element={_isLogin ? <PostWrite /> : <NotLogin />}
@@ -56,6 +54,8 @@ const App = () => {
 							path='/post/:id'
 							element={_isLogin ? <PostDetail /> : <NotLogin />}
 						/>
+						<Route path='/login' element={<Login />} />
+						<Route path='/signup' element={<SignUp />} />
 					</Routes>
 				</Grid>
 			</Template>
