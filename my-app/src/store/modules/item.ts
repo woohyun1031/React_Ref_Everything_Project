@@ -1,20 +1,17 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addDoc, collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import moment from 'moment';
 import { db } from '../../shared/firebase';
 import { RootState } from '../configStore';
 
-type listType = {
-  [index:string]:any;
-}
 //initialState
 type initialStateType = {
-	list: listType[];	
+	list: any;	
 	is_loading:boolean;
 };
 
 const initialState: initialStateType = {
-	list: [],	
+	list:{},	
   is_loading: false,
 };
 
@@ -28,11 +25,14 @@ export const getItem = createAsyncThunk(
         where('component_id','==', component_id)        
       );  
       const itemDB = await getDocs(item_query);   
-      const itemList : any = [];      
+      const itemList : any = [];   //[{},{},{}]   
       itemDB.forEach((item)=>{
         itemList.push({...item.data(),id:item.id})
       })
-      thunkAPI.dispatch(setItem(itemList))
+      const new_list = {[component_id] : itemList}
+      //const itemInfo = {...new_list};
+      //console.log(itemInfo)
+      thunkAPI.dispatch(setItem(new_list))      
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
@@ -42,8 +42,7 @@ export const getItem = createAsyncThunk(
 export const addItem = createAsyncThunk(
 	'component/addItem',
 	async (component_id:string ,thunkAPI) => {
-		try {	      
-      const _user = thunkAPI.getState() as RootState
+		try {	            
       let isItem = {
         id:'',
         component_id:component_id,
@@ -55,7 +54,11 @@ export const addItem = createAsyncThunk(
       }
       await addDoc(collection(db,'item'),{...isItem})
       .then(async(isdoc)=>{
-        thunkAPI.dispatch(addItemDone(isItem))    
+        isItem = {...isItem , id: isdoc.id}
+        const updateRef = doc(db,'item',isdoc.id);		
+        await updateDoc(updateRef, {id:isdoc.id});	        
+        const itemInfo = {isItem,component_id}
+        thunkAPI.dispatch(addItemDone(itemInfo))    
       })     
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
@@ -67,14 +70,14 @@ export const item = createSlice({
 	name: 'item',
 	initialState,
 	reducers: {
-		setItem: (state, action) => {			     
-      state.list[action.payload.component_id] = action.payload
+		setItem: (state, action) => {               
+      //state.list = action.payload.itemList;
+      state.list = {...state.list, ...action.payload};
       state.is_loading = false;
+      console.log(state)
 		},
     addItemDone:(state, action)=> {
-      state.list[action.payload.component_id] = [state.list[action.payload.component_id],action.payload]
-      console.log(state.list[action.payload.component_id])
-      console.log([state.list[action.payload.component_id],action.payload])
+      state.list[action.payload.component_id].push(action.payload.isItem)             
       state.is_loading = false;
     },
 		loading: (state) => {

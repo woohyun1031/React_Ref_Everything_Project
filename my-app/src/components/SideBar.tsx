@@ -23,7 +23,7 @@ const SideBar = (props: SideProps) => {
 						component_list ? (
 							component_list.map((component, index) => {
 								return (
-									<SideList>
+									<SideList key={component.id}>
 										<Text size='13px' bold>
 											{component.component_title}
 										</Text>

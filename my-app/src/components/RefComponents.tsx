@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Grid, Image, Text, Button } from '../elements/index';
-import { AppDispatch } from '../store/configStore';
+import { AppDispatch, RootState } from '../store/configStore';
+import { addItem, getItem } from '../store/modules/item';
 import RefItem from './RefItem';
 
 type RefComponentsProps = {
@@ -11,11 +12,24 @@ type RefComponentsProps = {
 	user_id?: string;
 };
 
+type listType = {
+	[index: string]: any;
+};
+
 const RefComponents = (props: RefComponentsProps) => {
 	const { component_title, id, user_id } = props;
+	const item_list = useSelector((state: RootState) => state.item.list);
 	const dispatch = useDispatch<AppDispatch>();
+	const [isItemList, setIsItemList] = useState();
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		if (id) dispatch(getItem(id));
+	}, []);
+
+	const onAddItem = async () => {
+		console.log(item_list);
+		if (id) await dispatch(addItem(id));
+	};
 	return (
 		<>
 			<Grid padding='16px' margin='30px 0px' width='100%'>
@@ -26,12 +40,11 @@ const RefComponents = (props: RefComponentsProps) => {
 				</Grid>
 				<Grid is_flex>
 					<RefItemWrap>
-						<RefItem />
-						<RefItem />
-						<RefItem />
-						<RefItem />
-						<RefItem />
+						{/* {item_list?.map((item, index) => {
+							return <RefItem key={item.id} {...item} />;
+						})} */}
 					</RefItemWrap>
+					<Button text='버튼' callback={onAddItem} />
 				</Grid>
 			</Grid>
 		</>
