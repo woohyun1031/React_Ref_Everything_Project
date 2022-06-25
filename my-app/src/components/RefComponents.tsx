@@ -3,17 +3,20 @@ import styled from 'styled-components';
 import { Grid, Image, Text, Button } from '../elements/index';
 import RefItem from './RefItem';
 
-type CommentListProps = {
-	post_id?: string;
+type RefComponentsProps = {
+	id?: string;
+	component_title?: string;
+	user_id?: string;
 };
 
-const RefComponents = (props: CommentListProps) => {
+const RefComponents = (props: RefComponentsProps) => {
+	const { component_title } = props;
 	return (
 		<>
-			<Grid padding='16px' margin='30px 0px' width='80%'>
+			<Grid padding='16px' margin='30px 0px' width='100%'>
 				<Grid padding='16px 5px' margin='5px 0px'>
 					<Text margin='0px' size='20px' bold>
-						👾 Components Title
+						{component_title}
 					</Text>
 				</Grid>
 				<Grid is_flex>

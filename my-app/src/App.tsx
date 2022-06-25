@@ -18,6 +18,7 @@ import { createGlobalStyle } from 'styled-components';
 import PostUpdate from './pages/PostUpdate';
 import { getUserInfo } from './store/modules/user';
 import SideBar from './components/SideBar';
+import NotLogin from './pages/NotLogin';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -37,24 +38,25 @@ const App = () => {
 			<Header _isLogin={_isLogin} />
 			<GlobalStyle />
 			<Template>
-				<SideBar />
+				<SideBar _isLogin={_isLogin} />
 				<Grid width='100%' margin='0% 0% 0% 20%'>
 					<Routes>
-						<Route path='/' element={<PostList />} />
+						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/signup' element={<SignUp />} />
-						<Route path='/write' element={<PostWrite />} />
-						<Route path='/update/:id' element={<PostUpdate />} />
-						<Route path='/post/:id' element={<PostDetail />} />
-					</Routes>
-					{_isLogin ? (
-						<FloatButton
-							callback={() => {
-								navigate('/write');
-								console.log('floatbutton click!!');
-							}}
+						<Route
+							path='/write'
+							element={_isLogin ? <PostWrite /> : <NotLogin />}
 						/>
-					) : null}
+						<Route
+							path='/update/:id'
+							element={_isLogin ? <PostUpdate /> : <NotLogin />}
+						/>
+						<Route
+							path='/post/:id'
+							element={_isLogin ? <PostDetail /> : <NotLogin />}
+						/>
+					</Routes>
 				</Grid>
 			</Template>
 		</>

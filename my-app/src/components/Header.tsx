@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { logout, logoutDB } from '../store/modules/user';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { AppDispatch } from '../store/configStore';
 
 type HeaderProps = {
 	_isLogin?: boolean | undefined;
@@ -11,7 +12,7 @@ type HeaderProps = {
 
 const Header = (props: HeaderProps) => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 	const [isLogin, setIsLogin] = useState(false);
 
 	useEffect(() => {
@@ -21,6 +22,11 @@ const Header = (props: HeaderProps) => {
 			setIsLogin(false);
 		}
 	}, [props._isLogin]);
+
+	const onLogout = async () => {
+		await dispatch(logoutDB());
+		navigate('/login');
+	};
 
 	if (isLogin) {
 		return (
@@ -46,13 +52,7 @@ const Header = (props: HeaderProps) => {
 								margin='0px 5px 0px 0px'
 								callback={() => {}}
 							/>
-							<Button
-								text='로그아웃'
-								callback={() => {
-									logoutDB();
-									navigate('/login');
-								}}
-							/>
+							<Button text='로그아웃' callback={onLogout} />
 						</Grid>
 					</Grid>
 				</HeaderBox>

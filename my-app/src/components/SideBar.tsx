@@ -1,9 +1,8 @@
-import { Grid, Text, Button } from '../elements/index';
+import { Text } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { logout, logoutDB } from '../store/modules/user';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { RootState } from '../store/configStore';
 
 type SideProps = {
 	_isLogin?: boolean | undefined;
@@ -12,27 +11,34 @@ type SideProps = {
 const SideBar = (props: SideProps) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const [isLogin, setIsLogin] = useState(false);
-
-	useEffect(() => {
-		if (props._isLogin) {
-			setIsLogin(true);
-		} else {
-			setIsLogin(false);
-		}
-	}, [props._isLogin]);
+	const component_list = useSelector(
+		(state: RootState) => state.component.list
+	);
 
 	return (
 		<>
 			<SideBarWrap>
 				<SideUlist>
-					<SideList>🧇 sidebar</SideList>
-					<SideList>🤬 sidebar</SideList>
-					<SideList>👾 sidebar</SideList>
-					<SideList>🏜 sidebar</SideList>
-					<SideList>😀 sidebar</SideList>
-					<SideList>😀 sidebar</SideList>
-					<AddSideList>+ 추가하기</AddSideList>
+					{props._isLogin ? (
+						component_list ? (
+							component_list.map((component, index) => {
+								return (
+									<SideList>
+										<Text size='13px' bold>
+											{component.component_title}
+										</Text>
+									</SideList>
+								);
+							})
+						) : (
+							<SideList>component가 존재하지 않습니다</SideList>
+						)
+					) : null}
+					{props._isLogin ? (
+						<AddSideList>+ 추가하기</AddSideList>
+					) : (
+						<SideList>🤬 Please login </SideList>
+					)}
 				</SideUlist>
 			</SideBarWrap>
 		</>

@@ -1,24 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs, addDoc, doc, getDoc, query, orderBy, updateDoc, limit, startAt, startAfter } from 'firebase/firestore';
-import { db, storage } from '../../shared/firebase';
-import moment from 'moment';
-import {RootState} from '../configStore';
-import { getDownloadURL, ref, uploadString, } from 'firebase/storage';
-import { uploadComplete } from './image';
-
-type ItemType = {
-  id?: string;
-  image_url?:string;
-  Item_url?:string;
-  title?:string;
-  contents?:string;
-  insert_dt?: string;  
-}
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
+import { db } from '../../shared/firebase';
+import { RootState } from '../configStore';
 
 type ComponentType = {
   id?: string;
   component_title?:string;
-  item_list?: ItemType[]
+  user_id?: string;  
 };
 
 //initialState
@@ -35,34 +23,33 @@ const initialState: initialStateType = {
 const userDefaultImgae = 'images/man_default_image.png';
 const ItemDefaultUrl = 'https://www.google.com/search?q=default+props&oq=default+props&aqs=chrome..69i57.2583j0j7&sourceid=chrome&ie=UTF-8'
 
-const initialComponent : ComponentType = {
-	id:'0',
-  component_title:'😀Components Title',
-  item_list: [
-    {
-      id:'abcdefghijklmnop',
-      image_url:userDefaultImgae,
-      Item_url:ItemDefaultUrl,
-      title:'Title',
-      contents:'간단한 설명이 적혀 있습니다.',
-      insert_dt: '20xx-xx-xx- hh:mm:ss',
-    },
-    {
-      id:'1234567890abcde',
-      image_url:userDefaultImgae,
-      Item_url:ItemDefaultUrl,
-      title:'Title',
-      contents:'간단한 설명이 적혀 있습니다.',
-      insert_dt: '20xx-xx-xx- hh:mm:ss',
-    }
-  ]
+const initialComponent : ComponentType= {
+	  id:'0',
+    component_title:'😀initialComponent Title', 
+    user_id:'initial user id'
 };
 
 export const getComponent = createAsyncThunk(
-	'user/getComponent',
+	'component/getComponent',
 	async (_,thunkAPI) => {
-		try {	
-		
+		try {	      
+      const _user = thunkAPI.getState() as RootState;
+			let post_query = query(
+				collection(db,'component'),
+				where('user_id','==', _user.user.user.user_uid),								
+			)	
+			const componentDB = await getDocs(post_query);
+      let componentList: ComponentType[] = [];
+      console.log(componentDB)
+      componentDB.forEach((component) => {
+				let _component = component.data();
+				let new_component = Object.keys(_component).reduce((acc, cur) => {
+					return {...acc, [cur]: _component[cur]}
+				},{id: component.id})
+				componentList.push(new_component);
+			})
+      console.log(componentList)
+      thunkAPI.dispatch(setComponents(componentList)); 
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
 		}
@@ -70,17 +57,12 @@ export const getComponent = createAsyncThunk(
 );
 
 export const component = createSlice({
-	name: 'post',
+	name: 'component',
 	initialState,
 	reducers: {
-		setPostInit:(state) => {
-			state.list = initialState.list;			
-			state.is_loading = false;	
-		},
-		setPost: (state, action) => {
-			if(action.payload){
-				state.list.push(...action?.payload?.post_list);				
-				state.is_loading = false;	
+		setComponents: (state, action) => {			
+      if(action.payload){
+        state.list = action.payload
 			}else {
 				state.list = [initialComponent]
 			}		
@@ -95,5 +77,5 @@ export const component = createSlice({
 	},
 );
 
-export const { setPostInit,setPost,loading, } = component.actions;
+export const { setComponents,loading, } = component.actions;
 export default component.reducer;
