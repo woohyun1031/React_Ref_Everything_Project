@@ -2,7 +2,8 @@ import { Text } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from '../store/configStore';
+import { AppDispatch, RootState } from '../store/configStore';
+import { addComponent } from '../store/modules/component';
 
 type SideProps = {
 	_isLogin?: boolean | undefined;
@@ -10,10 +11,14 @@ type SideProps = {
 
 const SideBar = (props: SideProps) => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useDispatch<AppDispatch>();
 	const component_list = useSelector(
 		(state: RootState) => state.component.list
 	);
+
+	const onAddComponent = () => {
+		dispatch(addComponent());
+	};
 
 	return (
 		<>
@@ -35,7 +40,7 @@ const SideBar = (props: SideProps) => {
 						)
 					) : null}
 					{props._isLogin ? (
-						<AddSideList>+ 추가하기</AddSideList>
+						<AddSideList onClick={onAddComponent}>+ 추가하기</AddSideList>
 					) : (
 						<SideList>🤬 Please login </SideList>
 					)}
@@ -49,7 +54,7 @@ export default SideBar;
 
 const SideBarWrap = styled.aside`
 	background-color: white;
-	width: 20%;
+	width: 15%;
 	position: fixed;
 	top: 60px;
 	padding: 40px 0px;

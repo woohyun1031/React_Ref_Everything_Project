@@ -70,8 +70,7 @@ export const item = createSlice({
 	name: 'item',
 	initialState,
 	reducers: {
-		setItem: (state, action) => {               
-      //state.list = action.payload.itemList;
+		setItem: (state, action) => {                     
       state.list = {...state.list, ...action.payload};
       state.is_loading = false;
       console.log(state)

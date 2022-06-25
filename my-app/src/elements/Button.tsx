@@ -4,13 +4,15 @@ type ButtonProps = {
 	text?: string;
 	callback?(): any;
 	width?: string;
+	height?: string;
 	margin?: string;
 };
 
 const Button = (props: ButtonProps) => {
-	const { text, callback, width, margin } = props;
+	const { text, callback, width, height, margin } = props;
 	const styles = {
 		width,
+		height,
 		margin,
 	};
 	return (
@@ -22,12 +24,18 @@ const Button = (props: ButtonProps) => {
 
 export default Button;
 
-const ButtonBox = styled.button<{ width?: string; margin?: string }>`
+const ButtonBox = styled.button<{
+	width?: string;
+	height?: string;
+	margin?: string;
+}>`
 	width: ${({ width }) => (width ? width : '100%')};
+	height: ${({ height }) => (height ? height : '80%')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
-	background-color: #212121;
+	background-color: #738cff;
 	color: #ffffff;
 	padding: 12px 0px;
 	box-sizing: border-box;
 	border: none;
+	border-radius: 10px;
 `;

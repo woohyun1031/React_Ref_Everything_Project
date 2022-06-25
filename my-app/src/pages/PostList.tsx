@@ -31,11 +31,11 @@ const PostList = () => {
 					return <RefComponents key={component.id} {...component} />;
 				})}
 			</PostListWrap>
-			{isLoading ? (
+			{/* {isLoading ? (
 				<Spinner type='inline' size={80} is_dim={false} />
 			) : (
 				<Button callback={onClick} text={'더 보기'} />
-			)}
+			)} */}
 		</>
 	);
 };

@@ -39,7 +39,7 @@ const App = () => {
 			<GlobalStyle />
 			<Template>
 				<SideBar _isLogin={_isLogin} />
-				<Grid width='100%' margin='0% 0% 0% 20%'>
+				<Grid width='100%' margin='0% 0% 0% 15%'>
 					<Routes>
 						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
 						<Route

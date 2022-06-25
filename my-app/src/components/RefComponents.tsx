@@ -6,6 +6,16 @@ import { AppDispatch, RootState } from '../store/configStore';
 import { addItem, getItem } from '../store/modules/item';
 import RefItem from './RefItem';
 
+type ItemType = {
+	id?: string;
+	component_id?: string;
+	image_url?: string;
+	item_url?: string;
+	title?: string;
+	contents?: string;
+	insert_dt?: number;
+};
+
 type RefComponentsProps = {
 	id?: string;
 	component_title?: string;
@@ -20,7 +30,6 @@ const RefComponents = (props: RefComponentsProps) => {
 	const { component_title, id, user_id } = props;
 	const item_list = useSelector((state: RootState) => state.item.list);
 	const dispatch = useDispatch<AppDispatch>();
-	const [isItemList, setIsItemList] = useState();
 
 	useEffect(() => {
 		if (id) dispatch(getItem(id));
@@ -40,11 +49,19 @@ const RefComponents = (props: RefComponentsProps) => {
 				</Grid>
 				<Grid is_flex>
 					<RefItemWrap>
-						{/* {item_list?.map((item, index) => {
-							return <RefItem key={item.id} {...item} />;
-						})} */}
+						{id
+							? item_list[id]?.map((item: ItemType) => {
+									return <RefItem key={item.id} {...item} />;
+							  })
+							: null}
+						<Button
+							width='200px'
+							height='60px'
+							margin='10px'
+							text='버튼'
+							callback={onAddItem}
+						/>
 					</RefItemWrap>
-					<Button text='버튼' callback={onAddItem} />
 				</Grid>
 			</Grid>
 		</>

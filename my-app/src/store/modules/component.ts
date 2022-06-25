@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../shared/firebase';
 import { RootState } from '../configStore';
 
@@ -56,6 +56,31 @@ export const getComponent = createAsyncThunk(
 	}
 );
 
+export const addComponent = createAsyncThunk(
+	'component/addComponent',
+	async (_,thunkAPI) => {
+		try {	            
+			const _user = thunkAPI.getState() as RootState;
+			const user_id = _user.user.user.user_uid;		
+
+      let isComponent = {
+        id:'',
+   			component_title:'😀addComponent Title', 
+   			user_id:user_id
+      }
+      await addDoc(collection(db,'component'),{...isComponent})
+      .then(async(isdoc)=>{
+        isComponent = {...isComponent , id: isdoc.id}
+        const updateRef = doc(db,'component',isdoc.id);		
+        await updateDoc(updateRef, {id:isdoc.id});	                
+        thunkAPI.dispatch(addComponentDone(isComponent))    
+      })     
+		} catch (error) {
+			alert(`알 수 없는 오류: ${error}`);			 
+		}
+	}
+);
+
 export const component = createSlice({
 	name: 'component',
 	initialState,
@@ -67,8 +92,11 @@ export const component = createSlice({
 				state.list = [initialComponent]
 			}		
 			state.is_loading = false;
-		}
-		,
+		},
+		addComponentDone: (state,action) => {
+			state.list.push(action.payload)
+			state.is_loading = false;
+		},		
 		loading: (state) => {
 		 state.is_loading = true;
 		},
@@ -79,5 +107,5 @@ export const component = createSlice({
 	},
 );
 
-export const { setComponents,loading } = component.actions;
+export const { setComponents,addComponentDone,loading } = component.actions;
 export default component.reducer;
