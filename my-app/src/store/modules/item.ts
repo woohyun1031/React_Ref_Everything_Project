@@ -1,8 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice,} from '@reduxjs/toolkit';
 import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
-import moment from 'moment';
 import { db } from '../../shared/firebase';
-import { RootState } from '../configStore';
 
 //initialState
 type initialStateType = {
@@ -30,8 +28,6 @@ export const getItem = createAsyncThunk(
         itemList.push({...item.data(),id:item.id})
       })
       const new_list = {[component_id] : itemList}
-      //const itemInfo = {...new_list};
-      //console.log(itemInfo)
       thunkAPI.dispatch(setItem(new_list))      
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 
@@ -72,8 +68,7 @@ export const item = createSlice({
 	reducers: {
 		setItem: (state, action) => {                     
       state.list = {...state.list, ...action.payload};
-      state.is_loading = false;
-      console.log(state)
+      state.is_loading = false;      
 		},
     addItemDone:(state, action)=> {
       state.list[action.payload.component_id].push(action.payload.isItem)             

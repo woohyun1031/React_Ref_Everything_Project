@@ -48,4 +48,5 @@ const PostListWrap = styled.div`
 	justify-content: flex-start;
 	flex-wrap: wrap;
 	padding: 16px;
+	margin-bottom: 300px;
 `;

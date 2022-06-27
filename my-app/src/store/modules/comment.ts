@@ -64,15 +64,12 @@ export const getComment = createAsyncThunk(
         orderBy("insert_dt", "desc"),		
       );       
       const commentDB = await getDocs(comment_query);   
-      console.log(commentDB,'commentDB')   
       const commentList : any = [];      
       commentDB.forEach((comment)=> {
         commentList.push({...comment.data(),id:comment.id})
       })
-      console.log(commentList,'commentList')   
       thunkAPI.dispatch(setCommentList(commentList))
 		} catch (error) {
-			console.log(`알 수 없는 오류: ${error}`);			 
 		}
 	}
 );

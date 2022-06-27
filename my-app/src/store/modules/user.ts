@@ -13,7 +13,6 @@ export const signUp = createAsyncThunk(
 		try {
 			const user  = await createUserWithEmailAndPassword(auth, signUpInfo.email, signUpInfo.password);					
 			if(auth.currentUser) {
-				console.log(auth.currentUser,signUpInfo.nickName)	
 				await updateProfile(auth.currentUser,{
 					displayName: signUpInfo.nickName
 				})
@@ -37,7 +36,6 @@ export const signIn = createAsyncThunk(
 	async (signInInfo: { email: string; password: string},{ rejectWithValue }) => {
 		try {
 			const user = await signInWithEmailAndPassword(auth, signInInfo.email, signInInfo.password);
-			console.log(user,"user");
 			const userInfo = {
 				user_name: user.user.displayName ? user.user.displayName : '',
 				user_id: user.user.email ? user.user.email : '',	
@@ -64,7 +62,6 @@ export const getUserInfo = createAsyncThunk(
 					user_profile: userDafaultImgae,	
 					user_uid: user.uid,
 				}
-				console.log(userInfo);
 				thunkAPI.dispatch(setUser(userInfo));	
 			}	else {
 				return;
@@ -123,14 +120,11 @@ export const user = createSlice({
 				user_uid: '',
 			};
 			state.isLogin = false;
-			console.log(`logout : ${state}`);
 		},
 		getUser : (state,actions) =>  {
 			state.user = {...actions.payload}
-			console.log(`getUser : ${state} ${actions}`);
 		},
 		setUser : (state,actions) => {
-			console.log(`setUser : ${state} ${actions}`);			
 			setCookie('isLogin','login Token')						
 			state.user = {		
 				user_name: actions.payload.user_name,
@@ -143,7 +137,6 @@ export const user = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(signUp.fulfilled, (state, action) => {
-			console.log(action,'signUp.fulfilled');
 			setCookie('isLogin','login Token')			
 			if(action.payload)			
 			state.user = {		
@@ -155,7 +148,6 @@ export const user = createSlice({
 			state.isLogin = true;			
 		});
 		builder.addCase(signIn.fulfilled, (state, action) => {
-			console.log(action,'signIn.fulfilled');
 			setCookie('isLogin','login Token')						
 			state.user = {		
 				user_name: action.payload.user_name,

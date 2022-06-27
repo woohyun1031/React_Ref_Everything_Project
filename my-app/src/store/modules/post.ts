@@ -171,8 +171,7 @@ export const getPost = createAsyncThunk(
 				postDB.docs[postDB.docs.length - 1] : 
 				null,
 				size: _paging.post.paging.size,
-			};
-			console.log(paging)
+			};			
 			postDB.forEach((post) => {
 				let _post = post.data();
 				let new_post = Object.keys(_post).reduce((acc, cur) => {
