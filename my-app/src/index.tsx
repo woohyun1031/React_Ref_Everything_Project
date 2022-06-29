@@ -4,6 +4,8 @@ import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import GlobalStyle from './styles/GlobalStyle';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
 
 import App from './App';
 import store from './store/configStore';
@@ -16,7 +18,9 @@ root.render(
 	<Provider store={store}>
 		<BrowserRouter>
 			<GlobalStyle />
-			<App />
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
 		</BrowserRouter>
 	</Provider>
 );
