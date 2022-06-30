@@ -56,9 +56,11 @@ const RefComponents = (props: RefComponentsProps) => {
 							: null}
 						<Button
 							width='200px'
-							height='60px'
+							height='80px'
 							margin='10px'
-							text='버튼'
+							text='+'
+							font_size='25px'
+							is_bold
 							callback={onAddItem}
 						/>
 					</RefItemWrap>

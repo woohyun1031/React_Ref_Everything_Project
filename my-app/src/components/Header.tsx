@@ -49,7 +49,7 @@ const Header = (props: HeaderProps) => {
 						<Grid is_flex padding='0px 5px' width='20%' bg>
 							<Button
 								text='내정보'
-								margin='0px 5px 0px 0px'
+								margin='0px 10px 0px 0px'
 								callback={() => {}}
 							/>
 							<Button text='로그아웃' callback={onLogout} />

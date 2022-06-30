@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 type GridProps = {
+	is_shadow?: boolean;
 	is_flex?: boolean;
 	position?: string;
 	width?: string;
@@ -14,6 +15,7 @@ type GridProps = {
 
 const Grid = (props: GridProps) => {
 	const {
+		is_shadow,
 		is_flex,
 		width,
 		padding,
@@ -25,6 +27,7 @@ const Grid = (props: GridProps) => {
 		position,
 	} = props;
 	const styles = {
+		is_shadow,
 		is_flex,
 		width,
 		padding,
@@ -41,6 +44,7 @@ const Grid = (props: GridProps) => {
 export default Grid;
 
 const GridBox = styled.div<{
+	is_shadow?: boolean;
 	is_flex?: boolean;
 	width?: string;
 	padding?: string;
@@ -56,6 +60,8 @@ const GridBox = styled.div<{
 	margin: ${({ margin }) => (margin ? margin : '0px')};
 	background-color: ${({ bg }) => (bg ? 'white' : '#F8F8F8')};
 	border: ${({ border }) => (border ? '1px black solid' : 'none')};
+	${({ is_shadow }) =>
+		is_shadow ? 'box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);' : ''};
 	display: ${({ is_flex }) => (is_flex ? 'flex' : 'block')};
 	${({ is_flex }) => (is_flex ? 'align-items: center' : '')};
 	${({ is_flex }) => (is_flex ? 'justify-content: space-between' : '')};

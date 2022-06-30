@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { Grid, Image, Text } from '../elements/index';
 import { displayDate } from '../shared/common';
 
@@ -19,7 +20,7 @@ const RefItem = (props: PostProps) => {
 	const userDafaultImgae = 'images/man_default_image.png';
 	return (
 		<>
-			<Grid margin='10px' width='200px' height='80px' bg is_flex>
+			<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
 				<Grid bg padding='10px'>
 					<Image shape={'circle'} src={image_url} size={35} />
 				</Grid>
@@ -35,3 +36,7 @@ const RefItem = (props: PostProps) => {
 };
 
 export default RefItem;
+
+const RefItemBox = styled.div`
+	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+`;
