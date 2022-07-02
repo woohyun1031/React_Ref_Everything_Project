@@ -10,24 +10,16 @@ const ModalSlice = createSlice({
 	name: 'modal',
 	initialState,
 	reducers: {
-		openModal(state, action: PayloadAction<
-			| 'isSignIn'
-			| 'isSignUp'
-			| 'addItem'
-			| 'addComponent'
-		>) {
+		openModal(state, action: PayloadAction<'addItem'|'addComponent'>) {
 			state.isOpen = true;
 			state.type = action.payload;
 		},
 		closeModal(state) {
 			state.isOpen = false;
 		},
-		changeClassId(state, action: PayloadAction<string>) {
-			state.classId = action.payload;
-		},
 	},
 });
 
-export const { openModal, closeModal, changeClassId } = ModalSlice.actions;
+export const { openModal, closeModal, } = ModalSlice.actions;
 
 export default ModalSlice.reducer;

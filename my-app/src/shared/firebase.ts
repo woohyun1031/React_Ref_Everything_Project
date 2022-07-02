@@ -15,13 +15,13 @@ import { getAnalytics } from "firebase/analytics";
  //  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
  //};
 const firebaseConfig = {
-  apiKey: "AIzaSyDg0Cu89IxaHtDb0dvKNKqTFk-qYxO1XoQ",
-  authDomain: "react-insta-d782a.firebaseapp.com",
-  projectId: "react-insta-d782a",
-  storageBucket: "react-insta-d782a.appspot.com",
-  messagingSenderId: "543689064922",
-  appId: "1:543689064922:web:04d28719de92ee251100e3",
-  measurementId: "G-58G5SJYLKN"
+  apiKey: "AIzaSyC3VLHMya1t8IDWdTkMLBNnNng1uZowWc8",
+  authDomain: "ref-evething-project.firebaseapp.com",
+  projectId: "ref-evething-project",
+  storageBucket: "ref-evething-project.appspot.com",
+  messagingSenderId: "427359463818",
+  appId: "1:427359463818:web:9d5227b131ebf341860073",
+  measurementId: "G-1B4HH9B8BM"
 };
 
 // Initialize Firebase

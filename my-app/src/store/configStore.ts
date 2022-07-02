@@ -6,10 +6,11 @@ import image from './modules/image';
 import comment from './modules/comment';
 import component from './modules/component';
 import item from './modules/item';
+import modal from './modules/modal';
 
 
 const store = configureStore({ 
-  reducer: {user,post,image,comment,component,item},
+  reducer: {user,post,image,comment,component,item,modal},
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
