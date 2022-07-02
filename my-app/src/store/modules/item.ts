@@ -37,24 +37,25 @@ export const getItem = createAsyncThunk(
 
 export const addItem = createAsyncThunk(
 	'component/addItem',
-	async (component_id:string ,thunkAPI) => {
-		try {	            
+	async (postInfo:{title:string,contents:string,address:string,postId:string} ,thunkAPI) => {
+		try {
+      const component_id = postInfo.postId;        
       let isItem = {
         id:'',
         component_id:component_id,
-        title:'Title',        
-        contents: '간단한 내용이 들어갑니다',
+        title:postInfo.title,        
+        contents: postInfo.contents,
         insert_dt: Number(new Date()),
-        image_url:'image/man_default_image.png',
-        item_url:'https://www.google.com/search?q=default+props&oq=default+props&aqs=chrome..69i57.2583j0j7&sourceid=chrome&ie=UTF-8',        
+        image_url:`http://www.google.com/s2/favicons?domain=${postInfo.address}`,
+        item_url:postInfo.address,        
       }
       await addDoc(collection(db,'item'),{...isItem})
       .then(async(isdoc)=>{
         isItem = {...isItem , id: isdoc.id}
         const updateRef = doc(db,'item',isdoc.id);		
-        await updateDoc(updateRef, {id:isdoc.id});	        
-        const itemInfo = {isItem,component_id}
-        thunkAPI.dispatch(addItemDone(itemInfo))    
+        await updateDoc(updateRef, {id:isdoc.id});	                
+        const itemInfo = {isItem, component_id};        
+        thunkAPI.dispatch(addItemDone(itemInfo));           
       })     
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);			 

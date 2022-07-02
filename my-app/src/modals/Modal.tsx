@@ -12,15 +12,7 @@ const Modal = () => {
 	const dispatch = useDispatch();
 	const modal = useSelector((state: RootState) => state.modal);
 	let contents;
-	let isCanClose = false;
-
-	useEffect(() => {
-		if (['addItem'].includes(modal.type)) {
-			isCanClose = false;
-		} else {
-			isCanClose = true;
-		}
-	}, [modal.type, modal.isOpen]);
+	let isCanClose = true;
 
 	switch (modal.type) {
 		case 'addItem':

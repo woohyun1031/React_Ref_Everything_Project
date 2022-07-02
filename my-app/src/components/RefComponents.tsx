@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Grid, Image, Text, Button } from '../elements/index';
 import { AppDispatch, RootState } from '../store/configStore';
 import { addItem, getItem } from '../store/modules/item';
-import { openModal } from '../store/modules/modal';
+import { changePostId, openModal } from '../store/modules/modal';
 import RefItem from './RefItem';
 
 type ItemType = {
@@ -38,6 +38,7 @@ const RefComponents = (props: RefComponentsProps) => {
 
 	const onAddItem = async () => {
 		console.log(item_list);
+		if (id) dispatch(changePostId(id));
 		dispatch(openModal('addItem'));
 		//if (id) await dispatch(addItem(id));
 	};

@@ -1,36 +1,57 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { AppDispatch, RootState } from '../store/configStore';
+import { addItem } from '../store/modules/item';
+import { closeModal } from '../store/modules/modal';
 import ModalCloseButton from './ModalCloseButton';
 
 const AddItem = () => {
-	const [input, setInput] = useState('');
+	const dispatch = useDispatch<AppDispatch>();
+	const [inputs, setInputs] = useState({
+		title: '',
+		contents: '',
+		address: '',
+	});
+	const postId = useSelector((state: RootState) => state.modal);
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInput(e.target.value);
+		const { name, value } = e.target;
+		setInputs({ ...inputs, [name]: value });
 	};
 
-	const onAddClick = async () => {
-		if (window.confirm('Add?')) {
-			console.log('isaddclick');
-		}
-	};
-
-	const hendleCheckEnter = (e: KeyboardEvent<HTMLFormElement>) => {
-		if (e.key === 'Enter') {
-			onAddClick();
+	const onAddClick = async (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		console.log('isaddclick', postId, inputs);
+		const postInfo = { ...inputs, postId: postId.postId };
+		if (
+			inputs.address === '' ||
+			inputs.contents === '' ||
+			inputs.title === ''
+		) {
+			return alert('빈 칸을 모두 채우세요');
+		} else {
+			await dispatch(addItem(postInfo));
+			dispatch(closeModal());
 		}
 	};
 
 	return (
-		<Form onKeyPress={hendleCheckEnter}>
+		<Form>
 			<ModalCloseButton />
 			<FormTitle>Add Item</FormTitle>
 			<FormDescription>
-				Add버튼을 누르시면 <br /> Add가 완료됩니다
+				Add버튼을 누르시면 <br /> Item이 Add 됩니다
 			</FormDescription>
-			<Label htmlFor='text'>Add</Label>
-			<Input type='text' id='text' onChange={handleChange} />
-			<Button onClick={() => onAddClick}>Add</Button>
+			<InputBox>
+				<Label htmlFor='address'>address</Label>
+				<Input type='text' name='address' onChange={handleChange} />
+				<Label htmlFor='title'>title</Label>
+				<Input type='text' name='title' onChange={handleChange} />
+				<Label htmlFor='contents'>contents</Label>
+				<Input type='text' name='contents' onChange={handleChange} />
+			</InputBox>
+			<Button onClick={onAddClick}>Add</Button>
 		</Form>
 	);
 };
@@ -39,7 +60,7 @@ export default AddItem;
 
 const Form = styled.form`
 	width: 460px;
-	height: 360px;
+	height: 510px;
 	font-size: 12px;
 	padding: 60px 100px;
 	color: #000000;
@@ -55,16 +76,21 @@ const FormDescription = styled.p`
 	margin-bottom: 30px;
 `;
 
+const InputBox = styled.div`
+	margin-bottom: 20px;
+`;
+
 const Label = styled.label``;
 
 const Input = styled.input`
 	width: 265px;
-	height: 38px;
+	height: 30px;
 	border-radius: 7px;
 	padding: 12px;
-	background-color: #718aff;
-	margin-top: 10px;
-	margin-bottom: 20px;
+	background-color: #ffffff;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	border: 1px solid gray;
 `;
 
 const Button = styled.button`
@@ -73,10 +99,10 @@ const Button = styled.button`
 	border-radius: 7px;
 	background-color: #718aff;
 	/* &:hover {
-		background-color: #9CAEFF;
+		background-color: #9caeff;
 	}
 	&:active {
-		background-color:#4F66D2;
+		background-color: #4f66d2;
 	} */
 	color: #ffffff;
 	font-weight: bold;

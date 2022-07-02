@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import PostList from './pages/PostList';
 
-import { Grid, FloatButton } from './elements/index';
+import { Grid } from './elements/index';
 
 import Login from './pages/Login';
 import Header from './components/Header';
@@ -10,7 +10,6 @@ import SignUp from './pages/SignUp';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './store/configStore';
 import { useEffect } from 'react';
-import { getCookie } from './shared/Cookie';
 import PostWrite from './pages/PostWrite';
 import PostDetail from './pages/PostDetail';
 import Template from './components/Template';
@@ -19,6 +18,8 @@ import PostUpdate from './pages/PostUpdate';
 import { getUserInfo } from './store/modules/user';
 import SideBar from './components/SideBar';
 import NotLogin from './pages/NotLogin';
+import Modal from './modals/Modal';
+import { closeModal } from './store/modules/modal';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -28,6 +29,7 @@ const App = () => {
 	useEffect(() => {
 		dispatch(getUserInfo());
 		if (_isLogin) {
+			dispatch(closeModal());
 			navigate('/');
 		} else {
 			console.log('notLogin');
@@ -59,6 +61,7 @@ const App = () => {
 					</Routes>
 				</Grid>
 			</Template>
+			<Modal />
 		</>
 	);
 };
