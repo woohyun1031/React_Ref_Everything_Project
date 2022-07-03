@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
-import { addComponent } from '../store/modules/component';
+import { addComponent, changeComponentId } from '../store/modules/component';
+import { MouseEvent } from 'react';
 
 type SideProps = {
 	_isLogin?: boolean | undefined;
@@ -20,6 +21,12 @@ const SideBar = (props: SideProps) => {
 		dispatch(addComponent());
 	};
 
+	const scrollClick = (component_id: string | undefined) => {
+		if (component_id) {
+			dispatch(changeComponentId(component_id));
+		}
+	};
+
 	return (
 		<>
 			<SideBarWrap>
@@ -29,7 +36,12 @@ const SideBar = (props: SideProps) => {
 							component_list.map((component, index) => {
 								return (
 									<SideList key={component.id}>
-										<Text size='13px' bold>
+										<Text
+											size='13px'
+											bold
+											color='#585858'
+											callback={() => scrollClick(component.id)}
+										>
 											{component.component_title}
 										</Text>
 									</SideList>
@@ -69,6 +81,7 @@ const SideUlist = styled.ul`
 `;
 
 const SideList = styled.li`
+	margin-bottom: 15px;
 	padding: 8px 36px;
 	cursor: pointer;
 	:hover {

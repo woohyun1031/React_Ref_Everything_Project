@@ -5,7 +5,7 @@ type TextProps = {
 	color?: string;
 	size?: string;
 	margin?: string;
-	callback?(): any;
+	callback?(event?: any): any;
 	children?: any;
 };
 

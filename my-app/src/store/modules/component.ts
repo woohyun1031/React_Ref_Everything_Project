@@ -13,11 +13,13 @@ type ComponentType = {
 type initialStateType = {
 	list: ComponentType[];	
 	is_loading:boolean;
+	is_location:string;
 };
 
 const initialState: initialStateType = {
 	list: [],	
   is_loading: false,
+	is_location:'',
 };
 
 const initialComponent : ComponentType= {
@@ -100,6 +102,9 @@ export const component = createSlice({
 		loading: (state) => {
 		 state.is_loading = true;
 		},
+		changeComponentId:(state,action) => {
+			state.is_location = action.payload
+		}
 	},
 	extraReducers: (builder) => {	
 		builder.addCase(getComponent.fulfilled, (state, action) => {});			
@@ -107,5 +112,5 @@ export const component = createSlice({
 	},
 );
 
-export const { setComponents,addComponentDone,loading } = component.actions;
+export const { setComponents,addComponentDone,loading,changeComponentId } = component.actions;
 export default component.reducer;

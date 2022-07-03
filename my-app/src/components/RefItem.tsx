@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Grid, Image, Text } from '../elements/index';
 import { displayDate } from '../shared/common';
+import { RootState } from '../store/configStore';
 
 type PostProps = {
 	id?: string;
@@ -24,13 +27,13 @@ const RefItem = (props: PostProps) => {
 			<RefItemBox href={item_url} target='_blank' rel='noopener noreferrer'>
 				<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
 					<Grid bg padding='10px'>
-						<Image shape={'circle'} src={image_url} size={35} />
+						<Image shape={'profile_rectangle'} src={image_url} size={30} />
 					</Grid>
 					<Grid bg padding='10px'>
-						<Text size='13px' margin='5px 0px' bold>
+						<Text size='8px' margin='5px 0px' bold>
 							{title}
 						</Text>
-						<Text size='10px'>{contents}</Text>
+						<Text size='5px'>{contents}</Text>
 					</Grid>
 				</Grid>
 			</RefItemBox>

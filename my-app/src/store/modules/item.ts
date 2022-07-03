@@ -5,12 +5,12 @@ import { db } from '../../shared/firebase';
 //initialState
 type initialStateType = {
 	list: any;	
-	is_loading:boolean;
+	is_loading:boolean;  
 };
 
 const initialState: initialStateType = {
 	list:{},	
-  is_loading: false,
+  is_loading: false,  
 };
 
 
