@@ -19,12 +19,11 @@ const RefItem = (props: PostProps) => {
 		props;
 	const navigate = useNavigate();
 	const userDafaultImgae = 'images/man_default_image.png';
-
 	return (
 		<>
 			<RefItemBox>
 				<Link
-					to={{ pathname: item_url ? item_url : 'https://www.google.com/' }}
+					to={item_url ? `externalLink/${item_url}` : 'https://www.google.com/'}
 					target='_blank'
 					rel='noopener noreferrer'
 				>

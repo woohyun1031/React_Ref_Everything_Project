@@ -20,6 +20,7 @@ import SideBar from './components/SideBar';
 import NotLogin from './pages/NotLogin';
 import Modal from './modals/Modal';
 import { closeModal } from './store/modules/modal';
+import RedirectPage from './components/RedirectPage';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -56,6 +57,7 @@ const App = () => {
 							path='/post/:id'
 							element={_isLogin ? <PostDetail /> : <NotLogin />}
 						/>
+						<Route path='/externalLink/:id' element={<RedirectPage />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/signup' element={<SignUp />} />
 					</Routes>
