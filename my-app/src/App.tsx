@@ -38,8 +38,8 @@ const App = () => {
 	}, [_isLogin]);
 	return (
 		<>
-			<Header _isLogin={_isLogin} />
 			<GlobalStyle />
+			<Header _isLogin={_isLogin} />
 			<Template>
 				<SideBar _isLogin={_isLogin} />
 				<Grid width='100%' margin='0% 0% 0% 15%'>

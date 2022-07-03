@@ -1,5 +1,4 @@
 import { createPortal } from 'react-dom';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/configStore';
 import { closeModal } from '../store/modules/modal';
@@ -44,14 +43,14 @@ const Background = styled.div`
 	position: fixed;
 	left: 0;
 	right: 0;
-	top: 0;
 	bottom: 0;
+	top: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(5px);
-	z-index: 1000;
+	z-index: 10000;
 `;
 
 const Contents = styled.div`

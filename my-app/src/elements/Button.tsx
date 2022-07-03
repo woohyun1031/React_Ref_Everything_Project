@@ -7,17 +7,28 @@ type ButtonProps = {
 	height?: string;
 	margin?: string;
 	font_size?: string;
+	font_color?: string;
 	is_bold?: boolean;
 };
 
 const Button = (props: ButtonProps) => {
-	const { text, callback, width, height, margin, font_size, is_bold } = props;
+	const {
+		text,
+		callback,
+		width,
+		height,
+		margin,
+		font_size,
+		is_bold,
+		font_color,
+	} = props;
 	const styles = {
 		width,
 		height,
 		margin,
 		font_size,
 		is_bold,
+		font_color,
 	};
 	return (
 		<ButtonBox {...styles} onClick={callback}>
@@ -33,6 +44,7 @@ const ButtonBox = styled.button<{
 	height?: string;
 	margin?: string;
 	font_size?: string;
+	font_color?: string;
 	is_bold?: boolean;
 }>`
 	width: ${({ width }) => (width ? width : '100%')};
@@ -41,10 +53,16 @@ const ButtonBox = styled.button<{
 	font-size: ${({ font_size }) => (font_size ? font_size : '10px')};
 	font-weight: ${({ is_bold }) => (is_bold ? '600' : '400')};
 	background-color: #ffffff;
-	color: #738cff;
+	color: ${({ font_color }) => (font_color ? font_color : '#738cff')};
 	padding: 12px 0px;
 	box-sizing: border-box;
 	border: none;
 	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
-	border-radius: 10px;
+	:hover {
+		background-color: #f4f4f4;
+	}
+	:active {
+		background-color: #e1e1e1;
+	}
+	//border-radius: 10px;
 `;
