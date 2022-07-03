@@ -21,24 +21,18 @@ const RefItem = (props: PostProps) => {
 	const userDafaultImgae = 'images/man_default_image.png';
 	return (
 		<>
-			<RefItemBox>
-				<Link
-					to={item_url ? `externalLink/${item_url}` : 'https://www.google.com/'}
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
-						<Grid bg padding='10px'>
-							<Image shape={'circle'} src={image_url} size={35} />
-						</Grid>
-						<Grid bg padding='10px'>
-							<Text size='13px' margin='5px 0px' bold>
-								{title}
-							</Text>
-							<Text size='10px'>{contents}</Text>
-						</Grid>
+			<RefItemBox href={item_url} target='_blank' rel='noopener noreferrer'>
+				<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
+					<Grid bg padding='10px'>
+						<Image shape={'circle'} src={image_url} size={35} />
 					</Grid>
-				</Link>
+					<Grid bg padding='10px'>
+						<Text size='13px' margin='5px 0px' bold>
+							{title}
+						</Text>
+						<Text size='10px'>{contents}</Text>
+					</Grid>
+				</Grid>
 			</RefItemBox>
 		</>
 	);
@@ -46,6 +40,7 @@ const RefItem = (props: PostProps) => {
 
 export default RefItem;
 
-const RefItemBox = styled.div`
+const RefItemBox = styled.a`
+	text-decoration: none;
 	cursor: pointer;
 `;
