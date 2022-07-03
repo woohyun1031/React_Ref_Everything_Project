@@ -35,13 +35,11 @@ const SideBar = (props: SideProps) => {
 						component_list ? (
 							component_list.map((component, index) => {
 								return (
-									<SideList key={component.id}>
-										<Text
-											size='13px'
-											bold
-											color='#585858'
-											callback={() => scrollClick(component.id)}
-										>
+									<SideList
+										key={component.id}
+										onClick={() => scrollClick(component.id)}
+									>
+										<Text size='13px' bold color='#585858'>
 											{component.component_title}
 										</Text>
 									</SideList>
