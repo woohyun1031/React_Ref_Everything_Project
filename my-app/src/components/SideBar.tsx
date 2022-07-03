@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
 import { addComponent, changeComponentId } from '../store/modules/component';
-import { MouseEvent } from 'react';
+import { openModal } from '../store/modules/modal';
 
 type SideProps = {
 	_isLogin?: boolean | undefined;
@@ -18,7 +18,7 @@ const SideBar = (props: SideProps) => {
 	);
 
 	const onAddComponent = () => {
-		dispatch(addComponent());
+		dispatch(openModal('addComponent'));
 	};
 
 	const scrollClick = (component_id: string | undefined) => {

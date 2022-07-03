@@ -60,14 +60,14 @@ export const getComponent = createAsyncThunk(
 
 export const addComponent = createAsyncThunk(
 	'component/addComponent',
-	async (_,thunkAPI) => {
+	async (title:string,thunkAPI) => {
 		try {	            
 			const _user = thunkAPI.getState() as RootState;
 			const user_id = _user.user.user.user_uid;		
 
       let isComponent = {
         id:'',
-   			component_title:'😀addComponent Title', 
+   			component_title:title, 
    			user_id:user_id
       }
       await addDoc(collection(db,'component'),{...isComponent})

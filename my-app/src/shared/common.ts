@@ -21,3 +21,13 @@ export const displayDate = (insert_dt:number) => {
   const years = days / 365
   return `${Math.floor(years)}년 전`
 }
+
+export const textLengthOverCut = (txt:string) => {  
+  if(txt.length > 20) {
+    let checkTxt = txt.substring(0,20)
+    return checkTxt + '...';
+  } else {
+    return txt
+  }
+}
+

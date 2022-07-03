@@ -11,6 +11,7 @@ type GridProps = {
 	bg?: boolean;
 	children?: any;
 	border?: boolean;
+	overflow?: boolean;
 };
 
 const Grid = (props: GridProps) => {
@@ -25,6 +26,7 @@ const Grid = (props: GridProps) => {
 		children,
 		height,
 		position,
+		overflow,
 	} = props;
 	const styles = {
 		is_shadow,
@@ -36,6 +38,7 @@ const Grid = (props: GridProps) => {
 		border,
 		height,
 		position,
+		overflow,
 	};
 
 	return <GridBox {...styles}>{children}</GridBox>;
@@ -52,6 +55,7 @@ const GridBox = styled.div<{
 	bg?: boolean;
 	border?: boolean;
 	height?: string;
+	overflow?: boolean;
 }>`
 	width: ${({ width }) => width};
 	height: ${({ height }) => (height ? height : '100%')};
@@ -65,4 +69,6 @@ const GridBox = styled.div<{
 	display: ${({ is_flex }) => (is_flex ? 'flex' : 'block')};
 	${({ is_flex }) => (is_flex ? 'align-items: center' : '')};
 	${({ is_flex }) => (is_flex ? 'justify-content: space-between' : '')};
+
+	${({ overflow }) => (overflow ? 'overflow: hidden' : '')};
 `;

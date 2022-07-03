@@ -4,6 +4,7 @@ import { RootState } from '../store/configStore';
 import { closeModal } from '../store/modules/modal';
 import styled from 'styled-components';
 import AddItem from './AddItem';
+import AddComponent from './AddComponent';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
 
@@ -16,6 +17,9 @@ const Modal = () => {
 	switch (modal.type) {
 		case 'addItem':
 			contents = <AddItem />;
+			break;
+		case 'addComponent':
+			contents = <AddComponent />;
 			break;
 		default:
 			contents = null;
@@ -49,7 +53,7 @@ const Background = styled.div`
 	justify-content: center;
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(5px);
+	backdrop-filter: blur(2px);
 	z-index: 10000;
 `;
 

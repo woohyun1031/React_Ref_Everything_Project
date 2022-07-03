@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Grid, Image, Text } from '../elements/index';
-import { displayDate } from '../shared/common';
+import { displayDate, textLengthOverCut } from '../shared/common';
 import { RootState } from '../store/configStore';
 
 type PostProps = {
@@ -29,11 +29,11 @@ const RefItem = (props: PostProps) => {
 					<Grid bg padding='10px'>
 						<Image shape={'profile_rectangle'} src={image_url} size={30} />
 					</Grid>
-					<Grid bg padding='10px'>
+					<Grid bg padding='10px' overflow>
 						<Text size='8px' margin='5px 0px' bold>
 							{title}
 						</Text>
-						<Text size='5px'>{contents}</Text>
+						<Text size='5px'>{contents && textLengthOverCut(contents)}</Text>
 					</Grid>
 				</Grid>
 			</RefItemBox>
