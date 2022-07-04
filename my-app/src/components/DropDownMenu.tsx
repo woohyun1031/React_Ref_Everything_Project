@@ -23,6 +23,7 @@ const DropDown = (props: DropDownProps) => {
 
 	const onLogout = async () => {
 		await dispatch(logoutDB());
+		setIsOpen((prevState) => !prevState);
 		navigate('/login');
 	};
 
@@ -76,6 +77,7 @@ const Container = styled.div`
 `;
 
 const Name = styled.button`
+	//background-color: #ffffff;
 	font-size: 14px;
 	font-weight: 600;
 	position: relative;
