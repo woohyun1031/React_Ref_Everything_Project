@@ -29,17 +29,21 @@ type listType = {
 };
 
 const RefComponents = (props: RefComponentsProps) => {
-	const element = useRef<HTMLDivElement>(null);
 	const { component_title, id, user_id } = props;
+
+	const element = useRef<HTMLDivElement>(null);
+
 	const item_list = useSelector((state: RootState) => state.item.list);
 	const isComponentLocation = useSelector(
 		(state: RootState) => state.component.is_location
 	);
+
 	const dispatch = useDispatch<AppDispatch>();
 
 	useEffect(() => {
 		if (id) dispatch(getItem(id));
 	}, []);
+
 	useEffect(() => {
 		if (id === isComponentLocation) {
 			// const elementLocation = element.current?.getBoundingClientRect().top;

@@ -11,7 +11,6 @@ type SideProps = {
 };
 
 const SideBar = (props: SideProps) => {
-	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
 	const component_list = useSelector(
 		(state: RootState) => state.component.list
@@ -64,7 +63,7 @@ export default SideBar;
 
 const SideBarWrap = styled.aside`
 	background-color: white;
-	width: 15%;
+	width: 210px;
 	position: fixed;
 	top: 60px;
 	padding: 40px 0px;

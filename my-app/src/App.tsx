@@ -42,7 +42,7 @@ const App = () => {
 			<Header _isLogin={_isLogin} />
 			<Template>
 				<SideBar _isLogin={_isLogin} />
-				<Grid width='100%' margin='0% 0% 0% 15%'>
+				<Grid width='100%' margin='0% 0% 0% 210px'>
 					<Routes>
 						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
 						<Route
