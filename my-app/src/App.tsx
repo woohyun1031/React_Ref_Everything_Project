@@ -83,5 +83,4 @@ const App = () => {
 };
 
 export type { ThemeType };
-
 export default App;

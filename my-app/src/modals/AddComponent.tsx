@@ -77,6 +77,7 @@ const Input = styled.input`
 	margin-top: 5px;
 	margin-bottom: 15px;
 	border: 1px solid ${({ theme }) => theme.colors.modal_border};
+	color: ${({ theme }) => theme.colors.title};
 `;
 
 const Button = styled.button`

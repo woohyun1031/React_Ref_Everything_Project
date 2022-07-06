@@ -47,7 +47,13 @@ const Header = (props: HeaderProps) => {
 					</Text>
 				</Grid>
 
-				<Grid is_flex padding='0px 5px' width='150px' bg>
+				<Grid
+					is_flex
+					padding='0px 5px'
+					width='150px'
+					bg
+					margin='0px 15px 0px 0px'
+				>
 					<IconWrap onClick={() => toggleDarkMode()}>
 						{isLogin && (
 							<Icon isDark={props._isDark}>
