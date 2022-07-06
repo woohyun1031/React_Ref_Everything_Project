@@ -17,10 +17,7 @@ const root = ReactDOM.createRoot(
 root.render(
 	<Provider store={store}>
 		<BrowserRouter>
-			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				<App />
-			</ThemeProvider>
+			<App />
 		</BrowserRouter>
 	</Provider>
 );

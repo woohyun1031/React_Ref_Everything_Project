@@ -13,7 +13,12 @@ import { useEffect } from 'react';
 import PostWrite from './pages/PostWrite';
 import PostDetail from './pages/PostDetail';
 import Template from './components/Template';
-import { createGlobalStyle } from 'styled-components';
+
+import GlobalStyle from './styles/GlobalStyle';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
+import darkTheme from './styles/darkTheme';
+
 import PostUpdate from './pages/PostUpdate';
 import { getUserInfo } from './store/modules/user';
 import SideBar from './components/SideBar';
@@ -26,6 +31,7 @@ const App = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
 	const _isLogin = useSelector((state: RootState) => state.user.isLogin);
+	const _isDark = useSelector((state: RootState) => state.user.isTheme);
 
 	useEffect(() => {
 		dispatch(getUserInfo());
@@ -38,31 +44,37 @@ const App = () => {
 	}, [_isLogin]);
 	return (
 		<>
-			<Header _isLogin={_isLogin} />
-			<Template>
-				<SideBar _isLogin={_isLogin} />
-				<Grid width='100%' margin='0% 0% 0% 210px'>
-					<Routes>
-						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
-						<Route
-							path='/write'
-							element={_isLogin ? <PostWrite /> : <NotLogin />}
-						/>
-						<Route
-							path='/update/:id'
-							element={_isLogin ? <PostUpdate /> : <NotLogin />}
-						/>
-						<Route
-							path='/post/:id'
-							element={_isLogin ? <PostDetail /> : <NotLogin />}
-						/>
-						<Route path='/externalLink/:id' element={<RedirectPage />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/signup' element={<SignUp />} />
-					</Routes>
-				</Grid>
-			</Template>
-			<Modal />
+			<ThemeProvider theme={_isDark ? theme : darkTheme}>
+				<GlobalStyle />
+				<Header _isLogin={_isLogin} _isDark={_isDark} />
+				<Template>
+					<SideBar _isLogin={_isLogin} />
+					<Grid width='100%' margin='0% 0% 0% 210px'>
+						<Routes>
+							<Route
+								path='/'
+								element={_isLogin ? <PostList /> : <NotLogin />}
+							/>
+							<Route
+								path='/write'
+								element={_isLogin ? <PostWrite /> : <NotLogin />}
+							/>
+							<Route
+								path='/update/:id'
+								element={_isLogin ? <PostUpdate /> : <NotLogin />}
+							/>
+							<Route
+								path='/post/:id'
+								element={_isLogin ? <PostDetail /> : <NotLogin />}
+							/>
+							<Route path='/externalLink/:id' element={<RedirectPage />} />
+							<Route path='/login' element={<Login />} />
+							<Route path='/signup' element={<SignUp />} />
+						</Routes>
+					</Grid>
+				</Template>
+				<Modal />
+			</ThemeProvider>
 		</>
 	);
 };

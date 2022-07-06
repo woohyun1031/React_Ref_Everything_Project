@@ -10,6 +10,7 @@ const Template = (props: TemplateProps) => {
 
 const TodoTemplateBlock = styled.div`
 	display: flex;
+	margin-top: 0;
 	position: relative;
 `;
 

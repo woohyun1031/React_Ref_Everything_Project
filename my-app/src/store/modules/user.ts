@@ -86,6 +86,7 @@ export const logoutDB = createAsyncThunk(
 	}
 );
 
+
 //initialState
 type initialStateType = {
 	user: {		
@@ -95,6 +96,7 @@ type initialStateType = {
 		user_uid: string;
 	},	
 	isLogin: boolean,
+	isTheme: boolean,
 }
 
 const initialState:initialStateType = {
@@ -105,6 +107,7 @@ const initialState:initialStateType = {
 		user_uid: '',
 	} ,	
 	isLogin: false,
+	isTheme: false,
 };
 
 export const user = createSlice({
@@ -133,7 +136,10 @@ export const user = createSlice({
 				user_uid: actions.payload.user_uid,
 			}
 			state.isLogin = true;		
-		}		
+		},		
+		changeTheme : (state,actions) =>  {
+			state.isTheme = actions.payload
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(signUp.fulfilled, (state, action) => {
@@ -160,5 +166,5 @@ export const user = createSlice({
 	},
 })
 
-export const { logout,getUser,setUser } = user.actions;
+export const { logout,getUser,setUser,changeTheme } = user.actions;
 export default user.reducer;

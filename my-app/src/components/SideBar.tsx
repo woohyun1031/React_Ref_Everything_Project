@@ -1,9 +1,8 @@
 import { Text } from '../elements/index';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
-import { addComponent, changeComponentId } from '../store/modules/component';
+import { changeComponentId } from '../store/modules/component';
 import { openModal } from '../store/modules/modal';
 
 type SideProps = {
@@ -78,19 +77,27 @@ const SideUlist = styled.ul`
 `;
 
 const SideList = styled.li`
+	color: ${({ theme }) => theme.colors.side_title};
 	margin-bottom: 15px;
 	padding: 8px 36px;
 	cursor: pointer;
-	:hover {
-		background: ${({ theme }) => theme.colors.side_background_hover};
+	&:hover {
+		filter: brightness(105%);
+	}
+	&:active {
+		filter: brightness(95%);
 	}
 `;
 
 const AddSideList = styled.button`
+	color: ${({ theme }) => theme.colors.side_title};
 	width: 100%;
 	padding: 8px 26px;
 	cursor: pointer;
-	:hover {
-		background: ${({ theme }) => theme.colors.side_background_hover};
+	&:hover {
+		filter: brightness(105%);
+	}
+	&:active {
+		filter: brightness(95%);
 	}
 `;

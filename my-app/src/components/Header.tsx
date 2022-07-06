@@ -1,14 +1,16 @@
 import { Grid, Text, Button } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { logoutDB } from '../store/modules/user';
+import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
 import DropDown from './DropDownMenu';
+import { changeTheme } from '../store/modules/user';
 
 type HeaderProps = {
 	_isLogin?: boolean | undefined;
+	_isDark: boolean;
 };
 
 const Header = (props: HeaderProps) => {
@@ -25,30 +27,34 @@ const Header = (props: HeaderProps) => {
 		}
 	}, [props._isLogin]);
 
-	return (
-		<>
-			<HeaderBox>
-				<Grid is_flex bg>
-					<Grid is_flex bg>
-						<Text
-							size='24px'
-							margin='0px 26px'
-							bold
-							callback={() => {
-								navigate('/');
-							}}
-						>
-							Ref everything
-						</Text>
-					</Grid>
+	const toggleDarkMode = () => {
+		dispatch(changeTheme(!props._isDark));
+	};
 
-					<Grid is_flex padding='0px 5px' width='15%' bg>
-						<DropDown name={userName} isLogin={isLogin} />
-					</Grid>
+	return (
+		<HeaderBox>
+			<Grid is_flex bg>
+				<Grid is_flex bg>
+					<Text
+						size='24px'
+						margin='0px 26px'
+						bold
+						callback={() => {
+							navigate('/');
+						}}
+					>
+						Ref everything
+					</Text>
 				</Grid>
-			</HeaderBox>
-			<HeaderPlaceHolder />
-		</>
+
+				<Grid is_flex padding='0px 5px' width='15%' bg>
+					<Icon isDark={props._isDark} onClick={() => toggleDarkMode()}>
+						{props._isDark ? <BsFillSunFill /> : <BsFillMoonFill />}
+					</Icon>
+					<DropDown name={userName} isLogin={isLogin} />
+				</Grid>
+			</Grid>
+		</HeaderBox>
 	);
 };
 
@@ -60,9 +66,10 @@ const HeaderBox = styled.div`
 	height: 61px;
 	width: 100%;
 	z-index: 9999;
-	border: 1px solid #e9e9e9;
+	border: 1px solid ${({ theme }) => theme.colors.header_border};
 `;
-const HeaderPlaceHolder = styled.div`
-	height: 61px;
-	margin: 0px;
+const Icon = styled.div<{ isDark: boolean }>`
+	transition: 0.3s;
+	color: ${({ isDark }) => (isDark ? '' : 'white')};
+	cursor: pointer;
 `;

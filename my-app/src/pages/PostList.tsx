@@ -26,6 +26,7 @@ const PostList = () => {
 
 	return (
 		<>
+			<HeaderPlaceHolder />
 			<PostListWrap>
 				{component_list?.map((component, index) => {
 					return <RefComponents key={component.id} {...component} />;
@@ -49,4 +50,8 @@ const PostListWrap = styled.div`
 	flex-wrap: wrap;
 	padding: 0px 50px;
 	margin-bottom: 300px;
+`;
+const HeaderPlaceHolder = styled.div`
+	height: 61px;
+	margin: 0px;
 `;

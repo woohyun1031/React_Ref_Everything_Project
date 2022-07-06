@@ -104,7 +104,7 @@ const Menu = styled.ul`
 	font-weight: 400;
 	bottom: -60px;
 	left: 5px;
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.background};
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 	background-position: center center;
 	background-repeat: no-repeat;
