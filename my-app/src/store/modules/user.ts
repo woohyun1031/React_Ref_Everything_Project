@@ -77,6 +77,7 @@ export const logoutDB = createAsyncThunk(
 	'user/logoutDB',
 	async (_,thunkAPI) => {
 		try {
+			thunkAPI.dispatch(changeTheme(false));
 			signOut(auth).then(()=>{
 			thunkAPI.dispatch(logout());	
 			})
@@ -96,7 +97,7 @@ type initialStateType = {
 		user_uid: string;
 	},	
 	isLogin: boolean,
-	isTheme: boolean,
+	isDark: boolean,
 }
 
 const initialState:initialStateType = {
@@ -107,7 +108,7 @@ const initialState:initialStateType = {
 		user_uid: '',
 	} ,	
 	isLogin: false,
-	isTheme: false,
+	isDark: false,
 };
 
 export const user = createSlice({
@@ -138,7 +139,7 @@ export const user = createSlice({
 			state.isLogin = true;		
 		},		
 		changeTheme : (state,actions) =>  {
-			state.isTheme = actions.payload
+			state.isDark = actions.payload
 		},
 	},
 	extraReducers: (builder) => {

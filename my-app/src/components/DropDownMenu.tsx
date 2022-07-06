@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppDispatch } from '../store/configStore';
 import { Grid, Text, Button } from '../elements/index';
-import { logoutDB } from '../store/modules/user';
+import { changeTheme, logoutDB } from '../store/modules/user';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 type DropDownProps = {
@@ -23,6 +23,7 @@ const DropDown = (props: DropDownProps) => {
 	};
 
 	const onLogout = async () => {
+		dispatch(changeTheme(false));
 		await dispatch(logoutDB());
 		setIsOpen((prevState) => !prevState);
 		navigate('/login');
@@ -40,10 +41,12 @@ const DropDown = (props: DropDownProps) => {
 		<>
 			{props.isLogin ? (
 				<Container>
-					<Name onClick={toggleDropDown}>{props.name} 님</Name>
-					<Icon isDark={props.isDark}>
-						{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
-					</Icon>
+					<NameWrap onClick={toggleDropDown}>
+						<Name>{props.name} 님</Name>
+						<Icon isDark={props.isDark}>
+							{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+						</Icon>
+					</NameWrap>
 					{isOpen && (
 						<>
 							<BackGround onClick={toggleDropDown} />
@@ -73,6 +76,9 @@ export default DropDown;
 
 const Container = styled.div`
 	position: relative;
+`;
+
+const NameWrap = styled.div`
 	display: flex;
 `;
 
@@ -89,7 +95,7 @@ const Icon = styled.div<{ isDark: boolean }>`
 	display: flex;
 	align-items: center;
 	transition: 0.3s;
-	color: ${({ isDark }) => (isDark ? '' : 'white')};
+	color: ${({ isDark }) => (isDark ? 'white' : '')};
 	cursor: pointer;
 `;
 

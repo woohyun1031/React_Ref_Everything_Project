@@ -60,12 +60,6 @@ const ButtonBox = styled.button<{
 	box-sizing: border-box;
 	border: none;
 	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
-	/* :hover {
-		background-color: ${({ theme }) => theme.colors.button_hover};
-	}
-	:active {
-		background-color: ${({ theme }) => theme.colors.button_active};
-	} */
 	&:hover {
 		filter: brightness(115%);
 	}

@@ -31,7 +31,7 @@ const App = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
 	const _isLogin = useSelector((state: RootState) => state.user.isLogin);
-	const _isDark = useSelector((state: RootState) => state.user.isTheme);
+	const _isDark = useSelector((state: RootState) => state.user.isDark);
 
 	useEffect(() => {
 		dispatch(getUserInfo());
@@ -44,7 +44,7 @@ const App = () => {
 	}, [_isLogin]);
 	return (
 		<>
-			<ThemeProvider theme={_isDark ? theme : darkTheme}>
+			<ThemeProvider theme={_isDark ? darkTheme : theme}>
 				<GlobalStyle />
 				<Header _isLogin={_isLogin} _isDark={_isDark} />
 				<Template>
