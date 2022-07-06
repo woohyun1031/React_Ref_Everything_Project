@@ -49,9 +49,7 @@ const SideBar = (props: SideProps) => {
 					) : null}
 					{props._isLogin ? (
 						<AddSideList onClick={onAddComponent}>+ 추가하기</AddSideList>
-					) : (
-						<SideList>🤬 Please login </SideList>
-					)}
+					) : null}
 				</SideUlist>
 			</SideBarWrap>
 		</>

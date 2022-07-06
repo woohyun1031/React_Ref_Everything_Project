@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
+
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
@@ -8,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
   }
   body {
-    background-color: #F8F8F8;
+    background-color: ${({theme})=>theme.colors.background}
   }
   li {
     list-style: none;

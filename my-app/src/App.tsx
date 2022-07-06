@@ -27,6 +27,8 @@ import Modal from './modals/Modal';
 import { closeModal } from './store/modules/modal';
 import RedirectPage from './components/RedirectPage';
 
+type ThemeType = typeof theme;
+
 const App = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
@@ -42,6 +44,7 @@ const App = () => {
 			console.log('notLogin');
 		}
 	}, [_isLogin]);
+
 	return (
 		<>
 			<ThemeProvider theme={_isDark ? darkTheme : theme}>
@@ -78,5 +81,7 @@ const App = () => {
 		</>
 	);
 };
+
+export type { ThemeType };
 
 export default App;
