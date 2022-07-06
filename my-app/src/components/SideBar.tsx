@@ -38,7 +38,7 @@ const SideBar = (props: SideProps) => {
 										key={component.id}
 										onClick={() => scrollClick(component.id)}
 									>
-										<Text size='13px' bold color='#585858'>
+										<Text size='13px' bold color='side_title'>
 											{component.component_title}
 										</Text>
 									</SideList>
@@ -62,14 +62,14 @@ const SideBar = (props: SideProps) => {
 export default SideBar;
 
 const SideBarWrap = styled.aside`
-	background-color: white;
+	background-color: ${({ theme }) => theme.colors.side_background};
 	width: 210px;
 	position: fixed;
 	top: 60px;
 	padding: 40px 0px;
 	height: 100%;
 	overflow: auto;
-	border-right: 1px solid #e9e9e9;
+	border-right: 1px solid ${({ theme }) => theme.colors.side_border};
 `;
 
 const SideUlist = styled.ul`
@@ -82,7 +82,7 @@ const SideList = styled.li`
 	padding: 8px 36px;
 	cursor: pointer;
 	:hover {
-		background: #e9e9e9;
+		background: ${({ theme }) => theme.colors.side_background_hover};
 	}
 `;
 
@@ -91,6 +91,6 @@ const AddSideList = styled.button`
 	padding: 8px 26px;
 	cursor: pointer;
 	:hover {
-		background: #e9e9e9;
+		background: ${({ theme }) => theme.colors.side_background_hover};
 	}
 `;

@@ -38,7 +38,8 @@ const Ptag = styled.p<{
 	margin?: string;
 	isCallback?: boolean;
 }>`
-	color: ${({ color }) => (color ? color : '#222831')};
+	color: ${({ theme, color }) =>
+		color ? theme.colors[color] : theme.colors.subTitle};
 	font-size: ${({ size }) => (size ? size : '14px')};
 	font-weight: ${({ bold }) => (bold ? '600' : '400')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};

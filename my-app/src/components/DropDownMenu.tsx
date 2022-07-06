@@ -77,7 +77,7 @@ const Container = styled.div`
 `;
 
 const Name = styled.button`
-	//background-color: #ffffff;
+	color: ${({ theme }) => theme.colors.title};
 	font-size: 14px;
 	font-weight: 600;
 	position: relative;
@@ -109,15 +109,16 @@ const Menu = styled.ul`
 	background-position: center center;
 	background-repeat: no-repeat;
 	& li {
+		color: ${({ theme }) => theme.colors.title};
 		width: 70px;
 		text-align: center;
-		margin: 0 auto;
+		margin: 0px auto 3px auto;
 		cursor: pointer;
 		padding: 4px 0;
 	}
 	& li:nth-child(2) {
-		color: red;
-		border-top: 1px solid '#D2D2D2';
+		color: ${({ theme }) => theme.colors.reject};
+		border-top: 1px solid ${({ theme }) => theme.colors.subTitle};
 	}
 	position: absolute;
 	z-index: 101;
@@ -129,7 +130,6 @@ const BackGround = styled.div`
 	right: 0;
 	bottom: 0;
 	top: 0;
-	background-color: rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(2px);
+	${({ theme }) => theme.commons.blur_background};
 	z-index: 100;
 `;

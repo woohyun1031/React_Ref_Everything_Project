@@ -85,6 +85,7 @@ const RefComponents = (props: RefComponentsProps) => {
 							font_size='25px'
 							is_bold
 							callback={onAddItem}
+							font_color='button_title'
 						/>
 					</RefItemWrap>
 				</Grid>
@@ -98,7 +99,7 @@ export default React.memo(RefComponents);
 const RefComponentWrap = styled.div`
 	width: 100%;
 	height: 100%;
-	padding: 30px 100px;
+	padding: 30px 10px;
 	margin: 20px 0px;
 	box-sizing: border-box;
 	scroll-margin: 107px;

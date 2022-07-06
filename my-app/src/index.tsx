@@ -17,8 +17,8 @@ const root = ReactDOM.createRoot(
 root.render(
 	<Provider store={store}>
 		<BrowserRouter>
-			<GlobalStyle />
 			<ThemeProvider theme={theme}>
+				<GlobalStyle />
 				<App />
 			</ThemeProvider>
 		</BrowserRouter>

@@ -38,7 +38,6 @@ const App = () => {
 	}, [_isLogin]);
 	return (
 		<>
-			<GlobalStyle />
 			<Header _isLogin={_isLogin} />
 			<Template>
 				<SideBar _isLogin={_isLogin} />
@@ -67,11 +66,5 @@ const App = () => {
 		</>
 	);
 };
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: #e9ecef;
-  }
-`;
 
 export default App;

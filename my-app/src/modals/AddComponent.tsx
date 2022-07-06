@@ -49,7 +49,7 @@ const Form = styled.form`
 	height: 370px;
 	font-size: 12px;
 	padding: 60px 100px;
-	color: #000000;
+	color: ${({ theme }) => theme.colors.title};
 `;
 
 const FormTitle = styled.h2`
@@ -73,24 +73,18 @@ const Input = styled.input`
 	height: 30px;
 	border-radius: 7px;
 	padding: 12px;
-	background-color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.background};
 	margin-top: 5px;
 	margin-bottom: 15px;
-	border: 1px solid gray;
+	border: 1px solid ${({ theme }) => theme.colors.modal_border};
 `;
 
 const Button = styled.button`
 	width: 265px;
 	height: 38px;
 	border-radius: 7px;
-	background-color: #718aff;
-	/* &:hover {
-		background-color: #9caeff;
-	}
-	&:active {
-		background-color: #4f66d2;
-	} */
-	color: #ffffff;
+	background-color: ${({ theme }) => theme.colors.modal_button_background};
+	color: ${({ theme }) => theme.colors.modal_button_title};
 	font-weight: bold;
 	margin-bottom: 10px;
 	transition: 0.3s;

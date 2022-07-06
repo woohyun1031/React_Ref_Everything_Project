@@ -52,8 +52,7 @@ const Background = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(0, 0, 0, 0.1);
-	backdrop-filter: blur(2px);
+	${({ theme }) => theme.commons.blur_background};
 	z-index: 10000;
 `;
 

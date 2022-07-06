@@ -62,7 +62,8 @@ const GridBox = styled.div<{
 	box-sizing: border-box;
 	padding: ${({ padding }) => (padding ? padding : '0px')};
 	margin: ${({ margin }) => (margin ? margin : '0px')};
-	background-color: ${({ bg }) => (bg ? 'white' : '#F8F8F8')};
+	background-color: ${({ theme, bg }) =>
+		bg ? theme.colors.background : theme.colors.subBackground};
 	border: ${({ border }) => (border ? '1px black solid' : 'none')};
 	${({ is_shadow }) =>
 		is_shadow ? 'box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);' : ''};
