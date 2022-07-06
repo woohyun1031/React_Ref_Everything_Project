@@ -66,7 +66,7 @@ const HeaderBox = styled.div`
 	height: 61px;
 	width: 100%;
 	z-index: 9999;
-	border: 1px solid ${({ theme }) => theme.colors.header_border};
+	border-bottom: 1px solid ${({ theme }) => theme.colors.header_border};
 `;
 const Icon = styled.div<{ isDark: boolean }>`
 	transition: 0.3s;

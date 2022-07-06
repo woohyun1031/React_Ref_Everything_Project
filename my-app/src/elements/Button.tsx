@@ -67,10 +67,10 @@ const ButtonBox = styled.button<{
 		background-color: ${({ theme }) => theme.colors.button_active};
 	} */
 	&:hover {
-		filter: brightness(105%);
+		filter: brightness(115%);
 	}
 	&:active {
-		filter: brightness(95%);
+		filter: brightness(85%);
 	}
 	//border-radius: 10px;
 `;

@@ -45,5 +45,13 @@ export default RefItem;
 
 const RefItemBox = styled.a`
 	text-decoration: none;
+	transition: 0.3s;
 	cursor: pointer;
+	:hover {
+		transform: translateY(-5px);
+		filter: brightness(115%);
+	}
+	:active {
+		filter: brightness(85%);
+	}
 `;
