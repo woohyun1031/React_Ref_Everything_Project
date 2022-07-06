@@ -47,11 +47,11 @@ const Header = (props: HeaderProps) => {
 					</Text>
 				</Grid>
 
-				<Grid is_flex padding='0px 5px' width='15%' bg>
+				<Grid is_flex padding='0px 5px' width='150px' bg>
 					<Icon isDark={props._isDark} onClick={() => toggleDarkMode()}>
 						{props._isDark ? <BsFillSunFill /> : <BsFillMoonFill />}
 					</Icon>
-					<DropDown name={userName} isLogin={isLogin} />
+					<DropDown name={userName} isLogin={isLogin} isDark={props._isDark} />
 				</Grid>
 			</Grid>
 		</HeaderBox>

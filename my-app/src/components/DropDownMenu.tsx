@@ -3,13 +3,14 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppDispatch } from '../store/configStore';
-import { openModal } from '../store/modules/modal';
 import { Grid, Text, Button } from '../elements/index';
 import { logoutDB } from '../store/modules/user';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 type DropDownProps = {
 	name?: string;
 	isLogin?: boolean;
+	isDark: boolean;
 };
 
 const DropDown = (props: DropDownProps) => {
@@ -39,12 +40,10 @@ const DropDown = (props: DropDownProps) => {
 		<>
 			{props.isLogin ? (
 				<Container>
-					<Name onClick={toggleDropDown}>
-						{props.name} 님
-						<ArrowIcon
-							src={isOpen ? '/images/arrowUp.png' : '/images/arrowDown.png'}
-						/>
-					</Name>
+					<Name onClick={toggleDropDown}>{props.name} 님</Name>
+					<Icon isDark={props.isDark}>
+						{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+					</Icon>
 					{isOpen && (
 						<>
 							<BackGround onClick={toggleDropDown} />
@@ -74,6 +73,7 @@ export default DropDown;
 
 const Container = styled.div`
 	position: relative;
+	display: flex;
 `;
 
 const Name = styled.button`
@@ -81,18 +81,16 @@ const Name = styled.button`
 	font-size: 14px;
 	font-weight: 600;
 	position: relative;
-	z-index: 101;
+	z-index: 99;
 	padding: 10px;
 `;
 
-const ArrowIcon = styled.div<{ src: string }>`
-	display: inline-block;
-	width: 14px;
-	height: 8px;
-	margin-left: 5px;
-	background-image: url(${({ src }) => src});
-	background-position: center center;
-	background-repeat: no-repeat;
+const Icon = styled.div<{ isDark: boolean }>`
+	display: flex;
+	align-items: center;
+	transition: 0.3s;
+	color: ${({ isDark }) => (isDark ? '' : 'white')};
+	cursor: pointer;
 `;
 
 const Menu = styled.ul`
