@@ -48,11 +48,13 @@ const Header = (props: HeaderProps) => {
 				</Grid>
 
 				<Grid is_flex padding='0px 5px' width='150px' bg>
-					{isLogin && (
-						<Icon isDark={props._isDark} onClick={() => toggleDarkMode()}>
-							{props._isDark ? <BsFillMoonFill /> : <BsFillSunFill />}
-						</Icon>
-					)}
+					<IconWrap onClick={() => toggleDarkMode()}>
+						{isLogin && (
+							<Icon isDark={props._isDark}>
+								{props._isDark ? <BsFillMoonFill /> : <BsFillSunFill />}
+							</Icon>
+						)}
+					</IconWrap>
 					<DropDown name={userName} isLogin={isLogin} isDark={props._isDark} />
 				</Grid>
 			</Grid>
@@ -70,8 +72,16 @@ const HeaderBox = styled.div`
 	z-index: 9999;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.header_border};
 `;
+
+const IconWrap = styled.div`
+	overflow: hidden;
+	cursor: pointer;
+`;
 const Icon = styled.div<{ isDark: boolean }>`
 	transition: 0.3s;
 	color: ${({ isDark }) => (isDark ? 'white' : '')};
 	cursor: pointer;
+	${IconWrap}:active & {
+		transform: translateY(-30px);
+	}
 `;
