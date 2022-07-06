@@ -53,7 +53,7 @@ const ButtonBox = styled.button<{
 	font-size: ${({ font_size }) => (font_size ? font_size : '10px')};
 	font-weight: ${({ is_bold }) => (is_bold ? '600' : '400')};
 	background-color: ${({ theme }) => theme.colors.button_background};
-	transition: 0.2s;
+	//transition: 0.2s;
 	color: ${({ theme, font_color }) =>
 		font_color ? theme.colors[font_color] : theme.colors.subTitle};
 	padding: 12px 0px;
@@ -61,6 +61,7 @@ const ButtonBox = styled.button<{
 	border: none;
 	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
 	&:hover {
+		transition: 0.2s;
 		filter: brightness(115%);
 	}
 	&:active {

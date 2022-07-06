@@ -7,8 +7,11 @@ import AddItem from './AddItem';
 import AddComponent from './AddComponent';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
+type ModalProps = {
+	isDark: boolean;
+};
 
-const Modal = () => {
+const Modal = (props: ModalProps) => {
 	const dispatch = useDispatch();
 	const modal = useSelector((state: RootState) => state.modal);
 	let contents;

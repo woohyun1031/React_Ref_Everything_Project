@@ -73,7 +73,7 @@ const App = () => {
 						</Routes>
 					</Grid>
 				</Template>
-				<Modal />
+				<Modal isDark={_isDark} />
 			</ThemeProvider>
 		</>
 	);

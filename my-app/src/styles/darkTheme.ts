@@ -31,7 +31,7 @@ const colors = {
 
 const commons = {
   blur_background: `
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(219,219,219, 0.1);
 	backdrop-filter: blur(2px);
   `,
 }

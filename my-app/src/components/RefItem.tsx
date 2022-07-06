@@ -48,7 +48,7 @@ const RefItemBox = styled.a`
 	transition: 0.3s;
 	cursor: pointer;
 	:hover {
-		transform: translateY(-5px);
+		transform: translateY(-2px);
 		filter: brightness(115%);
 	}
 	:active {
