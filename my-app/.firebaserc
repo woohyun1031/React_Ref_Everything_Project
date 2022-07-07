@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "ref-evething-project"
-  }
+    "default": "ref-evething-project"   
+  },
+  "targets": {}
 }
