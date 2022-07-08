@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
 import DropDown from './DropDownMenu';
-import { changeTheme } from '../store/modules/user';
+import { changeTheme, menuHover, openSidebar } from '../store/modules/user';
+import { RiMenuFoldFill, RiMenuUnfoldFill, RiMenuLine } from 'react-icons/ri';
 
 type HeaderProps = {
 	_isLogin?: boolean | undefined;
@@ -18,6 +19,8 @@ const Header = (props: HeaderProps) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const [isLogin, setIsLogin] = useState(false);
 	const userName = useSelector((state: RootState) => state.user.user.user_name);
+	const _isOpen = useSelector((state: RootState) => state.user.isOpen);
+	const _isHover = useSelector((state: RootState) => state.user.isHover);
 
 	useEffect(() => {
 		if (props._isLogin) {
@@ -31,10 +34,32 @@ const Header = (props: HeaderProps) => {
 		dispatch(changeTheme(!props._isDark));
 	};
 
+	const toggleSideOpen = () => {
+		dispatch(menuHover(false));
+		dispatch(openSidebar(!_isOpen));
+	};
+
 	return (
 		<HeaderBox>
 			<Grid is_flex bg>
 				<Grid is_flex bg>
+					{isLogin ? (
+						<MenuIcon isOpen={_isOpen}>
+							{_isOpen ? (
+								<RiMenuFoldFill onClick={toggleSideOpen} />
+							) : (
+								<RiMenuLine
+									onClick={toggleSideOpen}
+									onMouseOver={() => {
+										if (!_isOpen) dispatch(menuHover(!_isHover));
+									}}
+									onMouseOut={() => {
+										if (!_isOpen) dispatch(menuHover(!_isHover));
+									}}
+								/>
+							)}
+						</MenuIcon>
+					) : null}
 					<Text
 						size='24px'
 						margin='0px 26px'
@@ -56,9 +81,9 @@ const Header = (props: HeaderProps) => {
 				>
 					<IconWrap onClick={() => toggleDarkMode()}>
 						{isLogin && (
-							<Icon isDark={props._isDark}>
+							<ModeIcon isDark={props._isDark}>
 								{props._isDark ? <BsFillMoonFill /> : <BsFillSunFill />}
-							</Icon>
+							</ModeIcon>
 						)}
 					</IconWrap>
 					<DropDown name={userName} isLogin={isLogin} isDark={props._isDark} />
@@ -78,12 +103,21 @@ const HeaderBox = styled.div`
 	z-index: 9999;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.header_border};
 `;
+const MenuIcon = styled.div<{ isOpen: boolean }>`
+	margin-left: 20px;
+	cursor: pointer;
+	transition: 0.5s;
+	${({ isOpen }) => (isOpen ? 'transform:translateX(3px)' : '')};
+	:hover {
+		transform: translateX(3px);
+	}
+`;
 
 const IconWrap = styled.div`
 	overflow: hidden;
 	cursor: pointer;
 `;
-const Icon = styled.div<{ isDark: boolean }>`
+const ModeIcon = styled.div<{ isDark: boolean }>`
 	transition: 0.3s;
 	color: ${({ isDark }) => (isDark ? 'white' : '')};
 	cursor: pointer;

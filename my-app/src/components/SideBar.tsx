@@ -14,6 +14,8 @@ const SideBar = (props: SideProps) => {
 	const component_list = useSelector(
 		(state: RootState) => state.component.list
 	);
+	const _isOpen = useSelector((state: RootState) => state.user.isOpen);
+	const _isHover = useSelector((state: RootState) => state.user.isHover);
 
 	const onAddComponent = () => {
 		dispatch(openModal('addComponent'));
@@ -27,7 +29,7 @@ const SideBar = (props: SideProps) => {
 
 	return (
 		<>
-			<SideBarWrap>
+			<SideBarWrap isOpen={_isOpen} isHover={_isHover}>
 				<SideUlist>
 					{props._isLogin ? (
 						component_list ? (
@@ -58,15 +60,24 @@ const SideBar = (props: SideProps) => {
 
 export default SideBar;
 
-const SideBarWrap = styled.aside`
-	background-color: ${({ theme }) => theme.colors.side_background};
+const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
 	width: 210px;
+	height: 100%;
 	position: fixed;
 	top: 60px;
+	left: -210px;
 	padding: 40px 0px;
-	height: 100%;
 	overflow: auto;
+	background-color: ${({ theme }) => theme.colors.side_background};
 	border-right: 1px solid ${({ theme }) => theme.colors.side_border};
+
+	transform: ${({ isOpen, isHover }) =>
+		isOpen
+			? 'translateX(210px)'
+			: isHover
+			? 'translateX(30px)'
+			: 'translateX(0)'};
+	transition: 0.3s ease all;
 `;
 
 const SideUlist = styled.ul`

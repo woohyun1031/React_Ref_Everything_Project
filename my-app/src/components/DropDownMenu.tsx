@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppDispatch } from '../store/configStore';
 import { Grid, Text, Button } from '../elements/index';
-import { changeTheme, logoutDB } from '../store/modules/user';
+import { changeTheme, logoutDB, openSidebar } from '../store/modules/user';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 
 type DropDownProps = {
@@ -24,6 +24,7 @@ const DropDown = (props: DropDownProps) => {
 
 	const onLogout = async () => {
 		dispatch(changeTheme(false));
+		dispatch(openSidebar(false));
 		await dispatch(logoutDB());
 		setIsOpen((prevState) => !prevState);
 		navigate('/login');

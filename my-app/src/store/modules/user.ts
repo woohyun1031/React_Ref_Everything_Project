@@ -98,6 +98,8 @@ type initialStateType = {
 	},	
 	isLogin: boolean,
 	isDark: boolean,
+	isOpen:boolean,
+	isHover: boolean,
 }
 
 const initialState:initialStateType = {
@@ -109,6 +111,8 @@ const initialState:initialStateType = {
 	} ,	
 	isLogin: false,
 	isDark: false,
+	isOpen:false,
+	isHover: false,
 };
 
 export const user = createSlice({
@@ -141,6 +145,12 @@ export const user = createSlice({
 		changeTheme : (state,actions) =>  {
 			state.isDark = actions.payload
 		},
+		openSidebar: (state,actions) => {
+			state.isOpen = actions.payload
+		},
+		menuHover: (state,actions) => {
+			state.isHover = actions.payload
+		},		
 	},
 	extraReducers: (builder) => {
 		builder.addCase(signUp.fulfilled, (state, action) => {
@@ -167,5 +177,5 @@ export const user = createSlice({
 	},
 })
 
-export const { logout,getUser,setUser,changeTheme } = user.actions;
+export const { logout,getUser,setUser,changeTheme,openSidebar,menuHover } = user.actions;
 export default user.reducer;
