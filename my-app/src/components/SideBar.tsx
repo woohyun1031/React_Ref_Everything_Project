@@ -70,6 +70,7 @@ const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
 	overflow: auto;
 	background-color: ${({ theme }) => theme.colors.side_background};
 	border-right: 1px solid ${({ theme }) => theme.colors.side_border};
+	transition: 0.3s;
 
 	transform: ${({ isOpen, isHover }) =>
 		isOpen
@@ -77,7 +78,6 @@ const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
 			: isHover
 			? 'translateX(30px)'
 			: 'translateX(0)'};
-	transition: 0.3s ease all;
 `;
 
 const SideUlist = styled.ul`

@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configStore';
-import { getPost } from '../store/modules/post';
-import { Button } from '../elements/index';
-import Spinner from '../elements/Spinner';
+import { Text, Button } from '../elements/index';
 import styled from 'styled-components';
 import RefComponents from '../components/RefComponents';
 import { getComponent } from '../store/modules/component';
@@ -20,15 +18,11 @@ const PostList = () => {
 		dispatch(getComponent());
 	}, []);
 
-	const onClick = () => {
-		console.log(component_list);
-	};
-
 	return (
 		<>
 			<HeaderPlaceHolder />
 			<PostListWrap>
-				{component_list?.map((component, index) => {
+				{component_list.map((component, index) => {
 					return <RefComponents key={component.id} {...component} />;
 				})}
 			</PostListWrap>

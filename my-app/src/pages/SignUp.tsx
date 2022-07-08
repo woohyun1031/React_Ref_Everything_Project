@@ -102,6 +102,6 @@ const HeaderPlaceHolder = styled.div`
 
 const SignUpWrap = styled.div`
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	margin-top: 100px;
 `;

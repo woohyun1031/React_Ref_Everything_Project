@@ -22,12 +22,6 @@ const initialState: initialStateType = {
 	is_location:'',
 };
 
-const initialComponent : ComponentType= {
-	  id:'11111111',
-    component_title:'😀initialComponent Title', 
-    user_id:'initial user id'
-};
-
 export const getComponent = createAsyncThunk(
 	'component/getComponent',
 	async (_,thunkAPI) => {
@@ -87,12 +81,8 @@ export const component = createSlice({
 	name: 'component',
 	initialState,
 	reducers: {
-		setComponents: (state, action) => {			
-      if(action.payload){
-        state.list = action.payload
-			}else {
-				state.list = [initialComponent]
-			}		
+		setComponents: (state, action) => {			      
+			state.list = action.payload					
 			state.is_loading = false;
 		},
 		addComponentDone: (state,action) => {

@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../store/configStore';
 import DropDown from './DropDownMenu';
 import { changeTheme, menuHover, openSidebar } from '../store/modules/user';
 import { RiMenuFoldFill, RiMenuLine } from 'react-icons/ri';
+import { MdBookmark } from 'react-icons/md';
 
 type HeaderProps = {
 	_isLogin?: boolean | undefined;
@@ -60,15 +61,11 @@ const Header = (props: HeaderProps) => {
 							)}
 						</MenuIcon>
 					) : null}
-					<Text
-						size='24px'
-						margin='0px 26px'
-						bold
-						callback={() => {
-							navigate('/');
-						}}
-					>
+					<Text size='24px' margin='0px 0px 0px 26px' bold>
 						Ref everything
+					</Text>
+					<Text size='24px' margin='0px 0px' bold>
+						<MdBookmark />
 					</Text>
 				</Grid>
 

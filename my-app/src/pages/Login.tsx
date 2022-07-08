@@ -70,6 +70,6 @@ const HeaderPlaceHolder = styled.div`
 
 const LoginWrap = styled.div`
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	margin-top: 100px;
 `;
