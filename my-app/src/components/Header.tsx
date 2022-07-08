@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
 import DropDown from './DropDownMenu';
 import { changeTheme, menuHover, openSidebar } from '../store/modules/user';
-import { RiMenuFoldFill, RiMenuUnfoldFill, RiMenuLine } from 'react-icons/ri';
+import { RiMenuFoldFill, RiMenuLine } from 'react-icons/ri';
 
 type HeaderProps = {
 	_isLogin?: boolean | undefined;
@@ -44,7 +44,7 @@ const Header = (props: HeaderProps) => {
 			<Grid is_flex bg>
 				<Grid is_flex bg>
 					{isLogin ? (
-						<MenuIcon isOpen={_isOpen}>
+						<MenuIcon isOpen={_isOpen} isDark={props._isDark}>
 							{_isOpen ? (
 								<RiMenuFoldFill onClick={toggleSideOpen} />
 							) : (
@@ -103,9 +103,10 @@ const HeaderBox = styled.div`
 	z-index: 9999;
 	border-bottom: 1px solid ${({ theme }) => theme.colors.header_border};
 `;
-const MenuIcon = styled.div<{ isOpen: boolean }>`
+const MenuIcon = styled.div<{ isOpen: boolean; isDark: boolean }>`
 	margin-left: 20px;
 	cursor: pointer;
+	color: ${({ isDark }) => (isDark ? 'white' : '')};
 	transition: 0.5s;
 	${({ isOpen }) => (isOpen ? 'transform:translateX(3px)' : '')};
 	:hover {
