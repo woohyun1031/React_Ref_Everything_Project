@@ -32,10 +32,10 @@ const Login = () => {
 	};
 
 	return (
-		<>
-			<HeaderPlaceHolder />
+		<>			
+		<Grid width='100%' is_Center>
 			<LoginWrap>
-				<Grid padding='16px 16px' width='50%'>
+				<Grid padding='16px 16px' width='100%'>
 					<Text size='32px' bold>
 						로그인
 					</Text>
@@ -57,19 +57,14 @@ const Login = () => {
 					<Button text='로그인' callback={onlogin} />
 				</Grid>
 			</LoginWrap>
+			</Grid>
 		</>
 	);
 };
 
 export default Login;
 
-const HeaderPlaceHolder = styled.div`
-	height: 61px;
-	margin: 0px;
-`;
-
 const LoginWrap = styled.div`
-	display: flex;
-	justify-content: flex-start;
+	width: 50%;	
 	margin-top: 100px;
 `;

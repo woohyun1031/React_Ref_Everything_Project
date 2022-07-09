@@ -51,30 +51,16 @@ const App = () => {
 				<GlobalStyle />
 				<Header _isLogin={_isLogin} _isDark={_isDark} />
 				<Template>
-					<SideBar _isLogin={_isLogin} />
-					<Grid width='100%' margin='0% 0% 0% 210px'>
-						<Routes>
-							<Route
-								path='/'
-								element={_isLogin ? <PostList /> : <NotLogin />}
-							/>
-							<Route
-								path='/write'
-								element={_isLogin ? <PostWrite /> : <NotLogin />}
-							/>
-							<Route
-								path='/update/:id'
-								element={_isLogin ? <PostUpdate /> : <NotLogin />}
-							/>
-							<Route
-								path='/post/:id'
-								element={_isLogin ? <PostDetail /> : <NotLogin />}
-							/>
-							<Route path='/externalLink/:id' element={<RedirectPage />} />
-							<Route path='/login' element={<Login />} />
-							<Route path='/signup' element={<SignUp />} />
-						</Routes>
-					</Grid>
+					<SideBar _isLogin={_isLogin} />					
+					<Routes>
+						<Route
+							path='/'
+							element={_isLogin ? <PostList /> : <NotLogin />}
+						/>
+						<Route path='/externalLink/:id' element={<RedirectPage />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/signup' element={<SignUp />} />
+					</Routes>					
 				</Template>
 				<Modal isDark={_isDark} />
 			</ThemeProvider>

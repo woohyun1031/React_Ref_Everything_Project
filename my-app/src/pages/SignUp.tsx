@@ -40,9 +40,9 @@ const SignUp = () => {
 
 	return (
 		<>
-			<HeaderPlaceHolder />
+		<Grid width='100%' is_Center>			
 			<SignUpWrap>
-				<Grid padding='16px' width='50%'>
+				<Grid padding='16px' width='100%'>
 					<Text size='32px' bold>
 						회원가입
 					</Text>
@@ -86,22 +86,17 @@ const SignUp = () => {
 						/>
 					</Grid>
 
-					<Button text='회원가입하기' callback={onSignUp}></Button>
+					<Button text='회원가입하기' callback={onSignUp} />
 				</Grid>
 			</SignUpWrap>
+			</Grid>
 		</>
 	);
 };
 
 export default SignUp;
 
-const HeaderPlaceHolder = styled.div`
-	height: 61px;
-	margin: 0px;
-`;
-
 const SignUpWrap = styled.div`
-	display: flex;
-	justify-content: flex-start;
+	width: 50%;	
 	margin-top: 100px;
 `;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type GridProps = {
 	is_shadow?: boolean;
 	is_flex?: boolean;
+	is_Center?: boolean;
 	position?: string;
 	width?: string;
 	padding?: string;
@@ -27,6 +28,7 @@ const Grid = (props: GridProps) => {
 		height,
 		position,
 		overflow,
+		is_Center,
 	} = props;
 	const styles = {
 		is_shadow,
@@ -39,6 +41,7 @@ const Grid = (props: GridProps) => {
 		height,
 		position,
 		overflow,
+		is_Center
 	};
 
 	return <GridBox {...styles}>{children}</GridBox>;
@@ -56,6 +59,7 @@ const GridBox = styled.div<{
 	border?: boolean;
 	height?: string;
 	overflow?: boolean;
+	is_Center?: boolean;
 }>`
 	width: ${({ width }) => width};
 	height: ${({ height }) => (height ? height : '100%')};
@@ -67,9 +71,9 @@ const GridBox = styled.div<{
 	border: ${({ border }) => (border ? '1px black solid' : 'none')};
 	${({ is_shadow }) =>
 		is_shadow ? 'box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);' : ''};
-	display: ${({ is_flex }) => (is_flex ? 'flex' : 'block')};
-	${({ is_flex }) => (is_flex ? 'align-items: center' : '')};
-	${({ is_flex }) => (is_flex ? 'justify-content: space-between' : '')};
+	display: ${({ is_flex, is_Center }) => (is_flex||is_Center ? 'flex' : 'block')};
+	${({ is_flex,is_Center }) => (is_flex||is_Center ? 'align-items: center' : '')};
+	${({ is_flex,is_Center }) => (is_flex ? 'justify-content: space-between' : is_Center?'justify-content: center':'')};
 
 	${({ overflow }) => (overflow ? 'overflow: hidden' : '')};
 `;

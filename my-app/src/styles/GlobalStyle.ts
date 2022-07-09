@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
   }
   body {
+    
     background-color: ${({theme})=> theme.colors.subBackground}
   }
   li {

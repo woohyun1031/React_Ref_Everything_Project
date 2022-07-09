@@ -34,6 +34,14 @@ const commons = {
   background-color: rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(2px);
   `,
+  button_event:`
+  :hover {
+    background-color: #f4f4f4;
+  } 
+  :active {
+    background-color: #e1e1e1;
+  }
+  `,
 }
 
 

@@ -90,12 +90,7 @@ const SideList = styled.li`
 	margin-bottom: 15px;
 	padding: 8px 36px;
 	cursor: pointer;
-	&:hover {
-		filter: brightness(105%);
-	}
-	&:active {
-		filter: brightness(95%);
-	}
+	${({ theme }) => theme.commons.button_event};
 `;
 
 const AddSideList = styled.button`

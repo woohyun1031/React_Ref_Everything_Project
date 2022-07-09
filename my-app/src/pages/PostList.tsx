@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configStore';
-import { Text, Button } from '../elements/index';
+import { Grid } from '../elements/index';
 import styled from 'styled-components';
 import RefComponents from '../components/RefComponents';
 import { getComponent } from '../store/modules/component';
@@ -20,12 +20,14 @@ const PostList = () => {
 
 	return (
 		<>
+		<Grid width='100%' margin='0% 10% 0% 210px'>
 			<HeaderPlaceHolder />
 			<PostListWrap>
 				{component_list.map((component, index) => {
 					return <RefComponents key={component.id} {...component} />;
 				})}
 			</PostListWrap>
+			</Grid>
 			{/* {isLoading ? (
 				<Spinner type='inline' size={80} is_dim={false} />
 			) : (
