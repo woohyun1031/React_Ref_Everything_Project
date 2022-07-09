@@ -28,9 +28,9 @@ export const getComponent = createAsyncThunk(
 		try {	      
       const _user = thunkAPI.getState() as RootState;
 			const user_id = _user.user.user.user_uid;			
-			let componentList: ComponentType[] = [];
+			const componentList: ComponentType[] = [];
 
-			let post_query = query(
+			const post_query = query(
 				collection(db,'component'),
 				where('user_id','==', user_id),								
 			)
@@ -38,8 +38,8 @@ export const getComponent = createAsyncThunk(
 			const componentDB = await getDocs(post_query);
 
       componentDB.forEach((component) => {
-				let _component = component.data();
-				let new_component = Object.keys(_component).reduce((acc, cur) => {
+				const _component = component.data();
+				const new_component = Object.keys(_component).reduce((acc, cur) => {
 					return {...acc, [cur]: _component[cur]}
 				},{id: component.id})
 				componentList.push(new_component);
@@ -95,10 +95,7 @@ export const component = createSlice({
 		changeComponentId:(state,action) => {
 			state.is_location = action.payload
 		}
-	},
-	extraReducers: (builder) => {	
-		builder.addCase(getComponent.fulfilled, (state, action) => {});			
-	},
+	},	
 	},
 );
 

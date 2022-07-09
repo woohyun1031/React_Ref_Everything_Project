@@ -1,7 +1,6 @@
 import { configureStore  } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import user from './modules/user';
-import post from './modules/post';
 import image from './modules/image';
 import comment from './modules/comment';
 import component from './modules/component';
@@ -10,7 +9,7 @@ import modal from './modules/modal';
 
 
 const store = configureStore({ 
-  reducer: {user,post,image,comment,component,item,modal},
+  reducer: {user,image,comment,component,item,modal},
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

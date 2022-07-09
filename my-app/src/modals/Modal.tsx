@@ -15,7 +15,7 @@ const Modal = (props: ModalProps) => {
 	const dispatch = useDispatch();
 	const modal = useSelector((state: RootState) => state.modal);
 	let contents;
-	let isCanClose = true;
+	const isCanClose = true;
 
 	switch (modal.type) {
 		case 'addItem':

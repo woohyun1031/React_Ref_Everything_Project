@@ -79,8 +79,6 @@ export const item = createSlice({
 		 state.is_loading = true;
 		},
 	},
-	extraReducers: (builder) => {			
-	},
 	},
 );
 

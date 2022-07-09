@@ -10,8 +10,6 @@ import SignUp from './pages/SignUp';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './store/configStore';
 import { useEffect } from 'react';
-import PostWrite from './pages/PostWrite';
-import PostDetail from './pages/PostDetail';
 import Template from './components/Template';
 
 import GlobalStyle from './styles/GlobalStyle';
@@ -19,7 +17,6 @@ import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import darkTheme from './styles/darkTheme';
 
-import PostUpdate from './pages/PostUpdate';
 import { getUserInfo } from './store/modules/user';
 import SideBar from './components/SideBar';
 import NotLogin from './pages/NotLogin';

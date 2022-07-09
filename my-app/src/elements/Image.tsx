@@ -17,9 +17,9 @@ const Image = (props: ImageProps) => {
 		margin,
 	};
 	if (shape === 'circle') {
-		return <CircleImageBox {...styles}></CircleImageBox>;
+		return <CircleImageBox {...styles}/>;
 	} else if (shape === 'profile_rectangle') {
-		return <ImageBox {...styles}></ImageBox>;
+		return <ImageBox {...styles}/>;
 	}
 	return (
 		<AspectOutter onClick={callback}>

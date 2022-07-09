@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/configStore';
-import { getOnePost } from '../store/modules/post';
 import { Button, Grid } from '../elements';
 import Post from '../components/Post';
 import CommentList from '../components/CommentList';
@@ -33,13 +32,7 @@ const PostDetail = (props: PostDetailType) => {
 	const [isPostData, setIsPostData] = useState<PostType>();
 	const [isContents, setIsContents] = useState('');
 
-	useEffect(() => {
-		if (postId)
-			dispatch(getOnePost(postId)).then((result) => {
-				const new_post = result.payload as PostType;
-				setIsPostData(new_post);
-			});
-	}, []);
+
 
 	const changeContents = (e: ChangeEvent<HTMLInputElement>) => {
 		setIsContents(e.target.value);

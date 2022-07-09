@@ -10,8 +10,7 @@ const PostList = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const component_list = useSelector(
 		(state: RootState) => state.component.list
-	);
-	const isLoading = useSelector((state: RootState) => state.post.is_loading);
+	);	
 	console.log('redering');
 
 	useEffect(() => {
