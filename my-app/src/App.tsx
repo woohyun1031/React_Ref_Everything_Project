@@ -48,16 +48,13 @@ const App = () => {
 				<GlobalStyle />
 				<Header _isLogin={_isLogin} _isDark={_isDark} />
 				<Template>
-					<SideBar _isLogin={_isLogin} />					
+					<SideBar _isLogin={_isLogin} />
 					<Routes>
-						<Route
-							path='/'
-							element={_isLogin ? <PostList /> : <NotLogin />}
-						/>
+						<Route path='/' element={_isLogin ? <PostList /> : <NotLogin />} />
 						<Route path='/externalLink/:id' element={<RedirectPage />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/signup' element={<SignUp />} />
-					</Routes>					
+					</Routes>
 				</Template>
 				<Modal isDark={_isDark} />
 			</ThemeProvider>
