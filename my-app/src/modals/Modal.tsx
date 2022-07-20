@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import AddItem from './AddItem';
 import AddComponent from './AddComponent';
 import { useEffect, useState } from 'react';
+import ModalCloseButton from './ModalCloseButton';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
 
@@ -48,6 +49,7 @@ const Modal = (props: ModalProps) => {
 	return createPortal(
 		<Background onClick={isClose} isOpen={isStatic}>
 			<Contents onClick={(e) => e.stopPropagation()} isOpen={isStatic}>
+				<ModalCloseButton callback={isClose} />
 				{contents}
 			</Contents>
 		</Background>,

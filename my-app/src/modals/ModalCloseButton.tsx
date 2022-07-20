@@ -5,16 +5,21 @@ import { closeModal } from '../store/modules/modal';
 import { RiCloseFill } from 'react-icons/ri';
 import { RootState } from '../store/configStore';
 
-const ModalCloseButton = () => {
+type ButtonProps = {
+	callback?(): void;
+};
+
+const ModalCloseButton = (props: ButtonProps) => {
 	const dispatch = useDispatch();
 	const isDark = useSelector((state: RootState) => state.user.isDark);
+
 	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setTimeout(() => dispatch(closeModal()), 250);
 	};
 
 	return (
-		<CloseButton onClick={onClick} isDark={isDark}>
+		<CloseButton onClick={props.callback} isDark={isDark}>
 			<RiCloseFill />
 		</CloseButton>
 	);

@@ -1,11 +1,9 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { AppDispatch, RootState } from '../store/configStore';
 import { addComponent } from '../store/modules/component';
-import { addItem } from '../store/modules/item';
 import { closeModal } from '../store/modules/modal';
-import ModalCloseButton from './ModalCloseButton';
 
 const AddComponent = () => {
 	const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +26,6 @@ const AddComponent = () => {
 
 	return (
 		<Form>
-			<ModalCloseButton />
 			<FormTitle>Add Component</FormTitle>
 			<FormDescription>
 				Add버튼을 누르시면 <br /> Component가 Add 됩니다
