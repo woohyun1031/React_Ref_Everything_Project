@@ -10,7 +10,7 @@ const ModalCloseButton = () => {
 	const isDark = useSelector((state: RootState) => state.user.isDark);
 	const onClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
-		dispatch(closeModal());
+		setTimeout(() => dispatch(closeModal()), 250);
 	};
 
 	return (

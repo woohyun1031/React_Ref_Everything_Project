@@ -5,6 +5,7 @@ import { closeModal } from '../store/modules/modal';
 import styled from 'styled-components';
 import AddItem from './AddItem';
 import AddComponent from './AddComponent';
+import { useEffect, useState } from 'react';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
 
@@ -15,6 +16,16 @@ type ModalProps = {
 const Modal = (props: ModalProps) => {
 	const dispatch = useDispatch();
 	const modal = useSelector((state: RootState) => state.modal);
+	const [isStatic, setIsStatic] = useState(true);
+
+	useEffect(() => {
+		if (!isStatic) {
+			setTimeout(() => {
+				dispatch(closeModal());
+				setIsStatic(true);
+			}, 250);
+		}
+	}, [isStatic]);
 
 	let contents: JSX.Element | null;
 	switch (modal.type) {
@@ -29,14 +40,14 @@ const Modal = (props: ModalProps) => {
 	}
 
 	const isClose = () => {
-		dispatch(closeModal());
+		setIsStatic(false);
 	};
 
 	if (!modal.isOpen) return null;
 
 	return createPortal(
-		<Background onClick={isClose} isOpen={modal.isOpen}>
-			<Contents onClick={(e) => e.stopPropagation()} isOpen={modal.isOpen}>
+		<Background onClick={isClose} isOpen={isStatic}>
+			<Contents onClick={(e) => e.stopPropagation()} isOpen={isStatic}>
 				{contents}
 			</Contents>
 		</Background>,
