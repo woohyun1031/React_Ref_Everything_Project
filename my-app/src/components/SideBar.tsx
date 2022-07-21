@@ -88,7 +88,7 @@ const SideUlist = styled.ul`
 const SideList = styled.li`
 	color: ${({ theme }) => theme.colors.side_title};
 	margin-bottom: 15px;
-	padding: 8px 36px;
+	padding: 8px 16px;
 	cursor: pointer;
 	${({ theme }) => theme.commons.button_event};
 `;

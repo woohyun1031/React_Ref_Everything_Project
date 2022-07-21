@@ -28,10 +28,7 @@ export const getItem = createAsyncThunk(
 	'item/getItem',
 	async (component_id: string, thunkAPI) => {
 		try {
-			const item_query = query(
-				collection(db, 'item'),
-				where('component_id', '==', component_id)
-			);
+			const item_query = collection(db, 'component', component_id, 'item');
 			const itemDB = await getDocs(item_query);
 			const itemList: any = []; //[{},{},{}]
 			itemDB.forEach((item) => {
@@ -67,15 +64,15 @@ export const addItem = createAsyncThunk(
 				image_url: `http://www.google.com/s2/favicons?domain=${postInfo.address}`,
 				item_url: postInfo.address,
 			};
-			await addDoc(collection(db, 'item'), { ...isItem }).then(
-				async (isdoc) => {
-					isItem = { ...isItem, id: isdoc.id };
-					const updateRef = doc(db, 'item', isdoc.id);
-					await updateDoc(updateRef, { id: isdoc.id });
-					const itemInfo = { isItem, component_id };
-					thunkAPI.dispatch(addItemDone(itemInfo));
-				}
-			);
+			await addDoc(collection(db, 'component', component_id, 'item'), {
+				...isItem,
+			}).then(async (isdoc) => {
+				isItem = { ...isItem, id: isdoc.id };
+				const updateRef = doc(db, 'component', component_id, 'item', isdoc.id);
+				await updateDoc(updateRef, { id: isdoc.id });
+				const itemInfo = { isItem, component_id };
+				thunkAPI.dispatch(addItemDone(itemInfo));
+			});
 		} catch (error) {
 			alert(`알 수 없는 오류: ${error}`);
 		}
@@ -87,7 +84,9 @@ export const removeItem = createAsyncThunk(
 	async (postInfo: { id: string; component_id: string }, thunkAPI) => {
 		const _user = thunkAPI.getState() as RootState;
 		try {
-			await deleteDoc(doc(db, 'item', postInfo.id));
+			await deleteDoc(
+				doc(db, 'component', postInfo.component_id, 'item', postInfo.id)
+			);
 			const new_list = {
 				[postInfo.component_id]: _user.item.list[postInfo.component_id].filter(
 					(item: ItemType) => {
