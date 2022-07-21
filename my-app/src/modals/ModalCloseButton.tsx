@@ -1,25 +1,20 @@
-import { MouseEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { closeModal } from '../store/modules/modal';
 import { RiCloseFill } from 'react-icons/ri';
 import { RootState } from '../store/configStore';
 
 type ButtonProps = {
-	callback?(): void;
+	top: string;
+	right: string;
+	callback?(event: any): any;
 };
 
 const ModalCloseButton = (props: ButtonProps) => {
-	const dispatch = useDispatch();
+	const { top, right, callback } = props;
 	const isDark = useSelector((state: RootState) => state.user.isDark);
 
-	const onClick = (e: MouseEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setTimeout(() => dispatch(closeModal()), 250);
-	};
-
 	return (
-		<CloseButton onClick={props.callback} isDark={isDark}>
+		<CloseButton onClick={callback} isDark={isDark} top={top} right={right}>
 			<RiCloseFill />
 		</CloseButton>
 	);
@@ -27,10 +22,10 @@ const ModalCloseButton = (props: ButtonProps) => {
 
 export default ModalCloseButton;
 
-const CloseButton = styled.div<{ isDark: boolean }>`
+const CloseButton = styled.div<{ isDark: boolean; top: string; right: string }>`
 	cursor: pointer;
 	position: absolute;
 	color: ${({ isDark }) => (isDark ? 'white' : '')};
-	top: 30px;
-	right: 30px;
+	top: ${({ top }) => top};
+	right: ${({ right }) => right};
 `;

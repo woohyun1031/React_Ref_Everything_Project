@@ -10,11 +10,7 @@ import ModalCloseButton from './ModalCloseButton';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
 
-type ModalProps = {
-	isDark: boolean;
-};
-
-const Modal = (props: ModalProps) => {
+const Modal = () => {
 	const dispatch = useDispatch();
 	const modal = useSelector((state: RootState) => state.modal);
 	const [isStatic, setIsStatic] = useState(true);
@@ -24,7 +20,7 @@ const Modal = (props: ModalProps) => {
 			setTimeout(() => {
 				dispatch(closeModal());
 				setIsStatic(true);
-			}, 250);
+			}, 150);
 		}
 	}, [isStatic]);
 
@@ -41,7 +37,9 @@ const Modal = (props: ModalProps) => {
 	}
 
 	const isClose = () => {
-		setIsStatic(false);
+		if (confirm('정말로 취소하시겠습니까?')) {
+			setIsStatic(false);
+		}
 	};
 
 	if (!modal.isOpen) return null;
@@ -49,7 +47,7 @@ const Modal = (props: ModalProps) => {
 	return createPortal(
 		<Background onClick={isClose} isOpen={isStatic}>
 			<Contents onClick={(e) => e.stopPropagation()} isOpen={isStatic}>
-				<ModalCloseButton callback={isClose} />
+				<ModalCloseButton callback={isClose} top={'30px'} right={'30px'} />
 				{contents}
 			</Contents>
 		</Background>,
@@ -70,7 +68,7 @@ const Background = styled.div<{ isOpen: boolean }>`
 	align-items: center;
 	${({ theme }) => theme.commons.blur_background};
 	z-index: 10000;
-	animation-duration: 0.25s;
+	animation-duration: 0.15s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 	${({ isOpen }) =>
@@ -103,7 +101,7 @@ const Contents = styled.div<{ isOpen: boolean }>`
 	border-radius: 10px;
 	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
 	z-index: 1001;
-	animation-duration: 0.25s;
+	animation-duration: 0.15s;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 	${({ isOpen }) =>

@@ -56,7 +56,7 @@ const App = () => {
 						<Route path='/signup' element={<SignUp />} />
 					</Routes>
 				</Template>
-				<Modal isDark={_isDark} />
+				<Modal />
 			</ThemeProvider>
 		</>
 	);

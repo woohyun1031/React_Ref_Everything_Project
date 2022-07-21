@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Grid, Image, Text } from '../elements/index';
-import { displayDate, textLengthOverCut } from '../shared/common';
-import { RootState } from '../store/configStore';
+import { textLengthOverCut } from '../shared/common';
+import ModalCloseButton from '../modals/ModalCloseButton';
+import { removeItem } from '../store/modules/item';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/configStore';
 
-type PostProps = {
+export type ItemType = {
 	id?: string;
 	component_id?: string;
 	image_url?: string;
@@ -17,14 +16,29 @@ type PostProps = {
 	insert_dt?: number;
 };
 
-const RefItem = (props: PostProps) => {
-	const { id, component_id, image_url, item_url, title, contents, insert_dt } =
-		props;
-	const navigate = useNavigate();
-	const userDafaultImgae = 'images/man_default_image.png';
+const RefItem = (props: ItemType) => {
+	const { id, component_id, image_url, item_url, title, contents } = props;
+	const dispatch = useDispatch<AppDispatch>();
+	const ItemRemoveClick = () => {
+		if (confirm('Are you sure delete Item?')) {
+			if (id && component_id) {
+				const postInfo = { id, component_id };
+				dispatch(removeItem(postInfo));
+			}
+		}
+	};
+
 	return (
 		<>
 			<RefItemBox href={item_url} target='_blank' rel='noopener noreferrer'>
+				<ModalCloseButton
+					top='10px'
+					right='10px'
+					callback={(e: MouseEvent) => {
+						e.preventDefault();
+						ItemRemoveClick();
+					}}
+				/>
 				<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
 					<Grid bg padding='10px'>
 						<Image shape={'profile_rectangle'} src={image_url} size={30} />

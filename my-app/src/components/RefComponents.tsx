@@ -24,10 +24,6 @@ type RefComponentsProps = {
 	user_id?: string;
 };
 
-type listType = {
-	[index: string]: any;
-};
-
 const RefComponents = (props: RefComponentsProps) => {
 	const { component_title, id, user_id } = props;
 
@@ -46,11 +42,6 @@ const RefComponents = (props: RefComponentsProps) => {
 
 	useEffect(() => {
 		if (id === isComponentLocation) {
-			// const elementLocation = element.current?.getBoundingClientRect().top;
-			// window.scrollTo({
-			// 	top: elementLocation,
-			// 	behavior: 'smooth',
-			// });
 			element.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 			dispatch(changeComponentId(''));
 		}
@@ -60,7 +51,6 @@ const RefComponents = (props: RefComponentsProps) => {
 		console.log(item_list);
 		if (id) dispatch(changePostId(id));
 		dispatch(openModal('addItem'));
-		//if (id) await dispatch(addItem(id));
 	};
 	return (
 		<>
