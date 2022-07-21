@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Grid, Image, Text, Button } from '../elements/index';
+import { Grid, Text, Button } from '../elements/index';
 import { AppDispatch, RootState } from '../store/configStore';
-import { changeComponentId } from '../store/modules/component';
-import { addItem, getItem } from '../store/modules/item';
+import { changeComponent, changeComponentId } from '../store/modules/component';
+import { getItem } from '../store/modules/item';
 import { changePostId, openModal } from '../store/modules/modal';
 import RefItem from './RefItem';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
+import { FcCheckmark } from 'react-icons/fc';
 
 type ItemType = {
 	id?: string;
@@ -19,22 +21,25 @@ type ItemType = {
 };
 
 type RefComponentsProps = {
-	id?: string;
+	id: string;
 	component_title?: string;
 	user_id?: string;
 };
 
 const RefComponents = (props: RefComponentsProps) => {
-	const { component_title, id, user_id } = props;
+	const { component_title, id } = props;
 
+	const dispatch = useDispatch<AppDispatch>();
 	const element = useRef<HTMLDivElement>(null);
 
 	const item_list = useSelector((state: RootState) => state.item.list);
+	const isDark = useSelector((state: RootState) => state.user.isDark);
 	const isComponentLocation = useSelector(
 		(state: RootState) => state.component.is_location
 	);
 
-	const dispatch = useDispatch<AppDispatch>();
+	const [isUpdate, setIsUpdate] = useState(false);
+	const [newTitle, setNewTitle] = useState('');
 
 	useEffect(() => {
 		if (id) dispatch(getItem(id));
@@ -52,14 +57,41 @@ const RefComponents = (props: RefComponentsProps) => {
 		if (id) dispatch(changePostId(id));
 		dispatch(openModal('addItem'));
 	};
+	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setNewTitle(e.target.value);
+	};
+	const changeTitle = () => {
+		if (!isUpdate) {
+			setIsUpdate(true); //icon변경
+		} else {
+			if (component_title === newTitle || !newTitle) {
+				setIsUpdate(false); //icon변경
+			} else {
+				const compInfo = { id, newTitle };
+				dispatch(changeComponent(compInfo));
+				setIsUpdate(false); //icon변경
+			}
+		}
+	};
 	return (
 		<>
 			<RefComponentWrap ref={element}>
-				<Grid padding='16px 5px' margin='5px 0px'>
-					<Text margin='0px' size='20px' bold>
-						{component_title}
-					</Text>
-				</Grid>
+				<RefTitleWrap>
+					{isUpdate ? (
+						<Input
+							type='input'
+							name='title'
+							placeholder={component_title}
+							isDark={isDark}
+							onChange={onChange}
+							onBlur={changeTitle}
+						/>
+					) : (
+						<Text margin='0px' size='20px' bold callback={changeTitle}>
+							{component_title}
+						</Text>
+					)}
+				</RefTitleWrap>
 				<Grid is_flex>
 					<RefItemWrap>
 						{id
@@ -95,9 +127,34 @@ const RefComponentWrap = styled.div`
 	scroll-margin: 107px;
 `;
 
+const RefTitleWrap = styled.div`
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	padding: 16px 5px;
+	margin: 5px 0px;
+`;
+
 const RefItemWrap = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	flex-wrap: wrap;
+`;
+
+const Input = styled.input<{ isDark: boolean }>`
+	width: 100%;
+	font-size: 20px;
+	font-weight: 600;
+	color: ${({ isDark }) => (isDark ? 'white' : '')};
+	background: transparent;
+`;
+
+const Icon = styled.div<{ isDark: boolean }>`
+	display: inline-block;
+	margin-left: 5px;
+	padding-top: 0;
+	transition: 0.3s;
+	color: ${({ isDark }) => (isDark ? 'white' : '')};
+	cursor: pointer;
 `;
