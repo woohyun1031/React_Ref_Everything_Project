@@ -18,15 +18,15 @@ const DropDown = (props: DropDownProps) => {
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
 
-	const toggleDropDown = () => {
-		setIsOpen((prevState) => !prevState);
+	const toggleDropDown = (isOpen: boolean) => {
+		setIsOpen(isOpen);
 	};
 
 	const onLogout = async () => {
 		dispatch(changeTheme(false));
 		dispatch(openSidebar(false));
 		await dispatch(logoutDB());
-		setIsOpen((prevState) => !prevState);
+		setIsOpen(false);
 		navigate('/login');
 	};
 
@@ -42,21 +42,25 @@ const DropDown = (props: DropDownProps) => {
 		<>
 			{props.isLogin ? (
 				<Container>
-					<NameWrap onClick={toggleDropDown}>
-						<Name>{props.name} 님</Name>
-						<Icon isDark={props.isDark}>
-							{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
-						</Icon>
-					</NameWrap>
-					{isOpen && (
-						<>
-							<BackGround onClick={toggleDropDown} />
-							<Menu>
-								<li>마이페이지</li>
-								<li onClick={onLogout}>로그아웃</li>
-							</Menu>
-						</>
-					)}
+					<UpperWrap
+						onMouseOver={() => toggleDropDown(true)}
+						onMouseLeave={() => toggleDropDown(false)}
+					>
+						<NameWrap>
+							<Name>{props.name} 님</Name>
+							<Icon isDark={props.isDark}>
+								{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+							</Icon>
+						</NameWrap>
+						{isOpen && (
+							<>
+								<Menu>
+									<li>마이페이지</li>
+									<li onClick={onLogout}>로그아웃</li>
+								</Menu>
+							</>
+						)}
+					</UpperWrap>
 				</Container>
 			) : (
 				<Grid is_flex padding='5px' width='100%' bg>
@@ -78,6 +82,7 @@ export default DropDown;
 const Container = styled.div`
 	position: relative;
 `;
+const UpperWrap = styled.div``;
 
 const NameWrap = styled.div`
 	display: flex;

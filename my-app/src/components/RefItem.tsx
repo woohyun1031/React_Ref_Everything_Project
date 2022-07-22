@@ -39,9 +39,9 @@ const RefItem = (props: ItemType) => {
 						ItemRemoveClick();
 					}}
 				/>
-				<Grid margin='10px' width='200px' height='80px' bg is_flex is_shadow>
+				<Grid margin='10px' width='200px' height='80px' bg is_flex border>
 					<Grid bg padding='10px'>
-						<Image shape={'profile_rectangle'} src={image_url} size={30} />
+						<Image shape={'profile_rectangle'} src={image_url} size={25} />
 					</Grid>
 					<Grid bg padding='10px' overflow>
 						<Text size='8px' margin='5px 0px' bold>
