@@ -26,6 +26,8 @@ const colors = {
 	//background
 	background: '#FFFFFF',
 	subBackground: '#F8F8F8',
+	//border
+	border: '1px #f3f3f3 solid',
 };
 
 const commons = {

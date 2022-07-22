@@ -58,7 +58,7 @@ const ButtonBox = styled.button<{
 		font_color ? theme.colors[font_color] : theme.colors.subTitle};
 	padding: 12px 0px;
 	box-sizing: border-box;
-	border: 1px #f3f3f3 solid;
+	border: ${({ theme }) => theme.colors.border};
 	//box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.1);
 	&:hover {
 		transition: 0.2s;
