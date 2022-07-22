@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,6 +17,16 @@ const DropDown = (props: DropDownProps) => {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isStatic, setIsStatic] = useState(true);
+
+	useEffect(() => {
+		if (!isStatic) {
+			setTimeout(() => {
+				setIsOpen(false);
+				setIsStatic(true);
+			}, 200);
+		}
+	}, [isStatic]);
 
 	const toggleDropDown = (isOpen: boolean) => {
 		setIsOpen(isOpen);
@@ -44,7 +54,7 @@ const DropDown = (props: DropDownProps) => {
 				<Container>
 					<UpperWrap
 						onMouseOver={() => toggleDropDown(true)}
-						onMouseLeave={() => toggleDropDown(false)}
+						onMouseLeave={() => setIsStatic(false)}
 					>
 						<NameWrap>
 							<Name>{props.name} 님</Name>
@@ -52,14 +62,11 @@ const DropDown = (props: DropDownProps) => {
 								{isOpen ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
 							</Icon>
 						</NameWrap>
-						{isOpen && (
-							<>
-								<Menu>
-									<li>마이페이지</li>
-									<li onClick={onLogout}>로그아웃</li>
-								</Menu>
-							</>
-						)}
+
+						<Menu isOpen={isOpen} isStatic={isStatic}>
+							<li>마이페이지</li>
+							<li onClick={onLogout}>로그아웃</li>
+						</Menu>
 					</UpperWrap>
 				</Container>
 			) : (
@@ -105,7 +112,7 @@ const Icon = styled.div<{ isDark: boolean }>`
 	cursor: pointer;
 `;
 
-const Menu = styled.ul`
+const Menu = styled.ul<{ isOpen: boolean; isStatic: boolean }>`
 	width: 108px;
 	height: 65px;
 	border-radius: 7px;
@@ -118,6 +125,34 @@ const Menu = styled.ul`
 	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
 	background-position: center center;
 	background-repeat: no-repeat;
+
+	animation-duration: 0.2s;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+	${({ isStatic }) =>
+		isStatic ? 'animation-name: slideUp' : 'animation-name: slideDown'};
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0px);
+		}
+	}
+	@keyframes slideDown {
+		from {
+			opacity: 1;
+			transform: translateY(0px);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
+	}
+	${({ isOpen }) => !isOpen && 'display:none'};
 	& li {
 		color: ${({ theme }) => theme.colors.title};
 		width: 70px;
