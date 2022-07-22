@@ -8,9 +8,15 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
   }
   body {
-    
-    background-color: ${({theme})=> theme.colors.subBackground}
-  }
+    &::-webkit-scrollbar{
+      width: 5px; 
+    }
+    &::-webkit-scrollbar-thumb {      
+      border-radius: 10px;
+      background: rgba(115, 140, 255, 0.15);
+    }
+    background-color: ${({ theme }) => theme.colors.subBackground}
+  } 
   li {
     list-style: none;
   }

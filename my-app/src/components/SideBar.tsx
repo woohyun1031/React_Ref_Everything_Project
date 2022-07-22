@@ -78,6 +78,9 @@ const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
 			: isHover
 			? 'translateX(30px)'
 			: 'translateX(0)'};
+	&::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 const SideUlist = styled.ul`

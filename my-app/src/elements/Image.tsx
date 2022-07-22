@@ -17,9 +17,9 @@ const Image = (props: ImageProps) => {
 		margin,
 	};
 	if (shape === 'circle') {
-		return <CircleImageBox {...styles}/>;
+		return <CircleImageBox {...styles} />;
 	} else if (shape === 'profile_rectangle') {
-		return <ImageBox {...styles}/>;
+		return <ImageBox {...styles} />;
 	}
 	return (
 		<AspectOutter onClick={callback}>
@@ -69,4 +69,5 @@ const ImageBox = styled.div<{ src?: string; size?: number; margin?: string }>`
 	background-position: center center;
 	background-repeat: no-repeat;
 	margin-right: 7px;
+	//filter: brightness(150%);
 `;

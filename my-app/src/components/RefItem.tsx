@@ -63,9 +63,10 @@ const RefItemBox = styled.a`
 	cursor: pointer;
 	:hover {
 		transform: translateY(-2px);
-		filter: brightness(115%);
+		filter: drop-shadow(3px 4px 7px rgba(0, 0, 0, 0.3));
 	}
 	:active {
 		filter: brightness(85%);
+		filter: drop-shadow(3px 4px 7px rgba(0, 0, 0, 0.3));
 	}
 `;
