@@ -39,7 +39,7 @@ const RefComponents = (props: RefComponentsProps) => {
 	);
 
 	const [isUpdate, setIsUpdate] = useState(false);
-	const [newTitle, setNewTitle] = useState('');
+	const [newTitle, setNewTitle] = useState(component_title);
 
 	useEffect(() => {
 		if (id) dispatch(getItem(id));
@@ -62,14 +62,14 @@ const RefComponents = (props: RefComponentsProps) => {
 	};
 	const changeTitle = () => {
 		if (!isUpdate) {
-			setIsUpdate(true); //icon변경
+			setIsUpdate(true);
 		} else {
 			if (component_title === newTitle || !newTitle) {
-				setIsUpdate(false); //icon변경
+				setIsUpdate(false);
 			} else {
 				const compInfo = { id, newTitle };
 				dispatch(changeComponent(compInfo));
-				setIsUpdate(false); //icon변경
+				setIsUpdate(false);
 			}
 		}
 	};
@@ -85,6 +85,8 @@ const RefComponents = (props: RefComponentsProps) => {
 							isDark={isDark}
 							onChange={onChange}
 							onBlur={changeTitle}
+							autoFocus
+							value={newTitle}
 						/>
 					) : (
 						<Text margin='0px' size='20px' bold callback={changeTitle}>

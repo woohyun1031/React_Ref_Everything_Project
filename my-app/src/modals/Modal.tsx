@@ -37,9 +37,9 @@ const Modal = () => {
 	}
 
 	const isClose = () => {
-		if (confirm('정말로 취소하시겠습니까?')) {
-			setIsStatic(false);
-		}
+		setIsStatic(false);
+		// if (confirm('정말로 취소하시겠습니까?')) {
+		// }
 	};
 
 	if (!modal.isOpen) return null;
