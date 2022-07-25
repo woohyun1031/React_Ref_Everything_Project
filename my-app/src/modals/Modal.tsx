@@ -7,6 +7,7 @@ import AddItem from './AddItem';
 import AddComponent from './AddComponent';
 import { useEffect, useState } from 'react';
 import ModalCloseButton from './ModalCloseButton';
+import MyPage from './MyPage';
 
 const modalRoot = document.querySelector('#modal') as HTMLElement;
 
@@ -31,6 +32,9 @@ const Modal = () => {
 			break;
 		case 'addComponent':
 			contents = <AddComponent />;
+			break;
+		case 'myPage':
+			contents = <MyPage />;
 			break;
 		default:
 			contents = null;

@@ -5,12 +5,15 @@ const initialState = {
 	type: '',
 	postId: '',
 };
-	
+
 const ModalSlice = createSlice({
 	name: 'modal',
 	initialState,
 	reducers: {
-		openModal(state, action: PayloadAction<'addItem'|'addComponent'>) {
+		openModal(
+			state,
+			action: PayloadAction<'addItem' | 'addComponent' | 'myPage'>
+		) {
 			state.isOpen = true;
 			state.type = action.payload;
 		},

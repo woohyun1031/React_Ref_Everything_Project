@@ -6,6 +6,7 @@ import { AppDispatch } from '../store/configStore';
 import { Grid, Text, Button } from '../elements/index';
 import { changeTheme, logoutDB, openSidebar } from '../store/modules/user';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
+import { openModal } from '../store/modules/modal';
 
 type DropDownProps = {
 	name?: string;
@@ -48,6 +49,10 @@ const DropDown = (props: DropDownProps) => {
 		navigate('/signup');
 	};
 
+	const openMyPage = () => {
+		dispatch(openModal('myPage'));
+	};
+
 	return (
 		<>
 			{props.isLogin ? (
@@ -64,7 +69,7 @@ const DropDown = (props: DropDownProps) => {
 						</NameWrap>
 
 						<Menu isOpen={isOpen} isStatic={isStatic}>
-							<li>마이페이지</li>
+							<li onClick={openMyPage}>마이페이지</li>
 							<li onClick={onLogout}>로그아웃</li>
 						</Menu>
 					</UpperWrap>

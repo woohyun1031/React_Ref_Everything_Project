@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
 	addDoc,
 	collection,
+	deleteDoc,
 	doc,
 	getDocs,
 	query,
@@ -103,6 +104,26 @@ export const changeComponent = createAsyncThunk(
 	}
 );
 
+export const removeComponent = createAsyncThunk(
+	'component/removeComponent',
+	async (component_id: string, thunkAPI) => {
+		const _user = thunkAPI.getState() as RootState;
+		try {
+			await deleteDoc(doc(db, 'component', component_id));
+			const new_list = _user.component.list.filter((list: ComponentType) => {
+				if (list.id !== component_id) {
+					return list;
+				} else {
+					return;
+				}
+			});
+			thunkAPI.dispatch(setComponents(new_list));
+		} catch (error) {
+			alert(`알 수 없는 오류: ${error}`);
+		}
+	}
+);
+
 export const component = createSlice({
 	name: 'component',
 	initialState,
@@ -126,7 +147,6 @@ export const component = createSlice({
 					return list;
 				}
 			});
-			//state.list = {action.payload}
 		},
 		loading: (state) => {
 			state.is_loading = true;
