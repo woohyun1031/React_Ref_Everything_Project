@@ -7,19 +7,23 @@ import { closeModal } from '../store/modules/modal';
 
 const AddComponent = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const [input, setInputs] = useState('');
-	const postId = useSelector((state: RootState) => state.modal);
+	const [inputs, setInputs] = useState({ icon: '', title: '' });
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setInputs(e.target.value);
+		const { name, value } = e.target;
+		setInputs({ ...inputs, [name]: value });
 	};
 
 	const onAddClick = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		if (input === '') {
+		const isIcon = inputs.icon.trim();
+		const isTitle = inputs.title.trim();
+		if (isIcon === '' || isTitle === '') {
 			return alert('빈 칸을 모두 채우세요');
 		} else {
-			await dispatch(addComponent(input));
+			const newComponent = isIcon + isTitle + isIcon;
+			console.log(newComponent);
+			await dispatch(addComponent(newComponent));
 			dispatch(closeModal());
 		}
 	};
@@ -31,6 +35,8 @@ const AddComponent = () => {
 				Add버튼을 누르시면 <br /> Component가 Add 됩니다
 			</FormDescription>
 			<InputBox>
+				<Label htmlFor='icon'>icon</Label>
+				<IconInput type='text' name='icon' onChange={handleChange} />
 				<Label htmlFor='title'>title</Label>
 				<Input type='text' name='title' onChange={handleChange} />
 			</InputBox>
@@ -67,6 +73,18 @@ const Label = styled.label``;
 
 const Input = styled.input`
 	width: 265px;
+	height: 30px;
+	border-radius: 7px;
+	padding: 12px;
+	background-color: ${({ theme }) => theme.colors.background};
+	margin-top: 5px;
+	margin-bottom: 15px;
+	border: 1px solid ${({ theme }) => theme.colors.modal_border};
+	color: ${({ theme }) => theme.colors.title};
+`;
+
+const IconInput = styled.input`
+	width: 43px;
 	height: 30px;
 	border-radius: 7px;
 	padding: 12px;
