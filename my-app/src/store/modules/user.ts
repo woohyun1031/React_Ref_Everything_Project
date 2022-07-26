@@ -5,8 +5,7 @@ import {
 	signOut,
 	updateProfile,
 } from 'firebase/auth';
-import { userInfo } from 'os';
-import { deleteCookie, getCookie, setCookie } from '../../shared/Cookie';
+import { deleteCookie, setCookie } from '../../shared/Cookie';
 import { auth } from '../../shared/firebase';
 
 const userDafaultImgae = 'images/man_default_image.png';
@@ -100,6 +99,22 @@ export const logoutDB = createAsyncThunk(
 	}
 );
 
+export const changeUserName = createAsyncThunk(
+	'user/changeUserName',
+	async (userName: string, thunkAPI) => {
+		try {
+			if (auth.currentUser) {
+				await updateProfile(auth.currentUser, {
+					displayName: userName,
+				});
+				thunkAPI.dispatch(setUser({ user_name: userName }));
+			}
+		} catch (error) {
+			return alert(`알 수 없는 오류: ${error}`);
+		}
+	}
+);
+
 //initialState
 type initialStateType = {
 	user: {
@@ -141,17 +156,9 @@ export const user = createSlice({
 			};
 			state.isLogin = false;
 		},
-		getUser: (state, actions) => {
-			state.user = { ...actions.payload };
-		},
 		setUser: (state, actions) => {
 			setCookie('isLogin', 'login Token');
-			state.user = {
-				user_name: actions.payload.user_name,
-				user_id: actions.payload.user_id,
-				user_profile: actions.payload.user_profile,
-				user_uid: actions.payload.user_uid,
-			};
+			state.user = { ...state.user, ...actions.payload };
 			state.isLogin = true;
 		},
 		changeTheme: (state, actions) => {
@@ -189,6 +196,6 @@ export const user = createSlice({
 	},
 });
 
-export const { logout, getUser, setUser, changeTheme, openSidebar, menuHover } =
+export const { logout, setUser, changeTheme, openSidebar, menuHover } =
 	user.actions;
 export default user.reducer;

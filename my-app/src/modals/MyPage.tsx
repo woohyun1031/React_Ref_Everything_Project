@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Text } from '../elements/index';
 import { AppDispatch, RootState } from '../store/configStore';
-import { addComponent, removeComponent } from '../store/modules/component';
-import { closeModal } from '../store/modules/modal';
+import { removeComponent } from '../store/modules/component';
+import { changeUserName } from '../store/modules/user';
 import ModalCloseButton from './ModalCloseButton';
 
 const MyPage = () => {
 	const dispatch = useDispatch<AppDispatch>();
-	const [input, setInput] = useState('');
+	const userName = useSelector((state: RootState) => state.user.user.user_name);
 	const component_list = useSelector(
 		(state: RootState) => state.component.list
 	);
+	const [input, setInput] = useState(userName);
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setInput(e.target.value);
@@ -23,15 +24,29 @@ const MyPage = () => {
 			dispatch(removeComponent(componentId));
 	};
 
+	const updateUser = () => {
+		if (confirm('정말로 변경하시겠습니까')) dispatch(changeUserName(input));
+	};
+
 	return (
 		<Form>
 			<FormTitle>My Page</FormTitle>
 			<FormDescription>
 				My Page 입니다. <br /> Component list 및 개인 정보를 수정하세요.
 			</FormDescription>
-			<InputBox>
-				<Label htmlFor='nickname'>nickname</Label>
-				<Input type='text' name='nickname' onChange={handleChange} />
+			<Wrapper>
+				<Upper>
+					<InputBox>
+						<Label htmlFor='nickname'>nickname</Label>
+						<Input
+							type='text'
+							name='nickname'
+							value={input}
+							onChange={handleChange}
+						/>
+					</InputBox>
+					<Button onClick={updateUser}>수정</Button>
+				</Upper>
 				<Label>component list</Label>
 				<ComponentList>
 					{component_list ? (
@@ -58,7 +73,7 @@ const MyPage = () => {
 						<Component>component가 존재하지 않습니다</Component>
 					)}
 				</ComponentList>
-			</InputBox>
+			</Wrapper>
 		</Form>
 	);
 };
@@ -83,39 +98,28 @@ const FormDescription = styled.p`
 	margin-bottom: 30px;
 `;
 
-const InputBox = styled.div`
+const InputBox = styled.div``;
+
+const Wrapper = styled.div`
 	margin-bottom: 20px;
+`;
+
+const Upper = styled.div`
+	display: flex;
+	margin-bottom: 15px;
 `;
 
 const Label = styled.label``;
 
 const Input = styled.input`
-	width: 70%;
+	width: 90%;
 	height: 30px;
 	border-radius: 7px;
 	padding: 12px;
 	background-color: ${({ theme }) => theme.colors.background};
 	margin-top: 5px;
-	margin-bottom: 15px;
 	border: 1px solid ${({ theme }) => theme.colors.modal_border};
 	color: ${({ theme }) => theme.colors.title};
-`;
-
-const Button = styled.button`
-	width: 265px;
-	height: 38px;
-	border-radius: 7px;
-	background-color: ${({ theme }) => theme.colors.modal_button_background};
-	color: ${({ theme }) => theme.colors.modal_button_title};
-	font-weight: bold;
-	margin-bottom: 10px;
-	transition: 0.3s;
-	&:hover {
-		filter: brightness(105%);
-	}
-	&:active {
-		filter: brightness(95%);
-	}
 `;
 
 const ComponentList = styled.div`
@@ -138,4 +142,21 @@ const Component = styled.li`
 	display: flex;
 	justify-content: space-between;
 	position: relative;
+`;
+
+const Button = styled.button`
+	width: 90px;
+	height: 28px;
+	border-radius: 7px;
+	background-color: ${({ theme }) => theme.colors.modal_button_background};
+	color: ${({ theme }) => theme.colors.modal_button_title};
+	font-weight: bold;
+	margin-top: 22px;
+	transition: 0.3s;
+	&:hover {
+		filter: brightness(105%);
+	}
+	&:active {
+		filter: brightness(95%);
+	}
 `;
