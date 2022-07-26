@@ -24,7 +24,8 @@ const MyPage = () => {
 			dispatch(removeComponent(componentId));
 	};
 
-	const updateUser = () => {
+	const updateUser = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
 		if (confirm('정말로 변경하시겠습니까')) dispatch(changeUserName(input));
 	};
 

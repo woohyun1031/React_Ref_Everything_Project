@@ -107,8 +107,8 @@ export const changeUserName = createAsyncThunk(
 				await updateProfile(auth.currentUser, {
 					displayName: userName,
 				});
-				thunkAPI.dispatch(setUser({ user_name: userName }));
 			}
+			return { user_name: userName };
 		} catch (error) {
 			return alert(`알 수 없는 오류: ${error}`);
 		}
@@ -192,6 +192,10 @@ export const user = createSlice({
 				user_uid: action.payload.user_uid,
 			};
 			state.isLogin = true;
+		});
+		builder.addCase(changeUserName.fulfilled, (state, action) => {
+			alert('변경되었습니다');
+			state.user = { ...state.user, ...action.payload };
 		});
 	},
 });
