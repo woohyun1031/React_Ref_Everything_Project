@@ -33,7 +33,7 @@ const MyPage = () => {
 		<Form>
 			<FormTitle>My Page</FormTitle>
 			<FormDescription>
-				My Page 입니다. <br /> Component list 및 개인 정보를 수정하세요.
+				Component list 및 개인 정보를 수정하세요.
 			</FormDescription>
 			<Wrapper>
 				<Upper>

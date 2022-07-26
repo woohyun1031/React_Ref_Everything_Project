@@ -16,14 +16,11 @@ const AddComponent = () => {
 
 	const onAddClick = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		const isIcon = inputs.icon.trim();
 		const isTitle = inputs.title.trim();
-		if (isIcon === '' || isTitle === '') {
+		if (isTitle === '') {
 			return alert('빈 칸을 모두 채우세요');
 		} else {
-			const newComponent = isIcon + isTitle + isIcon;
-			console.log(newComponent);
-			await dispatch(addComponent(newComponent));
+			await dispatch(addComponent(isTitle));
 			dispatch(closeModal());
 		}
 	};
@@ -35,8 +32,8 @@ const AddComponent = () => {
 				Add버튼을 누르시면 <br /> Component가 Add 됩니다
 			</FormDescription>
 			<InputBox>
-				<Label htmlFor='icon'>icon</Label>
-				<IconInput type='text' name='icon' onChange={handleChange} />
+				{/* <Label htmlFor='icon'>icon</Label>
+				<IconInput type='text' name='icon' onChange={handleChange} /> */}
 				<Label htmlFor='title'>title</Label>
 				<Input type='text' name='title' onChange={handleChange} />
 			</InputBox>
