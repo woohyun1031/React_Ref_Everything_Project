@@ -4,7 +4,6 @@ import Text from './Text';
 import Input from './Input';
 import Button from './Button';
 import FloatButton from './FloatButton';
-import Upload from './Upload';
 import TextArea from './TextArea';
 
-export {Grid,Image,Text,Input,Button,FloatButton,Upload,TextArea};
+export { Grid, Image, Text, Input, Button, FloatButton, TextArea };

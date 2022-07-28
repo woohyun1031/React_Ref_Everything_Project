@@ -7,8 +7,6 @@ import { changeComponent, changeComponentId } from '../store/modules/component';
 import { getItem } from '../store/modules/item';
 import { changePostId, openModal } from '../store/modules/modal';
 import RefItem from './RefItem';
-import { HiOutlinePencilAlt } from 'react-icons/hi';
-import { FcCheckmark } from 'react-icons/fc';
 
 type ItemType = {
 	id?: string;

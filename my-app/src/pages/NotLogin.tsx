@@ -1,4 +1,4 @@
-import { Grid, Text, Button, Upload, TextArea } from '../elements';
+import { Grid, Text } from '../elements';
 
 const NotLogin = () => {
 	return (

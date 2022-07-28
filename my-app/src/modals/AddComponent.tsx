@@ -1,7 +1,7 @@
 import { ChangeEvent, MouseEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { AppDispatch, RootState } from '../store/configStore';
+import { AppDispatch } from '../store/configStore';
 import { addComponent } from '../store/modules/component';
 import { closeModal } from '../store/modules/modal';
 
@@ -32,8 +32,6 @@ const AddComponent = () => {
 				Add버튼을 누르시면 <br /> Component가 Add 됩니다
 			</FormDescription>
 			<InputBox>
-				{/* <Label htmlFor='icon'>icon</Label>
-				<IconInput type='text' name='icon' onChange={handleChange} /> */}
 				<Label htmlFor='title'>title</Label>
 				<Input type='text' name='title' onChange={handleChange} />
 			</InputBox>

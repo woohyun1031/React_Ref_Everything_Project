@@ -4,9 +4,7 @@ import {
 	collection,
 	doc,
 	getDocs,
-	query,
 	updateDoc,
-	where,
 	deleteDoc,
 } from 'firebase/firestore';
 import { ItemType } from '../../components/RefItem';

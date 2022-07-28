@@ -29,38 +29,42 @@ const SideBar = (props: SideProps) => {
 
 	return (
 		<>
-			<SideBarWrap isOpen={_isOpen} isHover={_isHover}>
-				<SideUlist>
-					{props._isLogin ? (
-						component_list ? (
-							component_list.map((component, index) => {
-								return (
-									<SideList
-										key={component.id}
-										onClick={() => scrollClick(component.id)}
-									>
-										<Text size='13px' bold color='side_title'>
-											{component.component_title}
-										</Text>
-									</SideList>
-								);
-							})
-						) : (
-							<SideList>component가 존재하지 않습니다</SideList>
-						)
-					) : null}
-					{props._isLogin ? (
-						<AddSideList onClick={onAddComponent}>+ 추가하기</AddSideList>
-					) : null}
-				</SideUlist>
-			</SideBarWrap>
+			<SideBox>
+				<SideBarWrap isOpen={_isOpen} isHover={_isHover}>
+					<SideUlist>
+						{props._isLogin ? (
+							component_list ? (
+								component_list.map((component) => {
+									return (
+										<SideList
+											key={component.id}
+											onClick={() => scrollClick(component.id)}
+										>
+											<Text size='13px' bold color='side_title'>
+												{component.component_title}
+											</Text>
+										</SideList>
+									);
+								})
+							) : (
+								<SideList>component가 존재하지 않습니다</SideList>
+							)
+						) : null}
+						{props._isLogin ? (
+							<AddSideList onClick={onAddComponent}>+ 추가하기</AddSideList>
+						) : null}
+					</SideUlist>
+				</SideBarWrap>
+			</SideBox>
 		</>
 	);
 };
 
 export default SideBar;
 
-const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
+const SideBox = styled.aside``;
+
+const SideBarWrap = styled.div<{ isOpen: boolean; isHover: boolean }>`
 	width: 210px;
 	height: 100%;
 	position: fixed;
@@ -71,7 +75,6 @@ const SideBarWrap = styled.aside<{ isOpen: boolean; isHover: boolean }>`
 	background-color: ${({ theme }) => theme.colors.side_background};
 	border-right: 1px solid ${({ theme }) => theme.colors.side_border};
 	transition: 0.3s;
-
 	transform: ${({ isOpen, isHover }) =>
 		isOpen
 			? 'translateX(210px)'

@@ -1,4 +1,4 @@
-import { Grid, Text, Button } from '../elements/index';
+import { Grid, Text } from '../elements/index';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { BsFillSunFill, BsFillMoonFill } from 'react-icons/bs';

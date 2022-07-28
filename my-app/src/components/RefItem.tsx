@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Grid, Image, Text } from '../elements/index';
 import { textLengthOverCut } from '../shared/common';
-import ModalCloseButton from '../modals/ModalCloseButton';
 import { removeItem } from '../store/modules/item';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/configStore';
@@ -86,7 +85,7 @@ const RefItem = (props: ItemType) => {
 					</Grid>
 				</Grid>
 				<Menu isOpen={isOpen} isStatic={isStatic}>
-					<li>수정</li>
+					<li>정보</li>
 					<li
 						onClick={(e: MouseEvent<HTMLLIElement>) => {
 							e.preventDefault();
